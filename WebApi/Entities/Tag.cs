@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WebApi.Entities
 {
-    public partial class Tag
+    public partial class Tag:BaseEntity
     {
         public Tag()
         {

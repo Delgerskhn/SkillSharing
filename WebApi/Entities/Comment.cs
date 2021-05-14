@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WebApi.Entities
 {
-    public partial class Comment
+    public partial class Comment:BaseEntity
     {
         [Key]
         public int Pk { get; set; }

@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApi.Entities
 {
-    public partial class Blog
+    public partial class Blog:BaseEntity
     {
         public Blog()
         {
