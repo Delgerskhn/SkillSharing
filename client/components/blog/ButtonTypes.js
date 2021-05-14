@@ -1,9 +1,8 @@
-import { Editable, withReact, useSlate, Slate } from 'slate-react'
-import { Button, Icon, Toolbar } from './Components'
+import {  useSlate } from 'slate-react'
+import { Button, Icon } from './Components'
 import {
     Editor,
     Transforms,
-    createEditor,
     Element as SlateElement,
 } from 'slate'
 const LIST_TYPES = ['numbered-list', 'bulleted-list']
