@@ -14,7 +14,7 @@ using WebApi.Services;
 
 namespace SkillSharing.Controllers
 {
-    [Authorize( Policy = "ApiUser", Roles="Writer")]
+    [Authorize( Policy = "ApiUser")]
     [Route("api/[controller]")]
     [ApiController]
     public class WritersController : ControllerBase
