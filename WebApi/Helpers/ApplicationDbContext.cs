@@ -82,6 +82,7 @@ namespace WebApi.Helpers
             modelBuilder.Entity<BlogStatus>(entity =>
             {
                 entity.HasData(
+                    new BlogStatus { Pk = 4, Name = "Draft" },
                     new BlogStatus { Pk = 1, Name = "Pending" },
                     new BlogStatus { Pk = 2, Name = "Approved" },
                     new BlogStatus { Pk = 3, Name = "Declined" }
