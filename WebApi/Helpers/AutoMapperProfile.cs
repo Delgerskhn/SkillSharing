@@ -8,7 +8,6 @@ namespace WebApi.Helpers
     {
         public AutoMapperProfile()
         {
-            CreateMap<User, UserModel>();
             CreateMap<RegisterModel, AppUser>().ForMember(au => au.UserName, map => map.MapFrom(vm => vm.Email));
         }
     }
