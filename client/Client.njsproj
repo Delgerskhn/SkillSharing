@@ -18,7 +18,22 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
+    <Content Include="components\blog\ButtonTypes.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="components\blog\Components.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="components\blog\BlogEditor.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="components\blog\ElementTypes.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="components\blog\FeaturedPost.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="components\blog\LeafTypes.js">
       <SubType>Code</SubType>
     </Content>
     <Content Include="components\blog\Main.js">
