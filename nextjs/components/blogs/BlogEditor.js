@@ -56,6 +56,7 @@ const BlogEditor = () => {
                 renderElement={renderElement}
                 renderLeaf={renderLeaf}
                 placeholder="Title"
+                readOnly={false }
                 spellCheck
                 autoFocus
                 onKeyDown={event => {
