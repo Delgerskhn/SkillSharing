@@ -18,19 +18,6 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const sections = [
-    { title: 'Technology', url: '#' },
-    { title: 'Design', url: '#' },
-    { title: 'Culture', url: '#' },
-    { title: 'Business', url: '#' },
-    { title: 'Politics', url: '#' },
-    { title: 'Opinion', url: '#' },
-    { title: 'Science', url: '#' },
-    { title: 'Health', url: '#' },
-    { title: 'Style', url: '#' },
-    { title: 'Travel', url: '#' },
-];
-
 const mainFeaturedPost = {
     title: 'Title of a longer featured blog post',
     description:
@@ -89,10 +76,6 @@ export default function Blog() {
     const classes = useStyles();
 
     return (
-        <React.Fragment>
-            <CssBaseline />
-            <Container maxWidth="lg">
-                <Header title="Blog" sections={sections} />
                 <main>
                     <Grid container spacing={4}>
                         {featuredPosts.map((post) => (
@@ -109,8 +92,5 @@ export default function Blog() {
                         />
                     </Grid>
                 </main>
-            </Container>
-            <Footer title="Footer" description="Something here to give the footer a purpose!" />
-        </React.Fragment>
     );
 }

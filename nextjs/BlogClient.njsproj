@@ -19,6 +19,9 @@
     <Content Include="components\blogs\BlogEditor.js">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="shared\Layout.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="styles\app.css">
       <SubType>Code</SubType>
     </Content>

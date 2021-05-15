@@ -7,11 +7,12 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import createCache from '@emotion/cache';
 import theme from '../src/theme';
 import '../styles/app.css';
+import Layout from '../shared/Layout';
 
 export const cache = createCache({ key: 'css', prepend: true });
 
 export default function MyApp(props) {
-  const { Component, pageProps } = props;
+  const { Component, pageProps, router } = props;
 
   React.useEffect(() => {
     // Remove the server-side injected CSS.
@@ -29,8 +30,15 @@ export default function MyApp(props) {
       </Head>
       <ThemeProvider theme={theme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-        <CssBaseline />
-        <Component {...pageProps} />
+              <CssBaseline />
+            {router.pathname.startsWith('/account/') ?
+                <Component {...pageProps} />
+                : <Layout>
+                    <Component {...pageProps} />
+                    </Layout>
+            }
+
+
       </ThemeProvider>
     </CacheProvider>
   );
