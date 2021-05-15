@@ -31,7 +31,7 @@ export default function MyApp(props) {
       <ThemeProvider theme={theme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
               <CssBaseline />
-            {router.pathname.startsWith('/account/') ?
+            {router.pathname.startsWith('/auth/') ?
                 <Component {...pageProps} />
                 : <Layout>
                     <Component {...pageProps} />

@@ -19,6 +19,9 @@
     <Content Include="components\blogs\BlogEditor.js">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="pages\auth\login.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="shared\Layout.js">
       <SubType>Code</SubType>
     </Content>
@@ -60,6 +63,7 @@
   <ItemGroup>
     <Folder Include="components\" />
     <Folder Include="components\blogs\" />
+    <Folder Include="pages\auth\" />
     <Folder Include="styles\" />
     <Folder Include="pages" />
     <Folder Include="shared\" />
