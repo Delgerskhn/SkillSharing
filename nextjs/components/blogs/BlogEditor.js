@@ -1,7 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 
 import isHotkey from 'is-hotkey'
-import { Editable, withReact, useSlate, Slate } from 'slate-react'
+import isUrl from 'is-url'
+import imageExtensions from 'image-extensions'
+import { css } from 'emotion'
+
+import { Editable, withReact, useSlate, Slate, useSlateStatic, useSelected, useFocused } from 'slate-react'
 import {
     Editor,
     Transforms,
@@ -11,7 +15,7 @@ import {
 } from 'slate'
 import { withHistory } from 'slate-history'
 
-import { Button, Icon, Toolbar } from './Components'
+import { Button, Icon,  Toolbar } from './Components'
 
 const HOTKEYS = {
     'mod+b': 'bold',
@@ -26,7 +30,7 @@ const BlogEditor = () => {
     const [value, setValue] = useState(initialValue)
     const renderElement = useCallback(props => <Element {...props} />, [])
     const renderLeaf = useCallback(props => <Leaf {...props} />, [])
-    const editor = useMemo(() => withHistory(withReact(createEditor())), [])
+    const editor = useMemo(() => withImages(withHistory(withReact(createEditor()))), [])
     useEffect(() => {
         editor.selection = {
             anchor: { path: [0, 0], offset: 0 },
@@ -37,6 +41,7 @@ const BlogEditor = () => {
     return (
         <Slate editor={editor} value={value} onChange={value => setValue(value)}>
             <Toolbar>
+                <InsertImageButton />
                 <MarkButton format="bold" icon="format_bold" />
                 <MarkButton format="italic" icon="format_italic" />
                 <MarkButton format="underline" icon="format_underlined" />
@@ -65,6 +70,48 @@ const BlogEditor = () => {
             />
         </Slate>
     )
+}
+
+
+const insertImage = (editor, url) => {
+    const text = { text: '' }
+    const image = { type: 'image', url, children: [text] }
+    Transforms.insertNodes(editor, image)
+}
+
+const withImages = editor => {
+    const { insertData, isVoid } = editor
+
+    editor.isVoid = element => {
+        return element.type === 'image' ? true : isVoid(element)
+    }
+
+    editor.insertData = data => {
+        const text = data.getData('text/plain')
+        const { files } = data
+
+        if (files && files.length > 0) {
+            for (const file of files) {
+                const reader = new FileReader()
+                const [mime] = file.type.split('/')
+
+                if (mime === 'image') {
+                    reader.addEventListener('load', () => {
+                        const url = reader.result
+                        insertImage(editor, url)
+                    })
+
+                    reader.readAsDataURL(file)
+                }
+            }
+        } else if (isImageUrl(text)) {
+            insertImage(editor, text)
+        } else {
+            insertData(data)
+        }
+    }
+
+    return editor
 }
 
 const toggleBlock = (editor, format) => {
@@ -113,8 +160,11 @@ const isMarkActive = (editor, format) => {
     return marks ? marks[format] === true : false
 }
 
-const Element = ({ attributes, children, element }) => {
+const Element = props => {
+    const { attributes, children, element } = props
     switch (element.type) {
+        case 'image':
+            return <Image {...props} />
         case 'block-quote':
             return <blockquote {...attributes}>{children}</blockquote>
         case 'bulleted-list':
@@ -130,6 +180,56 @@ const Element = ({ attributes, children, element }) => {
         default:
             return <p {...attributes}>{children}</p>
     }
+}
+
+const InsertImageButton = () => {
+    const editor = useSlateStatic()
+    return (
+        <Button
+            onMouseDown={event => {
+                event.preventDefault()
+                const url = window.prompt('Enter the URL of the image:')
+                if (!url && !isImageUrl(url)) {
+                    alert('URL is not an image')
+                    return
+                }
+                insertImage(editor, url)
+            }}
+        >
+            <Icon>image</Icon>
+        </Button>
+    )
+}
+
+
+const isImageUrl = url => {
+    if (!url) return false
+    if (!isUrl(url)) return false
+    const ext = new URL(url).pathname.split('.').pop()
+    return imageExtensions.includes(ext)
+}
+
+
+const Image = ({ attributes, children, element }) => {
+    const selected = useSelected()
+    const focused = useFocused()
+    console.log(attributes, children, element)
+    return (
+        <div {...attributes}>
+            <div contentEditable={false}>
+                <img
+                    src={element.url}
+                    className={css`
+            display: block;
+            max-width: 100%;
+            max-height: 20em;
+            box-shadow: ${selected && focused ? '0 0 0 3px #B4D5FF' : 'none'};
+          `}
+                />
+            </div>
+            {children}
+        </div>
+    )
 }
 
 const Leaf = ({ attributes, children, leaf }) => {

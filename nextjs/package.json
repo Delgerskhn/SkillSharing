@@ -11,14 +11,13 @@
     "@material-ui/icons": "^5.0.0-alpha.29",
     "clsx": "latest",
     "emotion": "^10.0.9",
+    "image-extensions": "^1.1.0",
     "is-hotkey": "^0.1.6",
+    "is-url": "^1.2.2",
     "next": "latest",
     "prop-types": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "image-extensions": "^1.1.0",
-    "is-url": "^1.2.2",
-
     "slate": "*",
     "slate-history": "*",
     "slate-react": "*"

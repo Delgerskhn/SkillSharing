@@ -19,6 +19,9 @@
     <Content Include="components\blogs\BlogEditor.js">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="components\blogs\InsertImageButton.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="pages\auth\login.js">
       <SubType>Code</SubType>
     </Content>
