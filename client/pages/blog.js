@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
     mainGrid: {
         marginTop: theme.spacing(3),
     },
+   
 }));
 
 const mainFeaturedPost = {
@@ -54,16 +55,16 @@ export default function Blog() {
     const classes = useStyles();
 
     return (
-                <main>
-                    <Grid container spacing={5} className={classes.mainGrid}>
-                        <Main title="From the firehose" posts={posts} />
-                        <Sidebar
-                            title={sidebar.title}
-                            description={sidebar.description}
-                            archives={sidebar.archives}
-                            social={sidebar.social}
-                        />
-                    </Grid>
-                </main>
+        <main>
+            <Grid container spacing={5} className={classes.mainGrid}>
+                <Main title="From the firehose" posts={posts} />
+                <Sidebar
+                    title={sidebar.title}
+                    description={sidebar.description}
+                    archives={sidebar.archives}
+                    social={sidebar.social}
+                />
+            </Grid>
+        </main>
     );
 }

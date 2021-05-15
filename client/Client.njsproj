@@ -16,11 +16,21 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
+    <Content Include="context\HomeContext.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="package-lock.json" />
     <Content Include="package.json" />
+    <Content Include="pages\account\dashboard.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="pages\account\profile.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="pages\auth\signup.js">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="public\christian.jpg" />
     <Content Include="README.md" />
     <Content Include="pages\about.js" />
     <Content Include="pages\blog.js" />
@@ -47,8 +57,11 @@
     <Folder Include="Client" />
     <Folder Include="components" />
     <Folder Include="components\blogs" />
+    <Folder Include="context\" />
+    <Folder Include="public\" />
     <Folder Include="pages" />
     <Folder Include="pages\auth" />
+    <Folder Include="pages\account\" />
     <Folder Include="shared" />
     <Folder Include="src" />
     <Folder Include="styles" />

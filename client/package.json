@@ -8,6 +8,7 @@
     "@emotion/server": "latest",
     "@emotion/styled": "latest",
     "@material-ui/icons": "^5.0.0-alpha.29",
+    "classnames": "2.3.1",
     "clsx": "latest",
     "emotion": "^10.0.9",
     "image-extensions": "^1.1.0",

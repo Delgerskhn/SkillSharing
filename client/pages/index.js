@@ -29,6 +29,7 @@ const featuredPosts = [
         imageText: 'Image Text',
     },
 ];
+
 const useStyles = makeStyles((theme) => ({
     heroContent: {
         backgroundColor: theme.palette.background.paper,
