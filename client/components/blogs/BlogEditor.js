@@ -26,8 +26,8 @@ const HOTKEYS = {
 
 const LIST_TYPES = ['numbered-list', 'bulleted-list']
 
-const BlogEditor = () => {
-    const [value, setValue] = useState(initialValue)
+const BlogEditor = ({ readOnly, content }) => {
+    const [value, setValue] = useState(content)
     const renderElement = useCallback(props => <Element {...props} />, [])
     const renderLeaf = useCallback(props => <Leaf {...props} />, [])
     const editor = useMemo(() => withImages(withHistory(withReact(createEditor()))), [])
@@ -40,7 +40,7 @@ const BlogEditor = () => {
 
     return (
         <Slate editor={editor} value={value} onChange={value => setValue(value)}>
-            <Toolbar>
+            {!readOnly && <Toolbar>
                 <InsertImageButton />
                 <MarkButton format="bold" icon="format_bold" />
                 <MarkButton format="italic" icon="format_italic" />
@@ -51,12 +51,12 @@ const BlogEditor = () => {
                 <BlockButton format="block-quote" icon="format_quote" />
                 <BlockButton format="numbered-list" icon="format_list_numbered" />
                 <BlockButton format="bulleted-list" icon="format_list_bulleted" />
-            </Toolbar>
+            </Toolbar>}
             <Editable
                 renderElement={renderElement}
                 renderLeaf={renderLeaf}
                 placeholder="Title"
-                readOnly={false }
+                readOnly={readOnly}
                 spellCheck
                 autoFocus
                 onKeyDown={event => {
@@ -292,5 +292,10 @@ const initialValue = [
     },
    
 ]
+
+BlogEditor.defaultProps = {
+    readOnly: true,
+    content: initialValue
+}
 
 export default BlogEditor
