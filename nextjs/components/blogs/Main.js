@@ -16,26 +16,15 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const initialValue = {
-    type: "title",
-    children: [{ text: "Write..." }]
-}
+
 export default function Main(props) {
     const classes = useStyles();
     const { posts, title } = props;
 
     return (
         <Grid item xs={12} md={8}>
-            <Typography variant="h6" gutterBottom>
-                {title}
-            </Typography>
             <Divider />
-            <BlogEditor/>
-            {/*{posts.map((post) => (
-                <Markdown className={classes.markdown} key={post.substring(0, 40)}>
-                    {post}
-                </Markdown>
-            ))}*/}
+            <BlogEditor />
         </Grid>
     );
 }
