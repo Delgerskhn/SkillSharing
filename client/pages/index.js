@@ -31,6 +31,9 @@ const featuredPosts = [
 export default function Index() {
   return (
       <main>
+
+
+
           <Grid container spacing={4}>
               {featuredPosts.map((post) => (
                   <FeaturedPost key={post.title} post={post} />

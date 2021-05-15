@@ -5,6 +5,7 @@ import isUrl from 'is-url'
 import imageExtensions from 'image-extensions'
 import { css } from 'emotion'
 
+
 import { Editable, withReact, useSlate, Slate, useSlateStatic, useSelected, useFocused } from 'slate-react'
 import {
     Editor,

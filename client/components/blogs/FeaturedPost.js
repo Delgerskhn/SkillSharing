@@ -7,6 +7,7 @@ import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
+import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles({
   card: {
@@ -43,8 +44,10 @@ export default function FeaturedPost(props) {
                 Continue reading...
               </Typography>
             </CardContent>
-          </div>
-            <CardMedia className={classes.cardMedia} image={post.image} title={post.imageTitle} />
+                  </div>
+            <Box component="div" display={{ xs: 'none', md: 'block' }} p={1} m={1} bgcolor="background.paper">
+                <CardMedia className={classes.cardMedia} image={post.image} title={post.imageTitle} />
+            </Box>
           {/*<Hidden xsDown>
           </Hidden>*/}
         </Card>
