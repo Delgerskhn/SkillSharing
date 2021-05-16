@@ -21,11 +21,16 @@ namespace SkillSharing.Controllers
     {
         private readonly IBlogService _blogService;
         private readonly ClaimsPrincipal _caller;
+        private readonly ApplicationDbContext _context;
 
-        public WritersController(UserManager<AppUser> userManager, IBlogService blogService, IHttpContextAccessor httpContextAccessor)
+        public WritersController(
+            UserManager<AppUser> userManager,
+            IBlogService blogService,
+            IHttpContextAccessor httpContextAccessor, ApplicationDbContext context)
         {
             _caller = httpContextAccessor.HttpContext.User;
             _blogService = blogService;
+            _context = context;
         }
 
         public string GetUserId()
@@ -61,24 +66,13 @@ namespace SkillSharing.Controllers
         {
             if (id != blog.Pk)
             {
-                return BadRequest();
+                return BadRequest("Blog must contain the identity");
             }
-
-            try
+            if (!_blogService.BlogExists(id, GetUserId()))
             {
-                await _blogService.UpdateUserBlog(GetUserId(), blog);
+                return NotFound();
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!_blogService.BlogExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _blogService.UpdateUserBlog(GetUserId(), blog);
             return NoContent();
         }
 
@@ -91,11 +85,19 @@ namespace SkillSharing.Controllers
             return CreatedAtAction("GetBlog", new { id = blog.Pk }, blog);
         }
 
+        [HttpPost("tag")]
+        public async Task<ActionResult> PostTag(Tag tag)
+        {
+            await _context.AddAsync(tag);
+            await _context.SaveChangesAsync();
+            return new CreatedResult("Tag", tag);
+        }
+
         // DELETE: api/Writers/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBlog(int id)
         {
-            if(!_blogService.BlogExists(id))
+            if(!_blogService.BlogExists(id, GetUserId()))
             {
                 return NotFound();
             }

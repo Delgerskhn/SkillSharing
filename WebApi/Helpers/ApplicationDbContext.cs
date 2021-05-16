@@ -67,12 +67,10 @@ namespace WebApi.Helpers
        public virtual DbSet<Blog> Blogs { get; set; }
         public virtual DbSet<BlogStatus> BlogStatuses { get; set; }
         public virtual DbSet<Comment> Comments { get; set; }
-        public virtual DbSet<Follower> Followers { get; set; }
         public virtual DbSet<Like> Likes { get; set; }
         public virtual DbSet<ReadList> ReadLists { get; set; }
         //public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
-        public virtual DbSet<TagBlog> TagBlogs { get; set; }
         //public virtual DbSet<User> Users { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -102,10 +100,6 @@ namespace WebApi.Helpers
                 entity.HasNoKey();
             });
 
-            modelBuilder.Entity<TagBlog>(entity =>
-            {
-                entity.HasNoKey();
-            });
         }
     }
 }

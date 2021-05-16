@@ -3,36 +3,23 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApi.Helpers;
 
 namespace WebApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210516132022_remove_follower")]
+    partial class remove_follower
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.6")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("BlogTag", b =>
-                {
-                    b.Property<int>("BlogsPk")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TagsPk")
-                        .HasColumnType("int");
-
-                    b.HasKey("BlogsPk", "TagsPk");
-
-                    b.HasIndex("TagsPk");
-
-                    b.ToTable("BlogTag");
-                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -63,15 +50,15 @@ namespace WebApi.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "b89ca2d9-9a15-45fd-a414-3bf65530a671",
-                            ConcurrencyStamp = "ef7ff5e4-4879-4cd8-aeeb-05e6b8549a42",
+                            Id = "d1459324-426c-4b08-b04c-42b9183c2320",
+                            ConcurrencyStamp = "0f4bd497-5d37-497e-a979-046697b56a9b",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "ffef4fc2-138f-4e40-959f-f6f9d25a736a",
-                            ConcurrencyStamp = "688c60e4-1f04-47d6-b004-7a41cb3328c9",
+                            Id = "88a7427e-2e56-4ad0-b52e-834c9b1b1fb1",
+                            ConcurrencyStamp = "2543d174-9e05-43ab-b88a-717eb34a1fe8",
                             Name = "Writer",
                             NormalizedName = "WRITER"
                         });
@@ -435,19 +422,19 @@ namespace WebApi.Migrations
                     b.ToTable("Tags");
                 });
 
-            modelBuilder.Entity("BlogTag", b =>
+            modelBuilder.Entity("WebApi.Entities.TagBlog", b =>
                 {
-                    b.HasOne("WebApi.Entities.Blog", null)
-                        .WithMany()
-                        .HasForeignKey("BlogsPk")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<int?>("BlogPk")
+                        .HasColumnType("int");
 
-                    b.HasOne("WebApi.Entities.Tag", null)
-                        .WithMany()
-                        .HasForeignKey("TagsPk")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<int?>("TagPk")
+                        .HasColumnType("int");
+
+                    b.HasIndex("BlogPk");
+
+                    b.HasIndex("TagPk");
+
+                    b.ToTable("TagBlogs");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -559,6 +546,21 @@ namespace WebApi.Migrations
                     b.Navigation("AppUser");
 
                     b.Navigation("BlogPkNavigation");
+                });
+
+            modelBuilder.Entity("WebApi.Entities.TagBlog", b =>
+                {
+                    b.HasOne("WebApi.Entities.Blog", "BlogPkNavigation")
+                        .WithMany()
+                        .HasForeignKey("BlogPk");
+
+                    b.HasOne("WebApi.Entities.Tag", "TagPkNavigation")
+                        .WithMany()
+                        .HasForeignKey("TagPk");
+
+                    b.Navigation("BlogPkNavigation");
+
+                    b.Navigation("TagPkNavigation");
                 });
 
             modelBuilder.Entity("WebApi.Entities.Blog", b =>

@@ -16,5 +16,7 @@ namespace WebApi.Entities
         [StringLength(130)]
         public string Name { get; set; }
 
+        public ICollection<Blog> Blogs { get; set; }
+
     }
 }

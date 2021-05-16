@@ -22,12 +22,12 @@ namespace WebApi.Entities
         [StringLength(100)]
         public string Img { get; set; }
         [Required]
-        [StringLength(10000)]
         public string Content { get; set; }
         [ForeignKey("AppUser")]
         public string UserPk { get; set; }
         public int? BlogStatusPk { get; set; }
 
+        public virtual ICollection<Tag> Tags { get; set; }
         public virtual BlogStatus BlogStatusPkNavigation { get; set; }
         public virtual AppUser AppUser { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }

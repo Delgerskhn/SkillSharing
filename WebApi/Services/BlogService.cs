@@ -16,7 +16,7 @@ namespace WebApi.Services
         Task UpdateUserBlog(string userpk, Blog blog);
         Task CreateUserBlog(string userpk, Blog blog);
         Task DeleteUserBlog(int pk, string userpk);
-        bool BlogExists(int pk);
+        bool BlogExists(int pk, string userpk);
     }
     public class BlogService : IBlogService
     {
@@ -27,16 +27,16 @@ namespace WebApi.Services
             _context = context;
         }
 
-        public bool BlogExists(int pk)
+        public bool BlogExists(int pk, string userpk)
         {
-            return _context.Blogs.Any(e => e.Pk == pk);
+            return _context.Blogs.Any(e => e.Pk == pk && e.UserPk == userpk);
         }
 
         public async Task CreateUserBlog(string userpk, Blog blog)
         {
-            //Todo insertuserpk in blog
-            blog.AppUser.Id = userpk;
+            blog.UserPk = userpk;
             blog.BlogStatusPk = 1;
+            _context.AttachRange(blog.Tags);
             _context.Blogs.Add(blog);
             await _context.SaveChangesAsync();
         }
@@ -50,7 +50,7 @@ namespace WebApi.Services
         public async Task<Blog> GetUserBlog(int pk, string userpk)
         {
             var blog = await _context.Blogs.Where(r=>r.Pk == pk 
-            //&& r.UserPk == userpk
+            && r.UserPk == userpk
             ).FirstOrDefaultAsync();
             return blog;
         }
@@ -58,13 +58,15 @@ namespace WebApi.Services
         public async Task<List<Blog>> GetUserBlogs(string userpk)
         {
             return await _context.Blogs
-                //.Where(r => r.UserPk == userpk)
+                .Where(r => r.UserPk == userpk)
                 .ToListAsync();
         }
 
         public async Task UpdateUserBlog(string userpk, Blog blog)
         {
-            _context.Entry(blog).State = EntityState.Modified;
+            blog.UserPk = userpk;
+            blog.BlogStatusPk = 1;
+            _context.Update(blog);
             await _context.SaveChangesAsync();
         }
     }
