@@ -101,6 +101,16 @@ namespace WebApi
                    ClaimTypes.Role));
             });
 
+            /*services.AddIdentity<AppUser, AppRole>(o =>
+             {
+                 o.Password.RequireDigit = false;
+                 o.Password.RequireLowercase = false;
+                 o.Password.RequireUppercase = false;
+                 o.Password.RequireNonAlphanumeric = false;
+                 o.Password.RequiredLength = 6;
+             }).AddEntityFrameworkStores<ApplicationDbContext>()
+               .AddDefaultTokenProviders();*/
+
             // add identity
             var builder = services.AddIdentityCore<AppUser>(o =>
             {
