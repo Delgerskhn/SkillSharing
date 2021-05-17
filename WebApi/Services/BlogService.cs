@@ -66,6 +66,7 @@ namespace WebApi.Services
         {
             blog.UserPk = userpk;
             blog.BlogStatusPk = 1;
+            _context.AttachRange(blog.Tags);
             _context.Update(blog);
             await _context.SaveChangesAsync();
         }

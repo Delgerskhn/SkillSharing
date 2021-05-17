@@ -31,10 +31,10 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("search")]
-        public async Task<ActionResult<IEnumerable<Blog>>> GetBlogsByContent([FromBody] string query)
+        public async Task<ActionResult<IEnumerable<Blog>>> GetBlogsByKeyWords([FromBody] string query)
         {
-            //TODO: implement method
-            return NotFound();
+            var q = await _context.Blogs.FromSqlRaw("EXEC Blogs_SEL_FreeText {0}", query).ToListAsync();
+            return q;
         }
 
         [HttpGet("latest")]
