@@ -22,12 +22,25 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("tag/{id}")]
-        public async Task<ActionResult<IEnumerable<Blog>>> GetBlogsByTag(int id)
+        public async Task<ActionResult> GetBlogsByTag(int id)
         {
             var tag = await _context.Tags.FindAsync(id);
             if (tag == null) return NotFound("Tag is not found!");
-            var q = await _context.Blogs.Where(r => r.Tags.Contains(tag)).Include(r=>r.AppUser).ToListAsync();
-            return q;
+            var q = await (from b in _context.Blogs
+                    where b.Tags.Contains(tag)
+                    select new
+                    {
+                        Title = b.Title,
+                        Img = b.Img,
+                        Content = b.Content,
+                        AppUser = new 
+                        {
+                            UserName = b.AppUser.UserName
+                        },
+                        Tags = b.Tags,
+                        CreatedOn = b.CreatedOn
+                    }).ToListAsync();
+            return Ok(q);
         }
 
         [HttpPost("search")]
