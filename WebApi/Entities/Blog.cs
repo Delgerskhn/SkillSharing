@@ -15,6 +15,7 @@ namespace WebApi.Entities
         }
         [Key]
         public int Pk { get; set; }
+        public int Likes { get; set; }
         [Required]
         [StringLength(100)]
         public string Title { get; set; }

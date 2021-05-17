@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApi.Helpers;
 
 namespace WebApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210517041911_UserReputationTriggers_Like_Comment")]
+    partial class UserReputationTriggers_Like_Comment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -63,15 +65,15 @@ namespace WebApi.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "096e9a86-b6d6-4cc8-9228-886589d7d0bc",
-                            ConcurrencyStamp = "e20ff83f-d431-4c1b-b299-dae644f2221e",
+                            Id = "4b37a474-79dc-4f09-97a1-8bf011891d3b",
+                            ConcurrencyStamp = "614f81df-f614-413e-acf0-0afadf7420d7",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "ee48e356-4b07-4e2a-affe-7a98ffb7a652",
-                            ConcurrencyStamp = "6acea394-6fc8-4a11-b7ff-863b008f19a8",
+                            Id = "1ed9cd5c-fd1b-438d-af70-f85565b94b6e",
+                            ConcurrencyStamp = "c5282501-2465-446c-8648-ce3a8837134f",
                             Name = "Writer",
                             NormalizedName = "WRITER"
                         });
@@ -285,9 +287,6 @@ namespace WebApi.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
-
-                    b.Property<int>("Likes")
-                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
