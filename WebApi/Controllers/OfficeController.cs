@@ -54,14 +54,13 @@ namespace WebApi.Controllers
         [HttpGet("authors")]
         public async Task<ActionResult<ICollection<AppUser>>> Authors()
         {
-            /*var q = _context.Roles.Where(r => r.Name == "Admin").Include(r => r.Users).First().Users.ToList();*/
             var q = await (from a in _context.Roles
-                    join b in _context.UserRoles
-                    on a.Id equals b.RoleId
-                    join c in _context.Users
-                    on b.UserId equals c.Id
-                    where a.Name == "Writer"
-                    select c).ToListAsync();
+                            join b in _context.UserRoles
+                            on a.Id equals b.RoleId
+                            join c in _context.Users
+                            on b.UserId equals c.Id
+                            where a.Name == "Writer"
+                            select c).ToListAsync();
             return q;
         }
 
