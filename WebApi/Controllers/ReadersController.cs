@@ -15,7 +15,7 @@ namespace WebApi.Controllers
     public class ReadersController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
-
+        private const int ApprovedStatusPk = 2;
         public ReadersController(ApplicationDbContext context)
         {
             _context = context;
@@ -26,7 +26,7 @@ namespace WebApi.Controllers
         {
             var tag = await _context.Tags.FindAsync(id);
             if (tag == null) return NotFound("Tag is not found!");
-            var q = await (from b in _context.Blogs
+            var q = await (from b in _context.Blogs.Where(r=>r.BlogStatusPk == ApprovedStatusPk)
                     where b.Tags.Contains(tag)
                     select new
                     {
@@ -53,7 +53,11 @@ namespace WebApi.Controllers
         [HttpGet("latest")]
         public async Task<ActionResult<IEnumerable<Blog>>> GetLatestBlogs()
         {
-            return await _context.Blogs.OrderByDescending(r=>r.CreatedOn).Include(r=>r.AppUser).Take(10).ToListAsync();
+            return await _context.Blogs
+                .Where(r=>r.BlogStatusPk == ApprovedStatusPk)
+                .OrderByDescending(r=>r.CreatedOn)
+                .Include(r=>r.AppUser).Take(10)
+                .ToListAsync();
         }
 
         // GET: api/Readers/5
@@ -62,7 +66,7 @@ namespace WebApi.Controllers
         {
             var blog = await _context.Blogs.FindAsync(id);
 
-            if (blog == null)
+            if (blog == null || blog.BlogStatusPk != ApprovedStatusPk)
             {
                 return NotFound();
             }

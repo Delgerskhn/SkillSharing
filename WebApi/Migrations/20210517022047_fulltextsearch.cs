@@ -55,7 +55,7 @@ namespace WebApi.Migrations
 	                    -- interfering with SELECT statements.
 	                    SET NOCOUNT ON;
 	                     select top 20 * from Blogs 
-		                    where FreeText((Title, Content), @query)
+		                    where FreeText((Title, Content), @query) and BlogStatusPk = 2
 		                    order by pk desc
                         -- Insert statements for procedure here
                     END
