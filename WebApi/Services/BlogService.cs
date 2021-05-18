@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +13,16 @@ namespace WebApi.Services
     public interface IBlogService
     {
         Task<Blog> GetUserBlog(int pk, string userpk);
-        Task<List<Blog>> GetUserBlogs(string userpk);
+        Task<List<Blog>> GetUserBlogsByStatus(string userpk, string status);
         Task UpdateUserBlog(string userpk, Blog blog);
         Task CreateUserBlog(string userpk, Blog blog);
         Task DeleteUserBlog(int pk, string userpk);
-        bool BlogExists(int pk, string userpk);
+        Task<List<Blog>> GetBlogsByStatus(int statusPk);
+        bool UserBlogExists(int pk, string userpk);
+        Task<Blog> GetBlog(int pk);
+        Task UpdateBlogStatus(Blog blog);
+        Task<List<Blog>> GetBlogsByTag(Tag tag);
+        Task<List<Blog>> GetLatestBlogs();
     }
     public class BlogService : IBlogService
     {
@@ -27,7 +33,7 @@ namespace WebApi.Services
             _context = context;
         }
 
-        public bool BlogExists(int pk, string userpk)
+        public bool UserBlogExists(int pk, string userpk)
         {
             return _context.Blogs.Any(e => e.Pk == pk && e.UserPk == userpk);
         }
@@ -47,6 +53,49 @@ namespace WebApi.Services
             await _context.SaveChangesAsync();
         }
 
+        public async Task<Blog> GetBlog(int pk)
+        {
+            return await _context.Blogs.FindAsync(pk);
+        }
+
+        public async Task<List<Blog>> GetBlogsByStatus(int statusPk)
+        {
+            return await _context.Blogs
+                           .Where(r => r.BlogStatusPk == statusPk)
+                           .Include(r => r.BlogStatusPkNavigation)
+                           .Include(r => r.AppUser)
+                           .ToListAsync();
+        }
+
+        public async Task<List<Blog>> GetBlogsByTag(Tag tag)
+        {
+            var q = await(from b in _context.Blogs.Where(r => r.BlogStatusPk == Constants.Blogs.ApprovedStatusPk)
+                          where b.Tags.Contains(tag)
+                          select new Blog
+                          {
+                              Pk = b.Pk,
+                              Title = b.Title,
+                              Img = b.Img,
+                              Content = b.Content,
+                              AppUser = new AppUser
+                              {
+                                  UserName = b.AppUser.UserName
+                              },
+                              Tags = b.Tags,
+                              CreatedOn = b.CreatedOn
+                          }).ToListAsync();
+            return q;
+        }
+
+        public async Task<List<Blog>> GetLatestBlogs()
+        {
+            return await _context.Blogs
+                          .Where(r => r.BlogStatusPk == Constants.Blogs.ApprovedStatusPk)
+                          .OrderByDescending(r => r.CreatedOn)
+                          .Include(r => r.AppUser).Take(Constants.Blogs.PagingSize)
+                          .ToListAsync();
+        }
+
         public async Task<Blog> GetUserBlog(int pk, string userpk)
         {
             var blog = await _context.Blogs.Where(r=>r.Pk == pk 
@@ -55,11 +104,19 @@ namespace WebApi.Services
             return blog;
         }
 
-        public async Task<List<Blog>> GetUserBlogs(string userpk)
+        public async Task<List<Blog>> GetUserBlogsByStatus(string userpk, string status)
         {
-            return await _context.Blogs
-                .Where(r => r.UserPk == userpk)
-                .ToListAsync();
+            var q = await _context.BlogStatuses.Where(r => r.Name == status)
+                    .Include(r => r.Blogs.Where(b => b.UserPk == userpk))
+                    .Select(r=>r.Blogs.ToList())
+                    .FirstOrDefaultAsync();
+            return q;
+        }
+
+        public async  Task UpdateBlogStatus(Blog blog)
+        {
+            _context.Blogs.Update(blog);
+            await _context.SaveChangesAsync();
         }
 
         public async Task UpdateUserBlog(string userpk, Blog blog)

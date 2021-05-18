@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Entities;
 using WebApi.Helpers;
+using WebApi.Services;
 
 namespace WebApi.Controllers
 {
@@ -15,10 +16,11 @@ namespace WebApi.Controllers
     public class ReadersController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
-        private const int ApprovedStatusPk = 2;
-        public ReadersController(ApplicationDbContext context)
+        private readonly IBlogService _blogService;
+        public ReadersController(ApplicationDbContext context, IBlogService blogService)
         {
             _context = context;
+            _blogService = blogService;
         }
 
         [HttpGet("tag/{id}")]
@@ -26,22 +28,9 @@ namespace WebApi.Controllers
         {
             var tag = await _context.Tags.FindAsync(id);
             if (tag == null) return NotFound("Tag is not found!");
-            var q = await (from b in _context.Blogs.Where(r => r.BlogStatusPk == ApprovedStatusPk)
-                           where b.Tags.Contains(tag)
-                           select new
-                           {
-                               Pk = b.Pk,
-                               Title = b.Title,
-                               Img = b.Img,
-                               Content = b.Content,
-                               AppUser = new
-                               {
-                                   UserName = b.AppUser.UserName
-                               },
-                               Tags = b.Tags,
-                               CreatedOn = b.CreatedOn
-                           }).ToListAsync();
-            return Ok(q);
+            var blogs = await _blogService.GetBlogsByTag(tag);
+           
+            return Ok(blogs);
         }
 
         [HttpPost("search")]
@@ -54,20 +43,17 @@ namespace WebApi.Controllers
         [HttpGet("latest")]
         public async Task<ActionResult<IEnumerable<Blog>>> GetLatestBlogs()
         {
-            return await _context.Blogs
-                .Where(r => r.BlogStatusPk == ApprovedStatusPk)
-                .OrderByDescending(r => r.CreatedOn)
-                .Include(r => r.AppUser).Take(10)
-                .ToListAsync();
+            return await _blogService.GetLatestBlogs();
+          
         }
 
         // GET: api/Readers/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Blog>> GetBlog(int id)
         {
-            var blog = await _context.Blogs.FindAsync(id);
+            var blog = await _blogService.GetBlog(id);
 
-            if (blog == null || blog.BlogStatusPk != ApprovedStatusPk)
+            if (blog == null || blog.BlogStatusPk != Constants.Blogs.ApprovedStatusPk)
             {
                 return NotFound();
             }

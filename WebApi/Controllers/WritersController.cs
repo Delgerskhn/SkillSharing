@@ -40,9 +40,9 @@ namespace SkillSharing.Controllers
 
         // GET: api/Writers
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Blog>>> GetBlogs()
+        public async Task<ActionResult<IEnumerable<Blog>>> GetBlogs([FromQuery] string Status)
         {
-            return await _blogService.GetUserBlogs(GetUserId());
+            return await _blogService.GetUserBlogsByStatus(GetUserId(), Status);
         }
 
         // GET: api/Writers/5
@@ -68,7 +68,7 @@ namespace SkillSharing.Controllers
             {
                 return BadRequest("Blog must contain the identity");
             }
-            if (!_blogService.BlogExists(id, GetUserId()))
+            if (!_blogService.UserBlogExists(id, GetUserId()))
             {
                 return NotFound();
             }
@@ -97,7 +97,7 @@ namespace SkillSharing.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBlog(int id)
         {
-            if(!_blogService.BlogExists(id, GetUserId()))
+            if(!_blogService.UserBlogExists(id, GetUserId()))
             {
                 return NotFound();
             }

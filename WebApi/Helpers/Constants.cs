@@ -19,5 +19,14 @@ namespace WebApi.Helpers
                 public const string ApiAccess = "api_access";
             }
         }
+
+        public static class Blogs
+        {
+            public static int ApprovedStatusPk = 2;
+
+            public static int PagingSize = 10;
+
+        }
+
     }
 }
