@@ -17,7 +17,8 @@ const useStyles = makeStyles({
     flex: 1,
   },
   cardMedia: {
-    width: 160,
+      width: 160,
+      height: "100%"
   },
 });
 
@@ -27,7 +28,7 @@ export default function FeaturedPost(props) {
 
   return (
     <Grid item xs={12} md={6}>
-      <CardActionArea component="a" href="#">
+          <CardActionArea component="a" href={'/blog/'+post.pk}>
         <Card className={classes.card}>
           <div className={classes.cardDetails}>
             <CardContent>
@@ -35,7 +36,7 @@ export default function FeaturedPost(props) {
                 {post.title}
               </Typography>
               <Typography variant="subtitle1" color="textSecondary">
-                {post.date}
+                {post.createdOn}
               </Typography>
               <Typography variant="subtitle1" paragraph>
                 {post.description}
@@ -44,9 +45,9 @@ export default function FeaturedPost(props) {
                 Continue reading...
               </Typography>
             </CardContent>
-                  </div>
+            </div>
             <Box component="div" display={{ xs: 'none', md: 'block' }} p={1} m={1} bgcolor="background.paper">
-                <CardMedia className={classes.cardMedia} image={post.image} title={post.imageTitle} />
+                <CardMedia className={classes.cardMedia} image={post.img} title={post.title} />
             </Box>
           {/*<Hidden xsDown>
           </Hidden>*/}

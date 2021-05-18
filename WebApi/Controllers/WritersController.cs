@@ -107,5 +107,14 @@ namespace SkillSharing.Controllers
             return NoContent();
         }
 
+        [HttpPost("withdraw")]
+        public async Task<IActionResult> Withdraw()
+        {
+            var u = await _context.Users.FindAsync(GetUserId());
+            u.WithdrawReputation = 0;
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
+
     }
 }

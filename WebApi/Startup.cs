@@ -174,7 +174,7 @@ namespace WebApi
                            });
                });
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             // migrate any database changes on startup (includes initial db creation)
             dataContext.Database.Migrate();
 

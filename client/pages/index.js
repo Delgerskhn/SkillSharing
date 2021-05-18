@@ -9,6 +9,8 @@ import Grid from '@material-ui/core/Grid';
 import FeaturedPost from '../components/blogs/FeaturedPost';
 import { Button } from '../components/blogs/Components';
 import { makeStyles } from '@material-ui/core/styles';
+import { useAppContext } from '../context/AppContext';
+import Fetch from '../helpers/Fetch';
 
 
 const featuredPosts = [
@@ -37,9 +39,9 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function Index() {
+export default function Index({posts }) {
     const classes = useStyles();
-
+    console.log(posts)
   return (
       <main>
 
@@ -71,11 +73,19 @@ export default function Index() {
           </div>
 
           <Grid container spacing={4}>
-              {featuredPosts.map((post) => (
+              {posts.map((post) => (
                   <FeaturedPost key={post.title} post={post} />
               ))}
           </Grid>
           
       </main>
   );
+}
+
+
+export async function getServerSideProps() {
+    // Fetch data from external API
+    var res = await Fetch('/readers/latest', 'get');
+    // Pass data to the page via props
+    return { props: { posts: res } }
 }

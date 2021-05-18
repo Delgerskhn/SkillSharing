@@ -8,6 +8,8 @@ import createCache from '@emotion/cache';
 import theme from '../src/theme';
 import '../styles/app.css';
 import Layout from '../shared/Layout';
+import { AppProvider } from '../context/AppContext';
+import Loader from '../components/Loader';
 
 export const cache = createCache({ key: 'css', prepend: true });
 
@@ -29,14 +31,17 @@ export default function MyApp(props) {
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
       <ThemeProvider theme={theme}>
-        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-              <CssBaseline />
+              {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+        <CssBaseline />
+        <AppProvider>
             {router.pathname.startsWith('/auth/') ?
                 <Component {...pageProps} />
                 : <Layout>
                     <Component {...pageProps} />
                     </Layout>
-            }
+                  }
+            <Loader/>
+        </AppProvider>
 
 
       </ThemeProvider>

@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useRouter } from 'next/router'
+
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import TwitterIcon from '@material-ui/icons/Twitter';
-import Sidebar from '../shared/Sidebar';
-import FeaturedPost from '../components/blogs/FeaturedPost';
-import Main from '../components/blogs/Main';
+import Main from '../../components/blogs/Main';
+import Sidebar from '../../shared/Sidebar';
+import Fetch from '../../helpers/Fetch';
 
 const useStyles = makeStyles((theme) => ({
     mainGrid: {
@@ -51,7 +53,7 @@ const sidebar = {
     ],
 };
 
-export default function Blog() {
+export default function Blog({ blog }) {
     const classes = useStyles();
 
     return (
@@ -67,4 +69,13 @@ export default function Blog() {
             </Grid>
         </main>
     );
+}
+
+export async function getServerSideProps({ query }) {
+    const { pk } = query;
+    // Fetch data from external API
+    var res = await Fetch('/readers/' + pk, 'get');
+    console.log(res);
+    // Pass data to the page via props
+    return { props: { blog: res } }
 }

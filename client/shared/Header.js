@@ -27,8 +27,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Header(props) {
   const classes = useStyles();
-  const { sections, title } = props;
-
+    const { sections, title } = props;
   return (
     <React.Fragment>
       <Toolbar className={classes.toolbar}>
@@ -63,7 +62,7 @@ export default function Header(props) {
             {section.title}
           </Link>
         ))}
-      </Toolbar>
+          </Toolbar>
     </React.Fragment>
   );
 }
