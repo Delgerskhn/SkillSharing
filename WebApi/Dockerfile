@@ -19,4 +19,5 @@ RUN dotnet publish "WebApi.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "SkillSharing.dll"]
+#ENTRYPOINT ["dotnet", "SkillSharing.dll"]
+CMD ASPNETCORE_URLS=http://*:$PORT dotnet SkillSharing.dll
