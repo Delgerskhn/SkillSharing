@@ -50,6 +50,7 @@ namespace WebApi.Auth
         {
             var claims = new List<Claim>() {
                 new Claim(Helpers.Constants.Strings.JwtClaimIdentifiers.Id, id),
+                new Claim(Helpers.Constants.Strings.JwtClaimIdentifiers.Email, userName),
                 new Claim(Helpers.Constants.Strings.JwtClaimIdentifiers.Rol, Helpers.Constants.Strings.JwtClaims.ApiAccess),
             };
             foreach (var role in roles) claims.Add(new Claim(ClaimTypes.Role, role));

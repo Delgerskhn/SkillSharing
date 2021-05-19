@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { GetUser, SaveUser } from '../helpers/Auth'
 import Fetch from '../helpers/Fetch'
 
 
@@ -12,13 +13,45 @@ function useAppContext() {
 }
 function AppProvider(props) {
     const [isLoading, setIsLoading] = React.useState(false)
-    const FetchApi = async (path, method, body, secure) => {
-        setIsLoading(true);
-        var res = await Fetch(path, method, body, secure);
+    const [successMsg, setSuccessMsg] = React.useState('')
+    const [errorMsg, setErrorMsg] = React.useState('')
+    const [user, setUser] = React.useState({})
+
+    const hideAlerts = () => {
+        setSuccessMsg('')
+        setErrorMsg('')
+    }
+
+    React.useEffect(() => {
+        var u = GetUser()
+        setUser(u)
+    }, [])
+
+    React.useEffect(() => {
+        setTimeout(hideAlerts, 2000)
+    }, [successMsg, errorMsg])
+
+    const FetchApi = async (path, method, body,  hasLoader, secure) => {
+        if (hasLoader) setIsLoading(true);
+        try {
+            var res = await Fetch(path, method, body, secure);
+        } catch (err) {
+            setErrorMsg(err)
+        }
         setIsLoading(false);
         return res;
     }
-    const value = { isLoading, setIsLoading, FetchApi };
+    const value = {
+        isLoading,
+        setIsLoading,
+        FetchApi,
+        successMsg,
+        errorMsg,
+        setSuccessMsg,
+        setErrorMsg,
+        user,
+        setUser
+    };
     return <AppContext.Provider value={value} {...props} />
 }
 export { AppProvider, useAppContext }

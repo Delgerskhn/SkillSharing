@@ -3,6 +3,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import Header from './Header';
 import Footer from './Footer';
+import { useAppContext } from '../context/AppContext';
+import { ErrorAlert, SuccessAlert } from '../components/Alert';
 
 
 const sections = [
@@ -19,12 +21,15 @@ const sections = [
 ];
 
 export default function Layout({ children }) {
+    const { successMsg, errorMsg } = useAppContext();
 
     return (
         <React.Fragment>
+            <SuccessAlert msg={successMsg} />
+            <ErrorAlert msg={errorMsg} />
             <CssBaseline />
             <Container maxWidth="lg">
-                <Header title="Blog" sections={sections} />
+                <Header title="Skill share" sections={sections} />
                 {children}
             </Container>
             <Footer title="Footer" description="Something here to give the footer a purpose!" />

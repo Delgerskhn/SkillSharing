@@ -8,14 +8,14 @@ import createCache from '@emotion/cache';
 import theme from '../src/theme';
 import '../styles/app.css';
 import Layout from '../shared/Layout';
-import { AppProvider } from '../context/AppContext';
+import { AppProvider, useAppContext } from '../context/AppContext';
 import Loader from '../components/Loader';
+import AuthLayout from '../shared/AuthLayout';
 
 export const cache = createCache({ key: 'css', prepend: true });
 
 export default function MyApp(props) {
-  const { Component, pageProps, router } = props;
-
+    const { Component, pageProps, router } = props;
   React.useEffect(() => {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side');
@@ -33,9 +33,11 @@ export default function MyApp(props) {
       <ThemeProvider theme={theme}>
               {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
-        <AppProvider>
-            {router.pathname.startsWith('/auth/') ?
-                <Component {...pageProps} />
+              <AppProvider>
+                  {router.pathname.startsWith('/auth/') ?
+                <AuthLayout>
+                    <Component {...pageProps} />
+                </AuthLayout>
                 : <Layout>
                     <Component {...pageProps} />
                     </Layout>

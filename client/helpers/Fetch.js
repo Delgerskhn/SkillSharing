@@ -10,8 +10,13 @@ const Fetch = async (path, method, body, secure = false) => {
     };
     if (body) options.body = JSON.stringify(body);
     var req = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}${path}`, options)
-    var res = await req.json();
-    return res;
+    if (req.status == 500) throw "Unexpected error occured. Please try again."
+    var res = await req.text();
+    try {
+        res = JSON.parse(res);
+    } catch (err) {
+    }
+    return res
 }
 
 export default Fetch

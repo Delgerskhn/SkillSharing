@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +12,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { useAppContext } from '../../context/AppContext';
+import { useRouter } from 'next/router';
 
 function Copyright() {
     return (
@@ -47,8 +49,34 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignUp() {
+    const router = useRouter()
     const classes = useStyles();
+    const [fname, setfname] = useState("");
+    const [lname, setlname] = useState("");
+    const [email, setemail] = useState("");
+    const [validation, setValidation] = useState({email: false, fname:false,lname:false,password:false});
+    const [password, setpassword] = useState("");
+    const handleemail = (e) => setemail(e.target.value);
+    const handlefname = (e) => setfname(e.target.value);
+    const handlelname = (e) => setlname(e.target.value);
+    const handlepassword = (e) => setpassword(e.target.value);
 
+    const { FetchApi, setErrorMsg } = useAppContext();
+
+    const signUp = async () => {
+        var body = {
+            firstname: fname,
+            lastname: lname,
+            email: email,
+            password: password
+        }
+        var res = await FetchApi('/accounts', 'post', body, true);
+        if (res?.DuplicateUserName) setErrorMsg(res.DuplicateUserName[0])
+        else router.push('/auth/login')
+    };
+    const validEmail = () => {
+        console.log('validate email');
+    }
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
@@ -59,11 +87,15 @@ export default function SignUp() {
                 <Typography component="h1" variant="h5">
                     Sign up
         </Typography>
-                <form className={classes.form} noValidate>
+                <div className={classes.form}>
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm={6}>
                             <TextField
+                                error={validation.fname}
+                                helperText="Must have at least 4 letters"
                                 autoComplete="fname"
+                                onChange={handlefname}
+                                value={ fname}
                                 name="firstName"
                                 variant="outlined"
                                 required
@@ -77,10 +109,14 @@ export default function SignUp() {
                             <TextField
                                 variant="outlined"
                                 required
+                                onChange={handlelname}
+                                value={lname}
                                 fullWidth
                                 id="lastName"
                                 label="Last Name"
                                 name="lastName"
+                                error={validation.lname}
+                                helperText="Must have at least 4 letters"
                                 autoComplete="lname"
                             />
                         </Grid>
@@ -90,8 +126,13 @@ export default function SignUp() {
                                 required
                                 fullWidth
                                 id="email"
+                                onBlur={validEmail}
                                 label="Email Address"
+                                onChange={handleemail}
+                                value={email}
                                 name="email"
+                                error={validation.email}
+                                helperText="Must be correct email"
                                 autoComplete="email"
                             />
                         </Grid>
@@ -101,9 +142,13 @@ export default function SignUp() {
                                 required
                                 fullWidth
                                 name="password"
+                                onChange={handlepassword}
+                                value={password}
                                 label="Password"
                                 type="password"
                                 id="password"
+                                error={validation.password}
+                                helperText="Must have at least 6 letters"
                                 autoComplete="current-password"
                             />
                         </Grid>
@@ -117,6 +162,7 @@ export default function SignUp() {
                     <Button
                         type="submit"
                         fullWidth
+                        onClick={ signUp}
                         variant="contained"
                         color="primary"
                         className={classes.submit}
@@ -127,10 +173,10 @@ export default function SignUp() {
                         <Grid item>
                             <Link href="login" variant="body2">
                                 Already have an account? Sign in
-              </Link>
+                            </Link>
                         </Grid>
                     </Grid>
-                </form>
+                </div>
             </div>
             <Box mt={5}>
                 <Copyright />

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +12,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { useAppContext } from '../../context/AppContext';
+import { SaveUser } from '../../helpers/Auth';
+import { useRouter } from 'next/router';
 
 function Copyright() {
     return (
@@ -47,6 +50,27 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Login() {
     const classes = useStyles();
+    const { FetchApi, setErrorMsg, setUser } = useAppContext();
+    const router = useRouter()
+
+    const [email, setemail] = useState("");
+    const [password, setpassword] = useState("");
+    const handleemail = (e) => setemail(e.target.value);
+    const handlepassword = (e) => setpassword(e.target.value);
+
+    const signIn = async () => {
+        var body = {
+            email: email,
+            password: password
+        }
+        var res = await FetchApi('/auth/login', 'post', body, true);
+        if (res?.login_failure) setErrorMsg(res.login_failure[0])
+        else {
+            setUser(res)
+            SaveUser(res)
+            router.push('/')
+        }
+    };
 
     return (
         <Container component="main" maxWidth="xs">
@@ -58,7 +82,7 @@ export default function Login() {
             <Typography component="h1" variant="h5">
                 Sign in
         </Typography>
-            <form className={classes.form} noValidate>
+            <div className={classes.form} noValidate>
                 <TextField
                     variant="outlined"
                     margin="normal"
@@ -66,7 +90,9 @@ export default function Login() {
                     fullWidth
                     id="email"
                     label="Email Address"
-                    name="email"
+                        name="email"
+                        onChange={handleemail}
+                        value={email}
                     autoComplete="email"
                     autoFocus
                 />
@@ -74,7 +100,9 @@ export default function Login() {
                     variant="outlined"
                     margin="normal"
                     required
-                    fullWidth
+                        fullWidth
+                        onChange={handlepassword}
+                        value={password}
                     name="password"
                     label="Password"
                     type="password"
@@ -91,14 +119,15 @@ export default function Login() {
                     variant="contained"
                     color="primary"
                     className={classes.submit}
-                >
+                        onClick={ signIn}
+                    >
                     Sign In
           </Button>
                 <Grid container>
                     <Grid item xs>
                         <Link href="#" variant="body2">
                             Forgot password?
-              </Link>
+                        </Link>
                     </Grid>
                     <Grid item>
                         <Link href="signup" variant="body2">
@@ -106,7 +135,7 @@ export default function Login() {
                         </Link>
                     </Grid>
                 </Grid>
-            </form>
+            </div>
         </div>
         <Box mt={8}>
             <Copyright />

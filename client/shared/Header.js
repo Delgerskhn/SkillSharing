@@ -7,36 +7,40 @@ import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
+import { useAppContext } from '../context/AppContext';
 
 const useStyles = makeStyles((theme) => ({
-  toolbar: {
-    borderBottom: `1px solid ${theme.palette.divider}`,
-  },
-  toolbarTitle: {
-    flex: 1,
-  },
-  toolbarSecondary: {
-    justifyContent: 'space-between',
-    overflowX: 'auto',
-  },
-  toolbarLink: {
-    padding: theme.spacing(1),
-    flexShrink: 0,
-  },
+    toolbar: {
+        borderBottom: `1px solid ${theme.palette.divider}`,
+    },
+    toolbarTitle: {
+        flex: 1,
+    },
+    toolbarSecondary: {
+        justifyContent: 'space-between',
+        overflowX: 'auto',
+    },
+    toolbarLink: {
+        padding: theme.spacing(1),
+        flexShrink: 0,
+    },
+    btn: {
+        marginRight: theme.spacing(1)
+    }
 }));
 
 export default function Header(props) {
-  const classes = useStyles();
+    const classes = useStyles();
+    const { user } = useAppContext();
     const { sections, title } = props;
   return (
     <React.Fragment>
       <Toolbar className={classes.toolbar}>
-        <Button size="small">Subscribe</Button>
         <Typography
           component="h2"
           variant="h5"
           color="inherit"
-          align="center"
+          align="left"
           noWrap
           className={classes.toolbarTitle}
         >
@@ -44,11 +48,33 @@ export default function Header(props) {
         </Typography>
         <IconButton>
           <SearchIcon />
-        </IconButton>
-        <Button variant="outlined" size="small">
-          Sign up
-        </Button>
-      </Toolbar>
+              </IconButton>
+              {!user ?
+                <React.Fragment>
+                    <Link href="auth/login">
+                    <Button variant="outlined" size="small" className={classes.btn}>
+                        Sign in
+                    </Button>
+                    </Link>
+                    <Link href="auth/signup">
+                    <Button variant="outlined" size="small">
+                        Sign up
+                    </Button>
+                    </Link>
+                          
+                </React.Fragment>
+                  :
+                  <Typography
+                      component="h6"
+                      variant="h6"
+                      color="inherit"
+                      align="left"
+                      noWrap
+                  >
+                      {user.email}
+                  </Typography>
+                  }
+          </Toolbar>
       <Toolbar component="nav" variant="dense" className={classes.toolbarSecondary}>
         {sections.map((section) => (
           <Link

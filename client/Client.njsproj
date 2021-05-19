@@ -18,10 +18,16 @@
   <ItemGroup>
     <Content Include=".env" />
     <Content Include=".env.development" />
+    <Content Include="components\Alert.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="components\Loader.js">
       <SubType>Code</SubType>
     </Content>
     <Content Include="context\AppContext.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="helpers\Auth.js">
       <SubType>Code</SubType>
     </Content>
     <Content Include="helpers\Fetch.js">
@@ -46,6 +52,9 @@
     <Content Include="pages\index.js" />
     <Content Include="pages\_app.js" />
     <Content Include="pages\_document.js" />
+    <Content Include="shared\AuthLayout.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="shared\Footer.js" />
     <Content Include="shared\Header.js" />
     <Content Include="shared\Layout.js" />
