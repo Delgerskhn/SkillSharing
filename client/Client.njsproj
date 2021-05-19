@@ -24,6 +24,9 @@
     <Content Include="components\Loader.js">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="components\Popover.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="context\AppContext.js">
       <SubType>Code</SubType>
     </Content>
@@ -48,7 +51,7 @@
     <Content Include="public\christian.jpg" />
     <Content Include="README.md" />
     <Content Include="pages\about.js" />
-    <Content Include="pages\blog\[pk].js" />
+    <Content Include="pages\blog.js" />
     <Content Include="pages\index.js" />
     <Content Include="pages\_app.js" />
     <Content Include="pages\_document.js" />

@@ -6,9 +6,9 @@ import Grid from '@material-ui/core/Grid';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import TwitterIcon from '@material-ui/icons/Twitter';
-import Main from '../../components/blogs/Main';
-import Sidebar from '../../shared/Sidebar';
-import Fetch from '../../helpers/Fetch';
+import Main from '../components/blogs/Main';
+import Sidebar from '../shared/Sidebar';
+import Fetch from '../helpers/Fetch';
 
 const useStyles = makeStyles((theme) => ({
     mainGrid: {
@@ -72,6 +72,7 @@ export default function Blog({ blog }) {
 }
 
 export async function getServerSideProps({ query }) {
+    console.log(query);
     const { pk } = query;
     // Fetch data from external API
     var res = await Fetch('/readers/' + pk, 'get');

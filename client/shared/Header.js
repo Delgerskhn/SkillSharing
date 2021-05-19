@@ -8,6 +8,8 @@ import SearchIcon from '@material-ui/icons/Search';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import { useAppContext } from '../context/AppContext';
+import { AccountPopover } from '../components/Popover';
+import BorderColorIcon from '@material-ui/icons/BorderColor';
 
 const useStyles = makeStyles((theme) => ({
     toolbar: {
@@ -33,20 +35,27 @@ export default function Header(props) {
     const classes = useStyles();
     const { user } = useAppContext();
     const { sections, title } = props;
+   
   return (
     <React.Fragment>
       <Toolbar className={classes.toolbar}>
-        <Typography
-          component="h2"
-          variant="h5"
-          color="inherit"
-          align="left"
-          noWrap
-          className={classes.toolbarTitle}
-        >
-          {title}
-        </Typography>
-        <IconButton>
+              <div
+                  className={classes.toolbarTitle}
+              >
+                  <Link
+                  href="/">
+            <Typography
+                component="h2"
+                variant="h5"
+                color="inherit"
+                align="left"
+                noWrap
+            >
+                {title}
+            </Typography>
+            </Link>
+                </div>
+              <IconButton>
           <SearchIcon />
               </IconButton>
               {!user ?
@@ -64,16 +73,14 @@ export default function Header(props) {
                           
                 </React.Fragment>
                   :
-                  <Typography
-                      component="h6"
-                      variant="h6"
-                      color="inherit"
-                      align="left"
-                      noWrap
-                  >
-                      {user.email}
-                  </Typography>
-                  }
+                  <React.Fragment>
+                      <AccountPopover user={user}/>
+                      <Button >
+                          <BorderColorIcon color="#ba000d" />
+                    </Button>
+                </React.Fragment>
+              }
+             
           </Toolbar>
       <Toolbar component="nav" variant="dense" className={classes.toolbarSecondary}>
         {sections.map((section) => (
