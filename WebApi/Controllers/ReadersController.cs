@@ -36,7 +36,7 @@ namespace WebApi.Controllers
         [HttpPost("search")]
         public async Task<ActionResult<IEnumerable<Blog>>> GetBlogsByKeyWords([FromBody] string query)
         {
-            var q = await _context.Blogs.FromSqlRaw("EXEC Blogs_SEL_FreeText {0}", query).ToListAsync();
+            var q = await _context.Blogs.FromSqlRaw("select * from Blogs_Sel_Query({0})", query).ToListAsync();
             return q;
         }
 
