@@ -94,7 +94,10 @@ export default function Header(props) {
             {section.title}
           </Link>
         ))}
-              <SelectableSearch />
+              {
+                  //TODO: Must be combobox for multiple tags
+                  <SelectableSearch />
+              }
           </Toolbar>
     </React.Fragment>
   );

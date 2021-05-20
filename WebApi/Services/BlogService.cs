@@ -23,6 +23,7 @@ namespace WebApi.Services
         Task UpdateBlogStatus(Blog blog);
         Task<List<Blog>> GetBlogsByTag(Tag tag);
         Task<List<Blog>> GetLatestBlogs();
+        Task<List<Blog>> GetBlogsByTags(string[] idList);
     }
     public class BlogService : IBlogService
     {
@@ -126,6 +127,16 @@ namespace WebApi.Services
             _context.AttachRange(blog.Tags);
             _context.Update(blog);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<List<Blog>> GetBlogsByTags(string[] idList)
+        {
+            var q = await _context.Tags.Where(r => idList.Contains(r.Pk.ToString()))
+                    .Include(r => r.Blogs)
+                    .Select(r => r.Blogs).Take(Constants.Blogs.PagingSize).ToListAsync();
+            List<Blog> list = new();
+            foreach (var blogs in q) list.Concat(blogs);
+            return list;
         }
     }
 }

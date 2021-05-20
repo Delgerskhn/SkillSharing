@@ -13,7 +13,8 @@ const Fetch = async (path, method, body, secure = false) => {
     if (req.status == 500) throw "Unexpected error occured. Please try again."
     var res = await req.text();
     try {
-        res = JSON.parse(res);
+        var temp = JSON.parse(res);
+        res = temp;
     } catch (err) {
     }
     return res

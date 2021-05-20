@@ -23,13 +23,12 @@ namespace WebApi.Controllers
             _blogService = blogService;
         }
 
-        [HttpGet("tag/{id}")]
-        public async Task<ActionResult> GetBlogsByTag(int id)
+        //TODO: can have multiple tags 
+        [HttpGet("tag")]
+        public async Task<ActionResult> GetBlogsByTag([FromQuery] string ids)
         {
-            var tag = await _context.Tags.FindAsync(id);
-            if (tag == null) return NotFound("Tag is not found!");
-            var blogs = await _blogService.GetBlogsByTag(tag);
-           
+            string[] idList = ids.Split(",");
+            var blogs = await _blogService.GetBlogsByTags(idList);
             return Ok(blogs);
         }
 
@@ -78,6 +77,8 @@ namespace WebApi.Controllers
             await _context.SaveChangesAsync();
             return NoContent();
         }
+
+        //TODO: GetAllTags endpoint to provide tags
 
         public bool BlogExists(int blogPk)
         {
