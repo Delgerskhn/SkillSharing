@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3814b455-880b-411b-a692-d4b27219a6f6}</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <ProjectView>ShowAllFiles</ProjectView>
+    <StartupFile />
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">16.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <StartWebBrowser>True</StartWebBrowser>
+    <SaveNodeJsSettingsInProjectFile>True</SaveNodeJsSettingsInProjectFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <ItemGroup>
+    <Content Include=".env" />
+    <Content Include="devextreme.json" />
+    <Content Include="package-lock.json" />
+    <Content Include="package.json" />
+    <Content Include="README.md" />
+    <Content Include="public\robots.txt" />
+    <Content Include="public\index.html" />
+    <Content Include="public\logo192.png" />
+    <Content Include="public\logo512.png" />
+    <Content Include="public\favicon.ico" />
+    <Content Include="public\manifest.json" />
+    <Content Include="src\api\fetch.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\index.css" />
+    <Content Include="src\logo.svg" />
+    <Content Include="src\app-info.js" />
+    <Content Include="src\app-navigation.js" />
+    <Content Include="src\app-routes.js" />
+    <Content Include="src\App.js" />
+    <Content Include="src\App.test.js" />
+    <Content Include="src\Content.js" />
+    <Content Include="src\index.js" />
+    <Content Include="src\polyfills.js" />
+    <Content Include="src\reportWebVitals.js" />
+    <Content Include="src\setupTests.js" />
+    <Content Include="src\UnauthenticatedContent.js" />
+    <Content Include="src\api\auth.js" />
+    <Content Include="src\components\index.js" />
+    <Content Include="src\contexts\auth.js" />
+    <Content Include="src\contexts\navigation.js" />
+    <Content Include="src\layouts\index.js" />
+    <Content Include="src\pages\index.js" />
+    <Content Include="src\themes\metadata.additional.json" />
+    <Content Include="src\themes\metadata.base.json" />
+    <Content Include="src\utils\default-user.js" />
+    <Content Include="src\utils\media-query.js" />
+    <Content Include="src\utils\patches.js" />
+    <Content Include="src\components\change-password-form\change-password-form.js" />
+    <Content Include="src\components\create-account-form\create-account-form.js" />
+    <Content Include="src\components\footer\footer.js" />
+    <Content Include="src\components\header\header.js" />
+    <Content Include="src\components\login-form\login-form.js" />
+    <Content Include="src\components\reset-password-form\reset-password-form.js" />
+    <Content Include="src\components\side-navigation-menu\side-navigation-menu.js" />
+    <Content Include="src\components\user-panel\user-panel.js" />
+    <Content Include="src\layouts\side-nav-inner-toolbar\side-nav-inner-toolbar.js" />
+    <Content Include="src\layouts\side-nav-outer-toolbar\side-nav-outer-toolbar.js" />
+    <Content Include="src\layouts\single-card\single-card.js" />
+    <Content Include="src\pages\home\home.js" />
+    <Content Include="src\pages\profile\profile.js" />
+    <Content Include="src\pages\tasks\tasks.js" />
+    <Content Include="src\themes\generated\theme.additional.css" />
+    <Content Include="src\themes\generated\theme.base.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="public" />
+    <Folder Include="src" />
+    <Folder Include="src\api" />
+    <Folder Include="src\components" />
+    <Folder Include="src\components\change-password-form" />
+    <Folder Include="src\components\create-account-form" />
+    <Folder Include="src\components\footer" />
+    <Folder Include="src\components\header" />
+    <Folder Include="src\components\login-form" />
+    <Folder Include="src\components\reset-password-form" />
+    <Folder Include="src\components\side-navigation-menu" />
+    <Folder Include="src\components\user-panel" />
+    <Folder Include="src\contexts" />
+    <Folder Include="src\layouts" />
+    <Folder Include="src\layouts\side-nav-inner-toolbar" />
+    <Folder Include="src\layouts\side-nav-outer-toolbar" />
+    <Folder Include="src\layouts\single-card" />
+    <Folder Include="src\pages" />
+    <Folder Include="src\pages\home" />
+    <Folder Include="src\pages\profile" />
+    <Folder Include="src\pages\tasks" />
+    <Folder Include="src\themes" />
+    <Folder Include="src\themes\generated" />
+    <Folder Include="src\utils" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:48022/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://localhost:1337</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
+        <WebProjectProperties>
+          <StartPageUrl>
+          </StartPageUrl>
+          <StartAction>CurrentPage</StartAction>
+          <AspNetDebugging>True</AspNetDebugging>
+          <SilverlightDebugging>False</SilverlightDebugging>
+          <NativeDebugging>False</NativeDebugging>
+          <SQLDebugging>False</SQLDebugging>
+          <ExternalProgram>
+          </ExternalProgram>
+          <StartExternalURL>
+          </StartExternalURL>
+          <StartCmdLineArguments>
+          </StartCmdLineArguments>
+          <StartWorkingDirectory>
+          </StartWorkingDirectory>
+          <EnableENC>False</EnableENC>
+          <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
