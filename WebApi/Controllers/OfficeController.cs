@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using DevExtreme.AspNet.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -27,19 +26,12 @@ namespace WebApi.Controllers
             _context = context;
             _blogService = blogService;
         }
-
+        
         [HttpGet("blogs/status/{statusPk}")]
-        public  async Task<IActionResult> Get(DataSourceLoadOptionsBase loadOptions, int statusPk)
-        {
-            var blogs = await _blogService.GetBlogsByStatus(statusPk);
-            return Ok(DataSourceLoader.Load(blogs, loadOptions));
-        }
-
-       /* [HttpGet("blogs/status/{statusPk}")]
         public async Task<ActionResult<IEnumerable<Blog>>> GetBlogsByStatus(int statusPk)
         {
             return Ok(await _blogService.GetBlogsByStatus(statusPk));
-        }*/
+        }
         [HttpGet("blogs/{pk}")]
         public async Task<ActionResult> GetBlog(int pk)
         {

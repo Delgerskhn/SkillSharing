@@ -2,7 +2,7 @@ import { getUser, removeUser } from "./auth";
 
 const Fetch = async (path, method, body, secure = false) => {
     var headers = new Headers();
-    if (secure) headers.append("Authorization", `Bearer ${getUser().auth_token}`);
+    if (secure) headers.append("Authorization", `Bearer ${getUser().data.auth_token}`);
     if (method.toUpperCase() != "GET") headers.append("Content-Type", "application/json");
 
     var options = {

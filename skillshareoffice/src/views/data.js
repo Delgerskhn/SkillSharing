@@ -1,6 +1,5 @@
-import DataGrid from 'devextreme-react/data-grid';
-import ODataStore from 'devextreme/data/odata/store';
-import { getUser } from '../api/auth';
+import CustomStore from 'devextreme/data/custom_store';
+import { getBlogsByStatus } from '../api/blogs';
 
 const employees = [
 {
@@ -55,25 +54,28 @@ const tasks = [
     'EmployeeID': 9
     }];
 
-const serviceUrl = 'http://localhost:5002/api/office';
-const user = getUser();
-console.log(user)
-const blogsStore = new ODataStore({
-    url: serviceUrl + '/blogs/status/2',
+
+const store = new CustomStore({
     key: 'pk',
-    onLoaded: () => {
-        // Event handling commands go here
+    load: (loadOptions) => {
+        console.log(loadOptions)
+        // ...
+        return getBlogsByStatus(2)
     },
-    beforeSend: (e) => {
-        e.headers = {
-            'Authorization': 'Bearer ' + user.data.auth_token
-        }
+    insert: (values) => {
+        // ...
+    },
+    update: (key, values) => {
+        // ...
+    },
+    remove: (key) => {
+        // ...
     }
 });
 
 export default {
     getBlogs() {
-        return blogsStore;
+        return store;
     },
     getTasks() {
         return tasks;
