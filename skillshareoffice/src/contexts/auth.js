@@ -1,5 +1,5 @@
 import React, { useState, useEffect, createContext, useContext, useCallback } from 'react';
-import { getUser, signIn as sendSignInRequest } from '../api/auth';
+import { getUser, removeUser, signIn as sendSignInRequest } from '../api/auth';
 
 function AuthProvider(props) {
   const [user, setUser] = useState();
@@ -26,7 +26,8 @@ function AuthProvider(props) {
   }, []);
 
   const signOut = useCallback(() => {
-    setUser();
+      setUser();
+      removeUser();
   }, []);
 
 

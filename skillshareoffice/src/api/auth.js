@@ -9,31 +9,37 @@ export async function signIn(email, password) {
           password: password
       }
       var res = await Fetch('/auth/login', 'post', body, true);
-      console.log(res)
+      res.avatarUrl = defaultUser.avatarUrl
+      saveUser(res)
     return {
       isOk: true,
-        data: {
-            email: res.email,
-            avatarUrl: defaultUser.avatarUrl,
-            id:res.id
-        }
+        data: res
     };
   }
-  catch {
+  catch(ex) {
     return {
       isOk: false,
-      message: "Authentication failed"
+      message: ex?.login_failure[0] || "Authentication failed"
     };
   }
 }
 
-export async function getUser() {
-  try {
-    // Send request
+export function saveUser(user) {
+    localStorage.setItem('user', JSON.stringify(user))
+}
 
+export function removeUser() {
+    localStorage.removeItem('user')
+}
+
+export function getUser() {
+  try {
+      // Send request
+      var u = JSON.parse(localStorage.getItem('user'))
+      
     return {
       isOk: true,
-      data: defaultUser
+      data: u
     };
   }
   catch {

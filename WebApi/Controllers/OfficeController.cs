@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using DevExtreme.AspNet.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 using WebApi.Entities;
 using WebApi.Helpers;
 using WebApi.Services;
-
+using Newtonsoft.Json;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace WebApi.Controllers
@@ -28,10 +29,17 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("blogs/status/{statusPk}")]
+        public  async Task<IActionResult> Get(DataSourceLoadOptionsBase loadOptions, int statusPk)
+        {
+            var blogs = await _blogService.GetBlogsByStatus(statusPk);
+            return Ok(DataSourceLoader.Load(blogs, loadOptions));
+        }
+
+       /* [HttpGet("blogs/status/{statusPk}")]
         public async Task<ActionResult<IEnumerable<Blog>>> GetBlogsByStatus(int statusPk)
         {
             return Ok(await _blogService.GetBlogsByStatus(statusPk));
-        }
+        }*/
         [HttpGet("blogs/{pk}")]
         public async Task<ActionResult> GetBlog(int pk)
         {

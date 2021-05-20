@@ -29,6 +29,9 @@
     <Content Include="public\logo512.png" />
     <Content Include="public\favicon.ico" />
     <Content Include="public\manifest.json" />
+    <Content Include="src\api\blogs.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\api\fetch.js">
       <SubType>Code</SubType>
     </Content>
@@ -72,8 +75,21 @@
     <Content Include="src\pages\tasks\tasks.js" />
     <Content Include="src\themes\generated\theme.additional.css" />
     <Content Include="src\themes\generated\theme.base.css" />
+    <Content Include="src\utils\query-string.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\views\blogs-detailview.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\views\blogs-listview.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\views\data.js">
+      <SubType>Code</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="src\views\" />
     <Folder Include="public" />
     <Folder Include="src" />
     <Folder Include="src\api" />

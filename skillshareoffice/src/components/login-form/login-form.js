@@ -25,7 +25,8 @@ export default function () {
     const { email, password } = formData.current;
     setLoading(true);
 
-    const result = await signIn(email, password);
+      const result = await signIn(email, password);
+      console.log(result)
     if (!result.isOk) {
       setLoading(false);
       notify(result.message, 'error', 2000);

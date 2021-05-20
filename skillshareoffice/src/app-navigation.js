@@ -17,5 +17,19 @@ export const navigation = [
         path: '/tasks'
       }
     ]
+  }, 
+  {
+    text: 'Blogs',
+    items: [
+          {
+              text: 'Pending',
+              path: '/blogs?status=pending'
+          },
+          {
+              text: 'Approved',
+              path: '/blogs?status=approved'
+          }
+      ],
+    icon: 'contains'
   }
   ];
