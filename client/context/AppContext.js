@@ -1,5 +1,6 @@
+import { useRouter } from 'next/router'
 import * as React from 'react'
-import { GetUser, SaveUser } from '../helpers/Auth'
+import { GetUser, RemoveUser, SaveUser } from '../helpers/UserStore'
 import Fetch from '../helpers/Fetch'
 
 
@@ -16,12 +17,17 @@ function AppProvider(props) {
     const [successMsg, setSuccessMsg] = React.useState('')
     const [errorMsg, setErrorMsg] = React.useState('')
     const [user, setUser] = React.useState({})
+    const router = useRouter();
 
     const hideAlerts = () => {
         setSuccessMsg('')
         setErrorMsg('')
     }
-
+    const LogOut = () => {
+        setUser(null);
+        RemoveUser();
+        router.push('/');
+    }
     React.useEffect(() => {
         var u = GetUser()
         setUser(u)
@@ -50,6 +56,7 @@ function AppProvider(props) {
         setSuccessMsg,
         setErrorMsg,
         user,
+        LogOut, 
         setUser
     };
     return <AppContext.Provider value={value} {...props} />

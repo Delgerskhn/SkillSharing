@@ -1,13 +1,16 @@
+import Cookies from 'js-cookie'
+
+
 const SaveUser = (user) => {
-    window.localStorage.setItem('user', JSON.stringify(user))
+    Cookies.set('user', JSON.stringify(user), { expires: 7 });
 }
 
 const RemoveUser = () => {
-    window.localStorage.removeItem('user')
+    Cookies.remove('user')
 }
 
 const GetUser =  () => {
-    var u = window.localStorage.getItem('user');
+    var u = Cookies.get('user');
     try {
         u = JSON.parse(u);
     } catch {

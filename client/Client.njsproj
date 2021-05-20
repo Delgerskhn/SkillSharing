@@ -21,6 +21,9 @@
     <Content Include="components\Alert.js">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="components\forms\SelectableSearch.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="components\Loader.js">
       <SubType>Code</SubType>
     </Content>
@@ -30,7 +33,7 @@
     <Content Include="context\AppContext.js">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="helpers\Auth.js">
+    <Content Include="helpers\UserStore.js">
       <SubType>Code</SubType>
     </Content>
     <Content Include="helpers\Fetch.js">
@@ -48,6 +51,9 @@
     <Content Include="pages\auth\signup.js">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="pages\editor.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="public\christian.jpg" />
     <Content Include="README.md" />
     <Content Include="pages\about.js" />
@@ -62,6 +68,9 @@
     <Content Include="shared\Header.js" />
     <Content Include="shared\Layout.js" />
     <Content Include="shared\Sidebar.js" />
+    <Content Include="shared\withAuth.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\Copyright.js" />
     <Content Include="src\Link.js" />
     <Content Include="src\ProTip.js" />
@@ -78,6 +87,7 @@
     <Folder Include="Client" />
     <Folder Include="components" />
     <Folder Include="components\blogs" />
+    <Folder Include="components\forms\" />
     <Folder Include="context\" />
     <Folder Include="helpers\" />
     <Folder Include="pages\blog\" />

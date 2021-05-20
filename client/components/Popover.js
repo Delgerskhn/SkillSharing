@@ -12,7 +12,6 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import BorderColorIcon from '@material-ui/icons/BorderColor';
-import { RemoveUser } from '../helpers/Auth';
 
 const useStyles = makeStyles((theme) => ({
   typography: {
@@ -23,15 +22,12 @@ const useStyles = makeStyles((theme) => ({
 function AccountPopover() {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
-    const { user, setUser } = useAppContext();
+    const { user, LogOut } = useAppContext();
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
-    const LogOut = () => {
-        setUser(null);
-        RemoveUser();
-    }
+   
     const handleClose = () => {
         setAnchorEl(null);
     };
@@ -44,7 +40,6 @@ function AccountPopover() {
             <Button area-describedby={id} onClick={handleClick}>
                 <Typography
                     component="h6"
-                    variant="h6"
                     color="inherit"
                     align="left"
                     noWrap

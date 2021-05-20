@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useAppContext } from '../../context/AppContext';
-import { SaveUser } from '../../helpers/Auth';
+import { SaveUser } from '../../helpers/UserStore';
 import { useRouter } from 'next/router';
 
 function Copyright() {

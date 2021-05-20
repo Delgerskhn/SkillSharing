@@ -31,7 +31,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Main(props) {
     const classes = useStyles();
-    const { posts, title } = props;
     const following = false;
     return (
         <Grid item xs={12} md={8}>
@@ -66,9 +65,3 @@ export default function Main(props) {
     );
 }
 
-
-
-Main.propTypes = {
-    posts: PropTypes.array,
-    title: PropTypes.string,
-};

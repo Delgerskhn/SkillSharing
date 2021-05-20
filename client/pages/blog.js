@@ -14,20 +14,7 @@ const useStyles = makeStyles((theme) => ({
     mainGrid: {
         marginTop: theme.spacing(3),
     },
-   
 }));
-
-const mainFeaturedPost = {
-    title: 'Title of a longer featured blog post',
-    description:
-        "Multiple lines of text that form the lede, informing new readers quickly and efficiently about what's most interesting in this post's contents.",
-    image: 'https://source.unsplash.com/random',
-    imgText: 'main image description',
-    linkText: 'Continue reading…',
-};
-
-
-const posts = [];
 
 const sidebar = {
     title: 'About',
@@ -59,7 +46,7 @@ export default function Blog({ blog }) {
     return (
         <main>
             <Grid container spacing={5} className={classes.mainGrid}>
-                <Main title="From the firehose" posts={posts} />
+                <Main />
                 <Sidebar
                     title={sidebar.title}
                     description={sidebar.description}

@@ -11,6 +11,7 @@ import { Button } from '../components/blogs/Components';
 import { makeStyles } from '@material-ui/core/styles';
 import { useAppContext } from '../context/AppContext';
 import Fetch from '../helpers/Fetch';
+import PropTypes from 'prop-types';
 
 
 const featuredPosts = [
@@ -41,7 +42,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Index({posts }) {
     const classes = useStyles();
-    console.log(posts)
   return (
       <main>
 
@@ -82,10 +82,24 @@ export default function Index({posts }) {
   );
 }
 
+Index.propTypes = {
+    posts: PropTypes.array
+}
 
-export async function getServerSideProps() {
+export async function getServerSideProps({ query }) {
+    const { tag } = query;
     // Fetch data from external API
-    var res = await Fetch('/readers/latest', 'get');
+    var res = [];
+    try {
+        if (tag) {
+            res = await Fetch('/readers/' + tag, 'get');
+            if(!res.length) throw "Not found"
+        } else {
+             res = await Fetch('/readers/latest', 'get');
+        }
+    } catch {
+        res = []
+    }
     // Pass data to the page via props
     return { props: { posts: res } }
 }

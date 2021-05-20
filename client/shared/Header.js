@@ -10,10 +10,12 @@ import Link from '@material-ui/core/Link';
 import { useAppContext } from '../context/AppContext';
 import { AccountPopover } from '../components/Popover';
 import BorderColorIcon from '@material-ui/icons/BorderColor';
+import SelectableSearch from '../components/forms/SelectableSearch';
 
 const useStyles = makeStyles((theme) => ({
     toolbar: {
         borderBottom: `1px solid ${theme.palette.divider}`,
+        justifyContent: 'space-between',
     },
     toolbarTitle: {
         flex: 1,
@@ -39,10 +41,7 @@ export default function Header(props) {
   return (
     <React.Fragment>
       <Toolbar className={classes.toolbar}>
-              <div
-                  className={classes.toolbarTitle}
-              >
-                  <Link
+           <Link
                   href="/">
             <Typography
                 component="h2"
@@ -54,10 +53,10 @@ export default function Header(props) {
                 {title}
             </Typography>
             </Link>
-                </div>
-              <IconButton>
-          <SearchIcon />
-              </IconButton>
+            {/*  <IconButton>
+                <SearchIcon />
+              </IconButton>*/}
+              <div style={{ display: 'flex' }}>
               {!user ?
                 <React.Fragment>
                     <Link href="auth/login">
@@ -80,7 +79,7 @@ export default function Header(props) {
                     </Button>
                 </React.Fragment>
               }
-             
+             </div>
           </Toolbar>
       <Toolbar component="nav" variant="dense" className={classes.toolbarSecondary}>
         {sections.map((section) => (
@@ -95,6 +94,7 @@ export default function Header(props) {
             {section.title}
           </Link>
         ))}
+              <SelectableSearch />
           </Toolbar>
     </React.Fragment>
   );
