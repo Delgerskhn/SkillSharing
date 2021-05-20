@@ -17,7 +17,7 @@ namespace WebApi.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(Roles = "Admin")]
-    public class OfficeController : ControllerBase
+    public class OfficeController : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly IBlogService _blogService;
