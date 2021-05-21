@@ -10,7 +10,8 @@ import Link from '@material-ui/core/Link';
 import { useAppContext } from '../context/AppContext';
 import { AccountPopover } from '../components/Popover';
 import BorderColorIcon from '@material-ui/icons/BorderColor';
-import SelectableSearch from '../components/forms/SelectableSearch';
+import TagSearch from '../components/forms/TagSearch';
+import TagSelect from '../components/forms/TagSelect'; 
 
 const useStyles = makeStyles((theme) => ({
     toolbar: {
@@ -70,7 +71,7 @@ export default function Header(props) {
                     </Button>
                     </Link>
                           
-                </React.Fragment>
+                </React.Fragment> 
                   :
                   <React.Fragment>
                       <AccountPopover user={user}/>
@@ -95,8 +96,7 @@ export default function Header(props) {
           </Link>
         ))}
               {
-                  //TODO: Must be combobox for multiple tags
-                  <SelectableSearch />
+                  <TagSelect />
               }
           </Toolbar>
     </React.Fragment>
