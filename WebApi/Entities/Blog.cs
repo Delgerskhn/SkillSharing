@@ -16,16 +16,12 @@ namespace WebApi.Entities
         [Key]
         public int Pk { get; set; }
         public int Likes { get; set; }
-        [Required]
         [StringLength(100)]
         public string Title { get; set; }
-        [Required]
         [StringLength(400)]
         public string Description { get; set; }
-        [Required]
         [StringLength(100)]
         public string Img { get; set; }
-        [Required]
         public string Content { get; set; }
         [ForeignKey("AppUser")]
         public string UserPk { get; set; }

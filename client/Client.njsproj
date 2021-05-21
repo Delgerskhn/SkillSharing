@@ -54,6 +54,9 @@
     <Content Include="helpers\keyHandlers.js">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="helpers\populateBlogModel.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="helpers\useInterval.js">
       <SubType>Code</SubType>
     </Content>
