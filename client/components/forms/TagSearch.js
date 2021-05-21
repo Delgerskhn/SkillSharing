@@ -1,16 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/core/Autocomplete";
 import { makeStyles } from "@material-ui/core/styles";
 import { useRouter } from "next/router";
 import { onEnter } from "../../helpers/keyHandlers";
-
-const init = [
-    { name: "The Shawshank Redemption", pk: 1994 },
-    { name: "The Godfather", pk: 1972 },
-    { name: "The Godfather: Part II", pk: 1974 },
-    { name: "The Dark Knight", pk: 2008 }
-];
+import { createTag, fetchTags, getTags } from "../../api/tags";
 
 const useStyles = makeStyles(theme => ({
     input: {
@@ -19,23 +13,37 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function TagSearch() {
-    const [tags, setTags] = React.useState(init);
-    const router = useRouter();
+    const [tags, setTags] = React.useState([]);
+    const [selectValue, setSelectValue] = React.useState([]);
     const [inputValue, setInputValue] = React.useState("");
-    const classes = useStyles();
-    const addNewTag = () => {
-        const newTag = { name: inputValue }
-        setTags([...tags, newTag])
+    const initTags = async () => {
+        await fetchTags()
+        setTags(getTags())
     }
+    useEffect(() => {
+        initTags()
+    }, [])
+
+    const addNewTag = async () => {
+        const newTag = { name: inputValue }
+        setSelectValue([...selectValue, newTag])
+        createTag(newTag)
+    }
+
+    const onSelect = async (ev, val) => {
+        setSelectValue([...val])
+    }
+
     return (
         <div>
             <Autocomplete
                 multiple
+                value={ selectValue }
                 id="tags-standard"
+                onChange={onSelect}
                 style={{ width: 300 }}
                 options={tags}
-                getOptionLabel={(option) => option.name}
-                defaultValue={[tags[0]]}
+                getOptionLabel={(option) => option?.name || ''}
                 onKeyDown={(e) => onEnter(e, addNewTag)}
                 renderInput={(params) => (
                     <TextField
@@ -43,7 +51,7 @@ export default function TagSearch() {
                         variant="standard"
                         value={inputValue}
                         onChange={(e) => setInputValue(e.target.value)}
-                        label="Multiple values"
+                        label="Enter related tags"
                         placeholder="Tag name"
                     />
                 )}

@@ -18,6 +18,9 @@
   <ItemGroup>
     <Content Include=".env" />
     <Content Include=".env.development" />
+    <Content Include="api\tags.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="components\Alert.js">
       <SubType>Code</SubType>
     </Content>
@@ -96,6 +99,7 @@
     <Folder Include="components\editor\" />
     <Folder Include="context\" />
     <Folder Include="helpers\" />
+    <Folder Include="api\" />
     <Folder Include="pages\blog\" />
     <Folder Include="public\" />
     <Folder Include="pages" />
