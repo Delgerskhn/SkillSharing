@@ -21,6 +21,9 @@
     <Content Include="api\auth.js">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="api\blogs.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="api\tags.js">
       <SubType>Code</SubType>
     </Content>

@@ -7,6 +7,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Fetch from "../helpers/Fetch";
 import PropTypes from "prop-types";
 import { Button } from "@material-ui/core";
+import { getBlogsByTag, getLatestBlogs } from "../api/blogs";
 
 const featuredPosts = [
   {
@@ -93,10 +94,10 @@ export async function getServerSideProps({ query }) {
   var res = [];
   try {
     if (tag) {
-      res = await Fetch("/readers/" + tag, "get");
+      res = await getBlogsByTag(tag);
       if (!res.length) throw "Not found";
     } else {
-      res = await Fetch("/readers/latest", "get");
+      res = await getLatestBlogs();
     }
   } catch {
     res = [];

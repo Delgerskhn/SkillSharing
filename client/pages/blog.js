@@ -10,6 +10,7 @@ import Sidebar from "../shared/Sidebar";
 import Fetch from "../helpers/Fetch";
 import { Avatar, Box, Divider, Typography } from "@material-ui/core";
 import BlogEditor from "../components/editor/BlogEditor";
+import { getBlog } from "../api/blogs";
 
 const useStyles = makeStyles(theme => ({
   mainGrid: {
@@ -81,9 +82,8 @@ export default function Blog({ blog }) {
 export async function getServerSideProps({ query }) {
   console.log(query);
   const { pk } = query;
-  // Fetch data from external API
-  var res = await Fetch("/readers/" + pk, "get");
-  console.log(res);
+    // Fetch data from external API
+    var res = await getBlog(pk)
   // Pass data to the page via props
   return { props: { blog: res } };
 }
