@@ -48,7 +48,13 @@
     <Content Include="context\auth.js">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="context\blog.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="helpers\keyHandlers.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="helpers\useInterval.js">
       <SubType>Code</SubType>
     </Content>
     <Content Include="helpers\UserStore.js">
@@ -80,6 +86,9 @@
     <Content Include="pages\_app.js" />
     <Content Include="pages\_document.js" />
     <Content Include="shared\AuthLayout.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="shared\constants.js">
       <SubType>Code</SubType>
     </Content>
     <Content Include="shared\Footer.js" />

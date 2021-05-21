@@ -12,7 +12,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default function TagSearch() {
+export default function TagSearch({ onSelectCallback }) {
     const [tags, setTags] = React.useState([]);
     const [selectValue, setSelectValue] = React.useState([]);
     const [inputValue, setInputValue] = React.useState("");
@@ -24,14 +24,15 @@ export default function TagSearch() {
         initTags()
     }, [])
 
-    const addNewTag = async () => {
+    const addNewTag = async (e) => {
         const newTag = { name: inputValue }
-        setSelectValue([...selectValue, newTag])
+        onSelect(e,[...selectValue, newTag])
         createTag(newTag)
     }
 
     const onSelect = async (ev, val) => {
         setSelectValue([...val])
+        onSelectCallback && onSelectCallback(val)
     }
 
     return (

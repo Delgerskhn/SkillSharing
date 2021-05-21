@@ -1,6 +1,6 @@
 const onEnter = (e, callback) => {
     if (e.keyCode === 13) 
-        callback()
+        callback(e)
 } 
 
 export { onEnter }

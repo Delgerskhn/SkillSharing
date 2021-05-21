@@ -17,6 +17,8 @@ import {
 import { withHistory } from 'slate-history'
 
 import { Button, Icon,  Toolbar } from './Components'
+import constants from '../../shared/constants'
+import useInterval from '../../helpers/useInterval'
 
 const HOTKEYS = {
     'mod+b': 'bold',
@@ -27,8 +29,10 @@ const HOTKEYS = {
 
 const LIST_TYPES = ['numbered-list', 'bulleted-list']
 
-const BlogEditor = ({ readOnly, content }) => {
+const BlogEditor = ({ readOnly, content, onDeactiveEditor }) => {
     const [value, setValue] = useState(content)
+    const [secTillDeactivate, setSec] = useState(constants.SecToConsiderInActive)
+
     const renderElement = useCallback(props => <Element {...props} />, [])
     const renderLeaf = useCallback(props => <Leaf {...props} />, [])
     const editor = useMemo(() => withImages(withHistory(withReact(createEditor()))), [])
@@ -37,10 +41,30 @@ const BlogEditor = ({ readOnly, content }) => {
             anchor: { path: [0, 0], offset: 0 },
             focus: { path: [0, 0], offset: 0 },
         };
+        
     }, []);
 
+    const countDownInActiveSeconds = () => {
+        console.log('Will deactivate after: ', secTillDeactivate);
+        if (secTillDeactivate === 1) {
+            onDeactiveEditor && onDeactiveEditor(value)
+            setSec(constants.SecToConsiderInActive)
+            return
+        }
+        setSec(secTillDeactivate-1)
+    }
+
+    useInterval(countDownInActiveSeconds, constants.MsPerSecond);
+
     return (
-        <Slate editor={editor} value={value} onChange={value => setValue(value)}>
+        <Slate
+            editor={editor}
+            value={value} 
+            onChange={value => {
+                setValue(value);
+                setSec(constants.SecToConsiderInActive)
+            }}
+        >
             {!readOnly && <Toolbar>
                 <InsertImageButton />
                 <MarkButton format="bold" icon="format_bold" />
@@ -57,6 +81,7 @@ const BlogEditor = ({ readOnly, content }) => {
                 renderElement={renderElement}
                 renderLeaf={renderLeaf}
                 placeholder="Title"
+                
                 readOnly={readOnly}
                 spellCheck
                 autoFocus
