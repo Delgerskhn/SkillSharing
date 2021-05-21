@@ -18,7 +18,6 @@ import { withHistory } from 'slate-history'
 
 import { Button, Icon,  Toolbar } from './Components'
 import constants from '../../shared/constants'
-import useInterval from '../../helpers/useInterval'
 
 const HOTKEYS = {
     'mod+b': 'bold',
@@ -27,14 +26,23 @@ const HOTKEYS = {
     'mod+`': 'code',
 }
 
+const initialValue = [
+    {
+        type: 'heading-one',
+        children: [
+            { text: '' }
+        ],
+    },
+
+]
 const LIST_TYPES = ['numbered-list', 'bulleted-list']
+let timeOut = null;
 
-const BlogEditor = ({ readOnly, content, onDeactiveEditor }) => {
-    const [value, setValue] = useState(content)
-    const [secTillDeactivate, setSec] = useState(constants.SecToConsiderInActive)
-
+const BlogEditor = ({ readOnly, content, onNonInteractiveEditor }) => {
+    const [value, setValue] = useState(initialValue)
     const renderElement = useCallback(props => <Element {...props} />, [])
     const renderLeaf = useCallback(props => <Leaf {...props} />, [])
+    const { AutoSaveDuration, MsPerSecond } = constants
     const editor = useMemo(() => withImages(withHistory(withReact(createEditor()))), [])
     useEffect(() => {
         editor.selection = {
@@ -44,17 +52,10 @@ const BlogEditor = ({ readOnly, content, onDeactiveEditor }) => {
         
     }, []);
 
-    const countDownInActiveSeconds = () => {
-        console.log('Will deactivate after: ', secTillDeactivate);
-        if (secTillDeactivate === 1) {
-            onDeactiveEditor && onDeactiveEditor(value)
-            setSec(constants.SecToConsiderInActive)
-            return
-        }
-        setSec(secTillDeactivate-1)
-    }
-
-    useInterval(countDownInActiveSeconds, constants.MsPerSecond);
+    useEffect(() => {
+        if(content)
+        setValue(content)
+    }, [content])
 
     return (
         <Slate
@@ -62,7 +63,8 @@ const BlogEditor = ({ readOnly, content, onDeactiveEditor }) => {
             value={value} 
             onChange={value => {
                 setValue(value);
-                setSec(constants.SecToConsiderInActive)
+                clearTimeout(timeOut)
+                timeOut = setTimeout(() => onNonInteractiveEditor(value), AutoSaveDuration * MsPerSecond)
             }}
         >
             {!readOnly && <Toolbar>
@@ -309,15 +311,6 @@ const MarkButton = ({ format, icon }) => {
     )
 }
 
-const initialValue = [
-    {
-        type: 'heading-one',
-        children: [
-            { text: '' }
-        ],
-    },
-   
-]
 
 BlogEditor.defaultProps = {
     readOnly: true,

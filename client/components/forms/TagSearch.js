@@ -26,8 +26,8 @@ export default function TagSearch({ onSelectCallback }) {
 
     const addNewTag = async (e) => {
         const newTag = { name: inputValue }
+        await createTag(newTag)
         onSelect(e,[...selectValue, newTag])
-        createTag(newTag)
     }
 
     const onSelect = async (ev, val) => {

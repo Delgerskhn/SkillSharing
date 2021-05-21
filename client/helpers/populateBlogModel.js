@@ -2,6 +2,7 @@ export function populateBlogModel(content, tags) {
     let blog = {
         "Img": getImg(content),
         "Title": getBlock(content, 'heading-one'),
+        "Description": getBlock(content, 'paragraph'),
         "Content": JSON.stringify(content),
         "Tags": tags
     }

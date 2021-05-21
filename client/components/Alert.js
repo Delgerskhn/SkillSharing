@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Alert from '@material-ui/core/Alert';
 import Slide from '@material-ui/core/Slide';
 import Paper from '@material-ui/core/Paper';
@@ -29,6 +29,11 @@ const useStyles = makeStyles((theme) => ({
         stroke: theme.palette.divider,
         strokeWidth: 1,
     },
+    autoSaveWrap: {
+        position: 'fixed',
+        bottom: '5%',
+        left: '5%'
+    }
 }));
 const Error = ({ msg }) => {
     return <Alert severity = "error">{ msg }</Alert>;
@@ -43,7 +48,7 @@ const Success = ({ msg }) => {
          const classes = useStyles();
          return (
              <div className={classes.wrapper}>
-                 <Fade in={msg.length > 0} timeout={2} >
+                 <Fade in={msg.length > 0}  >
                      <Paper elevation={4} className={classes.paper}>
                          <Alert msg={msg} />
                      </Paper>
@@ -54,7 +59,23 @@ const Success = ({ msg }) => {
      }
 }
 
+function AutoSaveAlert({ isVisible, setIsVisible }) {
+    const classes = useStyles();
+    useEffect(() => {
+        if (isVisible) setTimeout(() => setIsVisible(false), 2000)
+    }, [isVisible])
+    return (
+        <Fade in={isVisible} className={classes.autoSaveWrap}>
+            <Paper elevation={4} >
+                Draft saved..
+            </Paper>
+        </Fade>
+        )
+}
+
+
+
 const SuccessAlert = withFader(Success);
 const ErrorAlert = withFader(Error);
 
-export { SuccessAlert, ErrorAlert }
+export { SuccessAlert, ErrorAlert, AutoSaveAlert }

@@ -1,4 +1,4 @@
 export default {
-    SecToConsiderInActive: 10,
+    AutoSaveDuration: 2,
     MsPerSecond: 1000
 }
