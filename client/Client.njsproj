@@ -76,11 +76,10 @@
     <Content Include="src\ProTip.js" />
     <Content Include="src\theme.js" />
     <Content Include="styles\app.css" />
-    <Content Include="components\blogs\BlogEditor.js" />
-    <Content Include="components\blogs\Components.js" />
+    <Content Include="components\editor\BlogEditor.js" />
+    <Content Include="components\editor\Components.js" />
     <Content Include="components\blogs\FeaturedPost.js" />
-    <Content Include="components\blogs\InsertImageButton.js" />
-    <Content Include="components\blogs\Main.js" />
+    <Content Include="components\editor\InsertImageButton.js" />
     <Content Include="pages\auth\login.js" />
   </ItemGroup>
   <ItemGroup>
@@ -88,6 +87,7 @@
     <Folder Include="components" />
     <Folder Include="components\blogs" />
     <Folder Include="components\forms\" />
+    <Folder Include="components\editor\" />
     <Folder Include="context\" />
     <Folder Include="helpers\" />
     <Folder Include="pages\blog\" />
