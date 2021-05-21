@@ -3,8 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import Link from 'next/link';
-import { useAppContext } from '../context/AppContext';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -12,6 +10,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import BorderColorIcon from '@material-ui/icons/BorderColor';
+import { useAuth } from '../context/auth';
 
 const useStyles = makeStyles((theme) => ({
   typography: {
@@ -22,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 function AccountPopover() {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
-    const { user, LogOut } = useAppContext();
+    const { user, LogOut } = useAuth();
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);

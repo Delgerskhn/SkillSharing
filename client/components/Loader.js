@@ -28,7 +28,7 @@ export default function Loader() {
             open={isLoading}
             closeAfterTransition
         >
-            <Fade in={isLoading}>
+            <Fade in={isLoading }>
                     <CircularProgress />
             </Fade>
         </Modal>

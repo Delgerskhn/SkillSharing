@@ -18,6 +18,9 @@
   <ItemGroup>
     <Content Include=".env" />
     <Content Include=".env.development" />
+    <Content Include="api\auth.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="api\tags.js">
       <SubType>Code</SubType>
     </Content>
@@ -37,6 +40,9 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="context\AppContext.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="context\auth.js">
       <SubType>Code</SubType>
     </Content>
     <Content Include="helpers\keyHandlers.js">

@@ -12,6 +12,7 @@ import { AccountPopover } from "../components/Popover";
 import BorderColorIcon from "@material-ui/icons/BorderColor";
 import TagSearch from "../components/forms/TagSearch";
 import TagSelect from "../components/forms/TagSelect";
+import { useAuth } from "../context/auth";
 
 const useStyles = makeStyles(theme => ({
   toolbar: {
@@ -35,8 +36,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Header(props) {
-  const classes = useStyles();
-  const { user } = useAppContext();
+    const classes = useStyles();
+    const { user } = useAuth();
   const { sections, title } = props;
 
   return (
@@ -64,15 +65,10 @@ export default function Header(props) {
                   Sign in
                 </Button>
               </Link>
-              <Link href="auth/signup">
-                <Button variant="outlined" size="small">
-                  Sign up
-                </Button>
-              </Link>
             </React.Fragment>
           ) : (
             <React.Fragment>
-              <AccountPopover user={user} />
+              <AccountPopover />
               <Link href="editor">
                 <Button>
                   <BorderColorIcon color="#ba000d" />
