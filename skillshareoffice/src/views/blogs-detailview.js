@@ -11,6 +11,7 @@ export default function BlogsDV(props)  {
     const [dataSource, setDataSource] = useState([])
 
     useEffect(() => {
+        console.log(props.data)
         setDataSource(getTasks(props.data.key));
     }, [])
     

@@ -23,11 +23,15 @@ export const navigation = [
     items: [
           {
               text: 'Pending',
-              path: '/blogs?status=pending'
-          },
+              path: '/blogs?status=1'
+        },
+        {
+            text: 'Declined',
+            path: '/blogs?status=3'
+        },
           {
               text: 'Approved',
-              path: '/blogs?status=approved'
+              path: '/blogs?status=2'
           }
       ],
     icon: 'contains'

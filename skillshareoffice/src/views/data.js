@@ -54,29 +54,30 @@ const tasks = [
     'EmployeeID': 9
     }];
 
+const getBlogs = (statusPk) => {
+    return new CustomStore({
+        key: 'pk',
+        load: (loadOptions) => {
+            console.log(loadOptions)
+            // ...
+            return getBlogsByStatus(statusPk)
+        },
+        insert: (values) => {
+            // ...
+        },
+        update: (key, values) => {
+            // ...
+        },
+        remove: (key) => {
+            // ...
+        }
+    });
 
-const store = new CustomStore({
-    key: 'pk',
-    load: (loadOptions) => {
-        console.log(loadOptions)
-        // ...
-        return getBlogsByStatus(2)
-    },
-    insert: (values) => {
-        // ...
-    },
-    update: (key, values) => {
-        // ...
-    },
-    remove: (key) => {
-        // ...
-    }
-});
+}
+
+export { getBlogs }
 
 export default {
-    getBlogs() {
-        return store;
-    },
     getTasks() {
         return tasks;
     }

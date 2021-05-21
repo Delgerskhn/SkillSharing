@@ -1,30 +1,51 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
+import { useHistory, withRouter } from "react-router-dom";
 
-import DataGrid,
-{
-    Column,
-    MasterDetail
-} from 'devextreme-react/data-grid';
+import DataGrid, { Column, MasterDetail } from "devextreme-react/data-grid";
 
-import service from './data.js';
-import BlogsDV from './blogs-detailview.js';
+import BlogsDV from "./blogs-detailview.js";
+import getParam from "../utils/query-string.js";
+import { getBlogs } from "./data.js";
 
-const blogs = service.getBlogs();
+function imgRender(data) {
+  return <img width="200" src={data.value} />;
+}
 
-export default function BlogsLV () {
-
-        return (
-            <DataGrid id="grid-container"
-                dataSource={blogs}
-                keyExpr="pk"
-                showBorders={true}
-            >
-                <Column dataField="title" width={70} caption="Title" />
-                {/*<MasterDetail
+function BlogsLV(props) {
+  const [blogs, setBlogs] = useState([]);
+  useEffect(
+    () => {
+      let p = getParam(props.location.search, "status");
+      setBlogs(getBlogs(p));
+    },
+    [props.location]
+  );
+  return (
+    <DataGrid
+      id="grid-container"
+      dataSource={blogs}
+      keyExpr="pk"
+      columnAutoWidth={true}
+      showBorders={true}
+    >
+      <Column dataField="title" caption="Title" />
+      <Column
+        dataField="Image"
+        dataField="img"
+        allowSorting={false}
+        cellRender={imgRender}
+      />
+      <Column dataField="description" caption="Description" />
+      <Column dataField="likes" caption="Likes" dataType="number" />
+      <Column dataField="createdOn" caption="Created" dataType="date" />
+      <Column dataField="appUser.email" caption="Writer" />
+      <Column dataField="appUser.reputation" caption="Writer Reputation" />
+      {/*<MasterDetail
                     enabled={true}
                     component={BlogsDV}
                 />*/}
-            </DataGrid>
-        );
+    </DataGrid>
+  );
 }
 
+export default withRouter(BlogsLV);
