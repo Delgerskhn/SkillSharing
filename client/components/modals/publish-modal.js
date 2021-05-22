@@ -1,68 +1,43 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
-import { Button } from '@material-ui/core';
+import { Box, Button, ButtonGroup, Typography } from '@material-ui/core';
+import withModal from './withModal';
+import PublishFloater from '../floaters/publish-floater';
+import { useBlogContext } from '../../context/blog';
+import TagSearch from '../forms/TagSearch';
 
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
+function Trigger() {
+    return <PublishFloater/>
 }
 
-function getModalStyle() {
-  const top = 50 + rand();
-  const left = 50 + rand();
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
-  };
+function Body({ onInteraction, handleClose}) {
+    const {
+        blog,
+        onTagSelect, 
+        publish
+    } = useBlogContext();
+    return (
+        <div >
+            <h2 id="simple-modal-title">Choose tag & Enter new one!</h2>
+            <TagSearch
+                onSelectCallback={onTagSelect}
+                defaultValue={blog.tags}
+            />
+            <Box mt={3}>
+                <ButtonGroup disableElevation variant="contained" color="primary">
+                    <Button onClick={publish}>
+                        <Typography>Publish</Typography>
+                    </Button>
+                    <Button onClick={handleClose}>
+                        <Typography>Cancel</Typography>
+                    </Button>
+                </ButtonGroup>
+            </Box>
+        </div>
+    );
 }
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    position: 'absolute',
-    width: 400,
-    backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-}));
+const PublishModal = withModal(Body, Trigger)
 
-export default function SimpleModal() {
-  const classes = useStyles();
-  // getModalStyle is not a pure function, we roll the style only on the first render
-  const [modalStyle] = React.useState(getModalStyle);
-  const [open, setOpen] = React.useState(false);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const body = (
-    <div style={modalStyle} className={classes.paper}>
-      <h2 id="simple-modal-title">Choose tag & Enter new one!</h2>
-      <p id="simple-modal-description">
-        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-      </p>
-    </div>
-  );
-
-  return (
-    <div>
-     <Button onClick={handleOpen}>Publish</Button>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-      >
-        {body}
-      </Modal>
-    </div>
-  );
-}
+export default PublishModal

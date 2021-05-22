@@ -1,7 +1,9 @@
+import { useRouter } from 'next/router'
 import * as React from 'react'
 import { useState } from 'react'
-import { createBlog, getWriterBlog, updateBlog } from '../api/blogs'
+import { createBlog, getWriterBlog, publishBlog, updateBlog } from '../api/blogs'
 import { populateBlogModel } from '../helpers/populateBlogModel'
+import { constBlog } from '../shared/constants'
 import { useAppContext } from './AppContext'
 
 
@@ -18,8 +20,8 @@ function BlogProvider(props) {
     const [tags, setTags] = useState([]);
     const [content, setContent] = useState(null);
     const [autoSaveAlertVisible, setVisible] = useState(false);
-
-    const { setIsLoading } = useAppContext();
+    const router = useRouter();
+    const { setIsLoading, setErrorMsg} = useAppContext();
 
     //save tag state
     const onTagSelect = tags => {
@@ -62,7 +64,13 @@ function BlogProvider(props) {
         setBlog(blogToStub);
     };
 
-   
+    const publish = async () => {
+        setIsLoading(true)
+        var res = await publishBlog(blog.pk)
+        setIsLoading(false)
+        if (res.Ok) router.push('/account/dashboard?status=' + constBlog.State.Pending)
+        else setErrorMsg(res.Message)
+    }
 
     //update model blog on content or tags change
     React.useEffect(
@@ -78,7 +86,8 @@ function BlogProvider(props) {
         blog,
         onNonInteractiveEditor,
         onTagSelect,
-        fetchBlog
+        fetchBlog,
+        publish
     };
     return <BlogContext.Provider value={value} {...props} />
 }

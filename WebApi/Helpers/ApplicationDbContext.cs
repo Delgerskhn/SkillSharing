@@ -6,6 +6,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using WebApi.Entities;
+using WebApi.Models;
 
 namespace WebApi.Helpers
 {
@@ -80,10 +81,10 @@ namespace WebApi.Helpers
             modelBuilder.Entity<BlogStatus>(entity =>
             {
                 entity.HasData(
-                    new BlogStatus { Pk = 4, Name = "Draft" },
-                    new BlogStatus { Pk = 1, Name = "Pending" },
-                    new BlogStatus { Pk = 2, Name = "Approved" },
-                    new BlogStatus { Pk = 3, Name = "Declined" }
+                    new BlogStatus { Pk = (int)BlogState.Draft, Name = "Draft" },
+                    new BlogStatus { Pk = (int)BlogState.Pending, Name = "Pending" },
+                    new BlogStatus { Pk = (int)BlogState.Approved, Name = "Approved" },
+                    new BlogStatus { Pk = (int)BlogState.Declined, Name = "Declined" }
                     );
             });
 

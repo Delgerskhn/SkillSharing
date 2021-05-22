@@ -21,6 +21,12 @@ export async function getBlogsByTag(tagPk) {
 
 }
 
+export async function getBlogsByStatus(status) {
+    var res = await Fetch("/writers/?Status=" + status, "get", null, true);
+    if(!res?.length) return []
+    return res;
+}
+
 export async function updateBlog(blog) {
     var res = await Fetch("/writers/" + blog.pk, "put",blog,true);
     return res;
@@ -29,4 +35,18 @@ export async function updateBlog(blog) {
 export async function createBlog(blog) {
     var res = await Fetch("/writers/", "post", blog, true);
     return res;
+}
+
+export async function publishBlog(blogPk) {
+    try {
+        var res = await Fetch("/writers/publish/" + blogPk, "post", null, true)
+        return {
+            Ok: true
+        }
+    } catch(ex) {
+        return {
+            Ok: false,
+            Message: "An error occured!"
+        }
+    }
 }

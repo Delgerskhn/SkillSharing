@@ -14,7 +14,7 @@ namespace WebApi.Services
     public interface IBlogService
     {
         Task<Blog> GetUserBlog(int pk, string userpk);
-        Task<List<Blog>> GetUserBlogsByStatus(string userpk, string status);
+        Task<List<Blog>> GetUserBlogsByStatus(string userpk, int status);
         Task UpdateUserBlog(string userpk, Blog blog);
         Task CreateUserBlog(string userpk, Blog blog);
         Task DeleteUserBlog(int pk, string userpk);
@@ -43,7 +43,7 @@ namespace WebApi.Services
         public async Task CreateUserBlog(string userpk, Blog blog)
         {
             blog.UserPk = userpk;
-            blog.BlogStatusPk = 1;
+            blog.BlogStatusPk = BlogState.Draft.Val();
             _context.AttachRange(blog.Tags);
             _context.Blogs.Add(blog);
             await _context.SaveChangesAsync();
@@ -57,7 +57,7 @@ namespace WebApi.Services
 
         public async Task<Blog> GetBlog(int pk)
         {
-            return await _context.Blogs.FindAsync(pk);
+            return await _context.Blogs.Where(r=>r.Pk==pk).Include(r=>r.Tags).FirstAsync();
         }
 
         public async Task<List<Blog>> GetBlogsByStatus(int statusPk)
@@ -106,9 +106,9 @@ namespace WebApi.Services
             return blog;
         }
 
-        public async Task<List<Blog>> GetUserBlogsByStatus(string userpk, string status)
+        public async Task<List<Blog>> GetUserBlogsByStatus(string userpk, int status)
         {
-            var q = await _context.BlogStatuses.Where(r => r.Name == status)
+            var q = await _context.BlogStatuses.Where(r => r.Pk == status)
                     .Include(r => r.Blogs.Where(b => b.UserPk == userpk))
                     .Select(r=>r.Blogs.ToList())
                     .FirstOrDefaultAsync();
@@ -124,7 +124,7 @@ namespace WebApi.Services
         public async Task UpdateUserBlog(string userpk, Blog blog)
         {
             var persistentBlog = await _context.Blogs.Where(r=>r.Pk == blog.Pk).Include(r=>r.Tags).FirstAsync();
-            persistentBlog.BlogStatusPk = 1;
+            persistentBlog.BlogStatusPk = BlogState.Draft.Val();
             persistentBlog.Img = blog.Img;
             persistentBlog.Title = blog.Title;
             persistentBlog.Content = blog.Content;
@@ -134,22 +134,7 @@ namespace WebApi.Services
             foreach (var t in tagsToRemove) persistentBlog.Tags.Remove(t);
             var tagsToAdd = blog.Tags.LeftExcept(persistentBlog.Tags);
             foreach (var t in tagsToAdd) persistentBlog.Tags.Add(t);
-            /*var newTagsSet = blog.Tags.Intersect(persistentBlog.Tags)
-                                .Concat(blog.Tags)
-                                .GroupBy(r => r.Pk).Select(g => g.First())
-                                .ToList();
-            persistentBlog.Tags= newTagsSet;*/
-                /* var newTagPks = persistentBlog.Tags.Concat(blog.Tags).Distinct().ToList().Select(r => r.Pk);
-            string[] newTagsQueryValues = { };
-            foreach (var pk in newTagPks)
-            {
-                newTagsQueryValues.Append(string.Format(@"({0},{1})", blog.Pk, pk));
-            }
-            var query = string.Format(
-                    @"insert into ""BlogTag"" values {0} on conflict do nothing;"
-                    , string.Join(",", newTagsQueryValues));
-            await _context.Database
-                .ExecuteSqlRawAsync(query);*/
+
             await _context.SaveChangesAsync();
         }
 

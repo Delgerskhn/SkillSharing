@@ -65,7 +65,7 @@ export default function Blog({ blog }) {
           </Box>
 
           <Divider />
-          <BlogEditor />
+                  <BlogEditor content={blog.content && JSON.parse(blog.content) }/>
         </Grid>
 
         <Sidebar

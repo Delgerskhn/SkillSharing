@@ -9,7 +9,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Entities;
+using WebApi.Extensions;
 using WebApi.Helpers;
+using WebApi.Models;
 using WebApi.Services;
 
 namespace SkillSharing.Controllers
@@ -38,9 +40,24 @@ namespace SkillSharing.Controllers
             return _caller.Claims.Single(c => c.Type == "id").Value;
         }
 
+        [HttpPost("publish/{pk}")]
+        public async Task<IActionResult> Publish(int pk)
+        {
+            if(_blogService.UserBlogExists(pk, GetUserId()))
+            {
+                var blog = await _blogService.GetUserBlog(pk, GetUserId());
+                blog.BlogStatusPk = BlogState.Pending.Val();
+                await _blogService.UpdateBlogStatus(blog);
+                return NoContent();
+            }else
+            {
+                return BadRequest("Blog doesn't exist!");
+            }
+        }
+
         // GET: api/Writers
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Blog>>> GetBlogs([FromQuery] string Status)
+        public async Task<ActionResult<IEnumerable<Blog>>> GetBlogs([FromQuery] int Status)
         {
             return Ok(await _blogService.GetUserBlogsByStatus(GetUserId(), Status));
         }

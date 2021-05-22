@@ -9,8 +9,6 @@ namespace WebApi.Entities
 {
     public partial class Comment:BaseEntity
     {
-        [Key]
-        public int Pk { get; set; }
         public int? BlogPk { get; set; }
         [StringLength(500)]
         public string Content { get; set; }

@@ -17,7 +17,7 @@ import {
 import { withHistory } from 'slate-history'
 
 import { Button, Icon,  Toolbar } from './Components'
-import constants from '../../shared/constants'
+import { constEditor } from '../../shared/constants'
 
 const HOTKEYS = {
     'mod+b': 'bold',
@@ -26,23 +26,14 @@ const HOTKEYS = {
     'mod+`': 'code',
 }
 
-const initialValue = [
-    {
-        type: 'heading-one',
-        children: [
-            { text: '' }
-        ],
-    },
-
-]
 const LIST_TYPES = ['numbered-list', 'bulleted-list']
 let timeOut = null;
 
 const BlogEditor = ({ readOnly, content, onNonInteractiveEditor }) => {
-    const [value, setValue] = useState(initialValue)
+    const { AutoSaveDuration, MsPerSecond, InitialValue } = constEditor
+    const [value, setValue] = useState(InitialValue)
     const renderElement = useCallback(props => <Element {...props} />, [])
     const renderLeaf = useCallback(props => <Leaf {...props} />, [])
-    const { AutoSaveDuration, MsPerSecond } = constants
     const editor = useMemo(() => withImages(withHistory(withReact(createEditor()))), [])
     useEffect(() => {
         editor.selection = {
@@ -313,8 +304,7 @@ const MarkButton = ({ format, icon }) => {
 
 
 BlogEditor.defaultProps = {
-    readOnly: true,
-    content: initialValue
+    readOnly: true
 }
 
 export default BlogEditor

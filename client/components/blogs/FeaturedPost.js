@@ -9,6 +9,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Box from '@material-ui/core/Box';
 import Link from 'next/link';
+import { constBlog } from '../../shared/constants';
 
 const useStyles = makeStyles({
   card: {
@@ -25,11 +26,16 @@ const useStyles = makeStyles({
 
 export default function FeaturedPost(props) {
   const classes = useStyles();
-  const { post } = props;
+    const { post } = props;
+    const getJumpUrl = () => {
+        if (post?.blogStatusPk === constBlog.State.Published)
+            return '/blog?pk=' + post.pk
+        return '/editor?pk='+post.pk
+    }
 
   return (
       <Grid item xs={12} md={6}>
-          <Link href={'/blog?pk=' + post.pk}>
+          <Link href={getJumpUrl()}>
           <CardActionArea component="a">
         <Card className={classes.card}>
           <div className={classes.cardDetails}>
@@ -38,11 +44,13 @@ export default function FeaturedPost(props) {
                 {post.title}
               </Typography>
               <Typography variant="subtitle1" color="textSecondary">
-                {post.createdOn}
-              </Typography>
-              <Typography variant="subtitle1" paragraph>
-                {post.description}
-              </Typography>
+                {new Date(post.createdOn).toISOString().split('T')[0]}
+                </Typography>
+                <Box component="div" display={{ xs: 'none', md: 'block' }}>
+                  <Typography variant="subtitle1" paragraph>
+                    {post.description}
+                  </Typography>
+                </Box>
               <Typography variant="subtitle1" color="primary">
                 Continue reading...
               </Typography>

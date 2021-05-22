@@ -47,7 +47,7 @@ const Success = ({ msg }) => {
      return function AlertWithFader({  msg }) {
          const classes = useStyles();
          return (
-             <div className={classes.wrapper}>
+             <div className={classes.wrapper} style={{zIndex: msg? 1500: 0}}>
                  <Fade in={msg.length > 0}  >
                      <Paper elevation={4} className={classes.paper}>
                          <Alert msg={msg} />

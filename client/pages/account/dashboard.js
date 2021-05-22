@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
@@ -8,6 +8,10 @@ import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import FeaturedPost from '../../components/blogs/FeaturedPost';
+import { useRouter } from 'next/router';
+import { constBlog } from '../../shared/constants';
+import { getBlogsByStatus } from '../../api/blogs';
+import { useAppContext } from '../../context/AppContext';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -60,48 +64,54 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function Dashboard() {
     const classes = useStyles();
-    const [value, setValue] = React.useState(0);
+    const router = useRouter()
+    const [status, setStatus] = React.useState(0);
+    const [posts, setPosts] = React.useState([])
+    const { setIsLoading } = useAppContext()
+
+
+    useEffect(() => {
+        const { query } = router
+        query.status = parseInt(query.status)
+        if (Number.isInteger(query.status)) {
+            handleChange(null, query.status - 1)
+        } else handleChange(null, 0)
+    }, [router.query])
+
+    const fetchPosts = async (status) => {
+        setIsLoading(true)
+        var res = await getBlogsByStatus(status)
+        setIsLoading(false)
+        setPosts(res)
+    }
 
     const handleChange = (event, newValue) => {
-        setValue(newValue);
+        fetchPosts(newValue+1)
+        setStatus(newValue);
     };
 
     return (
         <div className={classes.root}>
             <Paper className={classes.root}>
                 <Tabs
-                    value={value}
+                    value={status}
                     onChange={handleChange}
                     indicatorColor="primary"
                     textColor="primary"
                     centered
                 >
-                    <Tab label="Draft" />
                     <Tab label="Pending" />
                     <Tab label="Published" />
+                    <Tab label="Declined" />
+                    <Tab label="Draft"  />
                 </Tabs>
             </Paper>
-            <TabPanel value={value} index={0}>
-                <Grid container spacing={4}>
-                    {featuredPosts.map((post) => (
-                        <FeaturedPost key={post.title} post={post} />
+            <Grid mt={3} container spacing={4}>
+                    {posts.map((post) => (
+                        <FeaturedPost key={post.pk} post={post} />
                     ))}
                 </Grid>
-            </TabPanel>
-            <TabPanel value={value} index={1}>
-                <Grid container spacing={4}>
-                    {featuredPosts.map((post) => (
-                        <FeaturedPost key={post.title} post={post} />
-                    ))}
-                </Grid>
-            </TabPanel>
-            <TabPanel value={value} index={2}>
-                <Grid container spacing={4}>
-                    {featuredPosts.map((post) => (
-                        <FeaturedPost key={post.title} post={post} />
-                    ))}
-                </Grid>
-            </TabPanel>
+            
         </div>
         );
 }
