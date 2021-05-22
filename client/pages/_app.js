@@ -12,6 +12,7 @@ import { AppProvider, useAppContext } from "../context/AppContext";
 import Loader from "../components/Loader";
 import AuthLayout from "../shared/AuthLayout";
 import { AuthProvider } from "../context/auth";
+import { BlogProvider } from "../context/blog";
 
 export const cache = createCache({ key: "css", prepend: true });
 
@@ -41,6 +42,12 @@ export default function MyApp(props) {
               <AuthLayout>
                 <Component {...pageProps} />
               </AuthLayout>
+            ) : router.pathname.startsWith("/editor") ? (
+              <Layout>
+                <BlogProvider>
+                  <Component {...pageProps} />
+                </BlogProvider>
+              </Layout>
             ) : (
               <Layout>
                 <Component {...pageProps} />

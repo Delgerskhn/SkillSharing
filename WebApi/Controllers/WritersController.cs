@@ -88,9 +88,13 @@ namespace SkillSharing.Controllers
         [HttpPost("tag")]
         public async Task<ActionResult> PostTag(Tag tag)
         {
-            await _context.AddAsync(tag);
-            await _context.SaveChangesAsync();
-            return new CreatedResult("Tag", tag);
+            if(await _context.Tags.AnyAsync(r=>r.Pk == (int)tag.Pk || r.Name == tag.Name))
+            {
+                await _context.AddAsync(tag);
+                await _context.SaveChangesAsync();
+                return new CreatedResult("Tag", tag);
+            }
+            return new BadRequestObjectResult("Tag already exist!");
         }
 
         

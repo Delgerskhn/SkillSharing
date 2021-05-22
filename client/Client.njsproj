@@ -39,6 +39,9 @@
     <Content Include="components\Loader.js">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="components\modals\publish-modal.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="components\Popover.js">
       <SubType>Code</SubType>
     </Content>
@@ -115,6 +118,7 @@
     <Folder Include="components\blogs" />
     <Folder Include="components\forms\" />
     <Folder Include="components\editor\" />
+    <Folder Include="components\modals\" />
     <Folder Include="context\" />
     <Folder Include="helpers\" />
     <Folder Include="api\" />
