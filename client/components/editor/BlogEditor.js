@@ -240,11 +240,12 @@ const Image = ({ attributes, children, element }) => {
                 <img
                     src={element.url}
                     className={css`
-            display: block;
-            max-width: 100%;
-            max-height: 20em;
-            box-shadow: ${selected && focused ? '0 0 0 3px #B4D5FF' : 'none'};
-          `}
+                        display: block;
+                        max-width: 100%;
+                        box-shadow: ${selected && focused ? '0 0 0 3px #B4D5FF' : 'none'};
+                        margin-left: auto;
+                        margin-right: auto;
+                      `}
                 />
             </div>
             {children}

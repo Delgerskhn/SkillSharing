@@ -115,7 +115,6 @@
     <Content Include="components\editor\BlogEditor.js" />
     <Content Include="components\editor\Components.js" />
     <Content Include="components\blogs\FeaturedPost.js" />
-    <Content Include="components\editor\InsertImageButton.js" />
     <Content Include="pages\auth\login.js" />
   </ItemGroup>
   <ItemGroup>
