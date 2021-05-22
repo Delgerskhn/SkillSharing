@@ -20,19 +20,18 @@ function AuthProvider(props) {
         })();
     }, []);
 
-    const signIn = useCallback(async (email, password) => {
+    const signIn = async (email, password) => {
         const result = await sendSignInRequest(email, password);
         if (result.isOk) {
             setUser(result.data);
         }
-
         return result;
-    }, []);
+    }
 
-    const signOut = useCallback(() => {
+    const signOut = () => {
         setUser();
         removeUser();
-    }, []);
+    }
 
 
     return (

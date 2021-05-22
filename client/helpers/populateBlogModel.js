@@ -10,6 +10,7 @@ export function populateBlogModel(content, tags) {
 }
 
 function getBlock(content, type) {
+    if(!content) return ''
     for (let block of content) 
         if (block.type == type)
             return block.children[0].text
@@ -17,6 +18,7 @@ function getBlock(content, type) {
 }
 
 function getImg(content) {
+    if(!content) return ''
     for (let block of content)
         if (block.type == 'image')
             return block.url

@@ -10,12 +10,14 @@ export async function signIn(email, password) {
         }
         var res = await Fetch('/auth/login', 'post', body, true);
         SaveUser(res)
+        console.log(res)
         return {
             isOk: true,
             data: res
         };
     }
     catch (ex) {
+        console.log(ex)
         return {
             isOk: false,
             message: (ex?.login_failure?.length && ex?.login_failure[0]) || "Authentication failed"

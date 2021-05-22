@@ -12,9 +12,8 @@ namespace WebApi.Entities
         public Blog()
         {
             Comments = new HashSet<Comment>();
+            Tags = new HashSet<Tag>();
         }
-        [Key]
-        public int Pk { get; set; }
         public int Likes { get; set; }
         [StringLength(100)]
         public string Title { get; set; }

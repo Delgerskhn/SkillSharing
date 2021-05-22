@@ -78,7 +78,11 @@ namespace WebApi.Controllers
             return NoContent();
         }
 
-        //TODO: GetAllTags endpoint to provide tags
+        [HttpGet("tags")]
+        public async Task<IActionResult> GetTags()
+        {
+            return Ok(await _context.Tags.ToListAsync());
+        }
 
         public bool BlogExists(int blogPk)
         {

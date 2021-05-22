@@ -42,7 +42,7 @@ namespace SkillSharing.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Blog>>> GetBlogs([FromQuery] string Status)
         {
-            return await _blogService.GetUserBlogsByStatus(GetUserId(), Status);
+            return Ok(await _blogService.GetUserBlogsByStatus(GetUserId(), Status));
         }
 
         // GET: api/Writers/5
@@ -92,6 +92,8 @@ namespace SkillSharing.Controllers
             await _context.SaveChangesAsync();
             return new CreatedResult("Tag", tag);
         }
+
+        
 
         // DELETE: api/Writers/5
         [HttpDelete("{id}")]

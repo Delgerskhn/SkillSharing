@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/core/Autocomplete";
 import { makeStyles } from "@material-ui/core/styles";
 import { useRouter } from "next/router";
 import { onEnter } from "../../helpers/keyHandlers";
 import { createTag, fetchTags, getTags } from "../../api/tags";
+import { useAppContext } from "../../context/AppContext";
 
 const useStyles = makeStyles(theme => ({
     input: {
@@ -12,22 +13,26 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default function TagSearch({ onSelectCallback }) {
+export default function TagSearch({ onSelectCallback, defaultValue }) {
     const [tags, setTags] = React.useState([]);
     const [selectValue, setSelectValue] = React.useState([]);
     const [inputValue, setInputValue] = React.useState("");
-    const initTags = async () => {
-        await fetchTags()
-        setTags(getTags())
-    }
+    const { popularTags } = useAppContext()
+
     useEffect(() => {
-        initTags()
-    }, [])
+        setTags(popularTags)
+    }, [popularTags])
+
+    useEffect(() => {
+        if (defaultValue && defaultValue.length)
+            setSelectValue(defaultValue)
+    }, [defaultValue])
 
     const addNewTag = async (e) => {
         const newTag = { name: inputValue }
-        await createTag(newTag)
-        onSelect(e,[...selectValue, newTag])
+        var result = await createTag(newTag)
+        console.log(result)
+        onSelect(e,[...selectValue, result])
     }
 
     const onSelect = async (ev, val) => {
@@ -35,11 +40,12 @@ export default function TagSearch({ onSelectCallback }) {
         onSelectCallback && onSelectCallback(val)
     }
 
+
     return (
         <div>
             <Autocomplete
                 multiple
-                value={ selectValue }
+                value={selectValue}
                 id="tags-standard"
                 onChange={onSelect}
                 style={{ width: 300 }}

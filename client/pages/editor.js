@@ -20,6 +20,8 @@ function Editor({ blogPk }) {
 
     //save tag state
     const onTagSelect = tags => {
+        console.log(tags)
+
         setTags(tags);
     };
 
@@ -39,6 +41,7 @@ function Editor({ blogPk }) {
 
     //save content state
     const onNonInteractiveEditor = async content => {
+        console.log('no interact',content)
         setContent(content)
     };
 
@@ -61,7 +64,7 @@ function Editor({ blogPk }) {
 
     //update model blog on content or tags change
     useEffect(() => {
-        if(content)
+        if (content || tags.length)
         saveDraft()
     }, [content, tags])
 
@@ -79,8 +82,8 @@ function Editor({ blogPk }) {
             onNonInteractiveEditor={onNonInteractiveEditor}
           />
         </Grid>
-        <Grid item>
-          <TagSearch onSelectCallback={onTagSelect} />
+              <Grid item>
+                  <TagSearch onSelectCallback={onTagSelect} defaultValue={blog.tags} />
         </Grid>
       </Grid>
     </main>

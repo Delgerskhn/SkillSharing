@@ -11,7 +11,11 @@ const RemoveUser = () => {
 
 const GetUser =  () => {
     var u = Cookies.get('user');
-     u = JSON.parse(u);
+    try {
+        u = JSON.parse(u);
+    } catch {
+        return null
+    }
     return u;
 }
 

@@ -3,7 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/core/Autocomplete';
 import { makeStyles } from '@material-ui/core/styles';
 import { useRouter } from 'next/router';
-import { fetchTags, getTags } from '../../api/tags';
+import { useAppContext } from '../../context/AppContext';
 
 const useStyles = makeStyles((theme) => ({
     input: {
@@ -16,14 +16,12 @@ export default function TagSelect() {
     const [options, setOptions] = useState([])
     const router = useRouter()
     const [inputValue, setInputValue] = React.useState('');
+    const { popularTags } = useAppContext()
     const classes = useStyles();
-    const initTags = async () => {
-        await fetchTags()
-        setOptions(getTags())
-    }
+
     useEffect(() => {
-        initTags()
-    }, [])
+        setOptions(popularTags)
+    }, [popularTags])
     return (
         <div>
             <Autocomplete

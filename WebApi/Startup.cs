@@ -40,6 +40,7 @@ namespace WebApi
             // use sql server db in production and sqlite db in development
             string connectionStr = _env.IsProduction() ? "ProdDb" : "DevDb";
             services.AddDbContext<ApplicationDbContext>(builder=> {
+                builder.EnableSensitiveDataLogging();
                 builder.UseNpgsql(_configuration.GetConnectionString("ProdDb")
                     //,b => b.MigrationsAssembly("AngularASPNETCore2WebApiAuth")
                     );

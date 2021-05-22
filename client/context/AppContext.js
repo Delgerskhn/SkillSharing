@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { fetchTags, getTags } from '../api/tags'
 
 
 const AppContext = React.createContext()
@@ -13,11 +14,19 @@ function AppProvider(props) {
     const [isLoading, setIsLoading] = React.useState(false)
     const [successMsg, setSuccessMsg] = React.useState('')
     const [errorMsg, setErrorMsg] = React.useState('')
+    const [popularTags, setTags] = React.useState([])
 
     const hideAlerts = () => {
         setSuccessMsg('')
         setErrorMsg('')
     }
+
+    React.useEffect(() => {
+        (async function () {
+            await fetchTags()
+            setTags(getTags)
+        })()
+    }, [])
    
     React.useEffect(() => {
         setTimeout(hideAlerts, 2000)
@@ -29,7 +38,8 @@ function AppProvider(props) {
         successMsg,
         errorMsg,
         setSuccessMsg,
-        setErrorMsg
+        setErrorMsg,
+        popularTags
     };
     return <AppContext.Provider value={value} {...props} />
 }
