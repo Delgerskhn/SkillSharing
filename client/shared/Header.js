@@ -38,8 +38,8 @@ const useStyles = makeStyles(theme => ({
 export default function Header(props) {
     const classes = useStyles();
     const { user } = useAuth();
-  const { sections, title } = props;
-
+    const { popularTags } = useAppContext();
+    const { title } = props;
   return (
     <React.Fragment>
       <Toolbar className={classes.toolbar}>
@@ -83,16 +83,16 @@ export default function Header(props) {
         variant="dense"
         className={classes.toolbarSecondary}
       >
-        {sections.map(section => (
+        {popularTags.slice(0,9).map(tag => (
           <Link
             color="inherit"
             noWrap
-            key={section.title}
+            key={tag.pk}
             variant="body2"
-            href={section.url}
+                href={'/?tag='+tag.pk}
             className={classes.toolbarLink}
           >
-            {section.title}
+            {tag.name}
           </Link>
         ))}
         {<TagSelect />}
