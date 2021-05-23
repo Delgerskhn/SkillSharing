@@ -1,4 +1,9 @@
 import Fetch from "../helpers/fetch";
+import { GetUser } from "../helpers/user-store";
+
+export async function likeBlog(blogPk) {
+    await Fetch('/readers/like', 'post', { BlogPk: blogPk, UserPk: GetUser()?.id })
+}
 
 export async function getBlog(pk) {
     var res = await Fetch("/readers/" + pk, "get");
