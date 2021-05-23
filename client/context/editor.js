@@ -7,15 +7,15 @@ import { constBlog } from '../shared/constants'
 import { useAppContext } from './app'
 
 
-const BlogContext = React.createContext()
-function useBlogContext() {
-    const context = React.useContext(BlogContext)
+const EditorContext = React.createContext()
+function useEditorContext() {
+    const context = React.useContext(EditorContext)
     if (!context) {
-        throw new Error(`useBlogContext must be used within a BlogProvider`)
+        throw new Error(`useEditorContext must be used within a EditorProvider`)
     }
     return context
 }
-function BlogProvider(props) {
+function EditorProvider(props) {
     const [blog, setBlog] = useState({});
     const [tags, setTags] = useState([]);
     const [content, setContent] = useState(null);
@@ -89,6 +89,6 @@ function BlogProvider(props) {
         fetchBlog,
         publish
     };
-    return <BlogContext.Provider value={value} {...props} />
+    return <EditorContext.Provider value={value} {...props} />
 }
-export { BlogProvider, useBlogContext }
+export { EditorProvider, useEditorContext }

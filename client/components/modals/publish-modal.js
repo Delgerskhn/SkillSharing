@@ -4,7 +4,7 @@ import Modal from '@material-ui/core/Modal';
 import { Box, Button, ButtonGroup, Typography } from '@material-ui/core';
 import withModal from './with-modal';
 import PublishFloater from '../floaters/publish-floater';
-import { useBlogContext } from '../../context/blog';
+import { useEditorContext } from '../../context/editor';
 import { TagSearch } from '../forms/tag-search';
 
 function Trigger() {
@@ -16,7 +16,7 @@ function Body({ onInteraction, handleClose }) {
         blog,
         onTagSelect,
         publish
-    } = useBlogContext();
+    } = useEditorContext();
     return (
         <div >
             <h2 id="simple-modal-title">Choose tag & Enter new one!</h2>

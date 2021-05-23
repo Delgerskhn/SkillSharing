@@ -3,7 +3,7 @@ import { withAuth } from "../shared/with-auth";
 import Grid from "@material-ui/core/Grid";
 import BlogEditor from "../components/editor/blog-editor";
 import { TagSearch } from "../components/forms/tag-search";
-import { useBlogContext } from "../context/blog";
+import { useEditorContext } from "../context/editor";
 import { AutoSaveAlert } from "../components/alert";
 import PublishFloater from "../components/floaters/publish-floater";
 import PublishModal from "../components/modals/publish-modal";
@@ -16,7 +16,7 @@ function Editor({ blogPk }) {
     onNonInteractiveEditor,
     onTagSelect,
     fetchBlog
-  } = useBlogContext();
+  } = useEditorContext();
   useEffect(() => {
     fetchBlog(blogPk);
   }, []);
