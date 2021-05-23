@@ -13,6 +13,7 @@ import Loader from "../components/loader";
 import AuthLayout from "../shared/auth-layout";
 import { AuthProvider } from "../context/auth";
 import { EditorProvider } from "../context/editor";
+import { pageContextMapper } from "../helpers/page-context-mapper";
 
 export const cache = createCache({ key: "css", prepend: true });
 
@@ -25,7 +26,7 @@ export default function MyApp(props) {
       jssStyles.parentElement.removeChild(jssStyles);
     }
   }, []);
-
+  const PageContextMapper = pageContextMapper(router.pathname, Component)
   return (
     <CacheProvider value={cache}>
       <Head>
@@ -38,21 +39,7 @@ export default function MyApp(props) {
         <AppProvider>
           <AuthProvider>
             <Loader />
-            {router.pathname.startsWith("/auth/") ? (
-              <AuthLayout>
-                <Component {...pageProps} />
-              </AuthLayout>
-            ) : router.pathname.startsWith("/editor") ? (
-              <Layout>
-                <EditorProvider>
-                  <Component {...pageProps} />
-                </EditorProvider>
-              </Layout>
-            ) : (
-              <Layout>
-                <Component {...pageProps} />
-              </Layout>
-            )}
+            <PageContextMapper pageProps={pageProps} />
           </AuthProvider>
         </AppProvider>
       </ThemeProvider>
