@@ -28,7 +28,8 @@ namespace SkillSharing.Controllers
         public WritersController(
             UserManager<AppUser> userManager,
             IBlogService blogService,
-            IHttpContextAccessor httpContextAccessor, ApplicationDbContext context)
+            IHttpContextAccessor httpContextAccessor,
+            ApplicationDbContext context)
         {
             _caller = httpContextAccessor.HttpContext.User;
             _blogService = blogService;
