@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { getAccountInfo } from '../api/account'
 import { fetchTags, getTags } from '../api/tags'
 
 
@@ -15,6 +16,7 @@ function AppProvider(props) {
     const [successMsg, setSuccessMsg] = React.useState('')
     const [errorMsg, setErrorMsg] = React.useState('')
     const [popularTags, setTags] = React.useState([])
+    const [ userInfo, setUser ] = React.useState({})
 
     const hideAlerts = () => {
         setSuccessMsg('')
@@ -23,6 +25,8 @@ function AppProvider(props) {
 
     React.useEffect(() => {
         (async function () {
+            var user = await getAccountInfo();
+            setUser(user);
             await fetchTags()
             setTags(getTags)
         })()
@@ -39,7 +43,8 @@ function AppProvider(props) {
         errorMsg,
         setSuccessMsg,
         setErrorMsg,
-        popularTags
+        popularTags,
+        userInfo
     };
     return <AppContext.Provider value={value} {...props} />
 }
