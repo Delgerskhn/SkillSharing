@@ -3,10 +3,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Avatar, Box, Button, Grid, Typography } from "@material-ui/core";
 import StarIcon from '@material-ui/icons/Star';
 const styles = {
-    
+
 };
 const useStyles = makeStyles(styles);
-export default function Profile({ user, reputation }) {
+export default function Profile({ user, reputation, hasInteraction }) {
     const classes = useStyles();
     return (
         <Box
@@ -32,15 +32,15 @@ export default function Profile({ user, reputation }) {
                 display="flex"
                 ml={5}
             >
-                <Button>
-                    <StarIcon fontSize="large"/>
+                <Button disabled={!hasInteraction}>
+                    <StarIcon fontSize="large" />
                     <Typography variant="subtitle1" color="textSecondary">
                         {reputation}
                     </Typography>
                 </Button>
             </Box>
         </Box>
-        );
+    );
 }
 
 

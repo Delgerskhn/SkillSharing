@@ -12,6 +12,7 @@ import { Avatar, Box, Divider, Typography } from "@material-ui/core";
 import BlogEditor from "../components/editor/blog-editor";
 import { getBlog } from "../api/blogs";
 import Profile from "../components/account/profile";
+import { useBlogContext } from "../context/blog";
 
 const useStyles = makeStyles(theme => ({
   mainGrid: {
@@ -45,6 +46,8 @@ const sidebar = {
 
 export default function Blog({ blog }) {
   const classes = useStyles();
+  const { setBlog } = useBlogContext()
+
   const parseContent = contentStr => {
     try {
       return JSON.parse(contentStr);
@@ -52,11 +55,15 @@ export default function Blog({ blog }) {
       return null;
     }
   };
+
+  useEffect(() => {
+    setBlog(blog)
+  }, [])
   return (
     <main>
       <Grid container spacing={5} className={classes.mainGrid}>
         <Grid item xs={12} md={8}>
-          <Profile user={blog?.appUser} reputation={blog?.appUser?.reputation} />
+          <Profile user={blog?.appUser} reputation={blog?.appUser?.reputation} hasInteraction={false} />
 
           <Divider />
           <BlogEditor content={parseContent(blog.content)} />

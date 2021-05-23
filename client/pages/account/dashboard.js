@@ -35,24 +35,6 @@ function TabPanel(props) {
     );
 }
 
-const featuredPosts = [
-    {
-        title: 'Featured post',
-        date: 'Nov 12',
-        description:
-            'This is a wider card with supporting text below as a natural lead-in to additional content.',
-        image: 'https://source.unsplash.com/random',
-        imageText: 'Image Text',
-    },
-    {
-        title: 'Post title',
-        date: 'Nov 11',
-        description:
-            'This is a wider card with supporting text below as a natural lead-in to additional content.',
-        image: 'https://source.unsplash.com/random',
-        imageText: 'Image Text',
-    },
-];
 TabPanel.propTypes = {
     children: PropTypes.node,
     index: PropTypes.any.isRequired,
@@ -96,7 +78,7 @@ export default function Dashboard() {
         <div className={classes.root}>
             <Grid mt={3} container spacing={4}>
                 <Grid item xs={12}>
-                    <Profile user={user} reputation={user?.withdrawReputation} />
+                    <Profile hasInteraction={true} user={user} reputation={user?.withdrawReputation} />
                 </Grid>
                 <Grid item xs={12}>
                     <Paper className={classes.root}>
