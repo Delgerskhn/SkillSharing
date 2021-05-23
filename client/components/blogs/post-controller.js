@@ -21,7 +21,7 @@ export default function PostController({ visible, post }) {
         setIsLoading(true)
         const res = await sendPublishRequest(post.pk)
         setIsLoading(false)
-        if (res.Ok) window.location.pathname = '/account/dashboard'
+        if (res.Ok) router.push('/account/dashboard?status=' + constBlog.State.Pending)
         else setErrorMsg(res.Message)
     }
     return (visible ?
