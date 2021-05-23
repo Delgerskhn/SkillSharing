@@ -108,7 +108,7 @@ export default function Dashboard() {
             </Paper>
             <Grid mt={3} container spacing={4}>
                     {posts.map((post) => (
-                        <FeaturedPost key={post.pk} post={post} />
+                        <FeaturedPost key={post.pk} post={post} hasController/>
                     ))}
                 </Grid>
             

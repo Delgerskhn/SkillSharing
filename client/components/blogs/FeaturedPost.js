@@ -10,6 +10,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Box from '@material-ui/core/Box';
 import Link from 'next/link';
 import { constBlog } from '../../shared/constants';
+import PostController from './post-controller';
 
 const useStyles = makeStyles({
   card: {
@@ -26,7 +27,7 @@ const useStyles = makeStyles({
 
 export default function FeaturedPost(props) {
   const classes = useStyles();
-    const { post } = props;
+    const { post, hasController } = props;
     const getJumpUrl = () => {
         if (post?.blogStatusPk === constBlog.State.Published)
             return '/blog?pk=' + post.pk
@@ -64,6 +65,7 @@ export default function FeaturedPost(props) {
         </Card>
       </CardActionArea>
           </Link>
+          <PostController visible={hasController} post={ post } /> 
     </Grid>
   );
 }

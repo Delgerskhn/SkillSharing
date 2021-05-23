@@ -44,7 +44,13 @@ const sidebar = {
 
 export default function Blog({ blog }) {
   const classes = useStyles();
-
+    const parseContent = (contentStr) => {
+        try {
+            return JSON.parse(contentStr)
+        } catch {
+            return null
+        }
+    }
   return (
     <main>
       <Grid container spacing={5} className={classes.mainGrid}>
@@ -65,7 +71,7 @@ export default function Blog({ blog }) {
           </Box>
 
           <Divider />
-                  <BlogEditor content={blog.content && JSON.parse(blog.content) }/>
+                  <BlogEditor content={parseContent(blog.content)}/>
         </Grid>
 
         <Sidebar

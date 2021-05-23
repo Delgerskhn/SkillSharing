@@ -30,7 +30,7 @@
     <Content Include="components\Alert.js">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="components\blogs\post-with-controller.js">
+    <Content Include="components\blogs\post-controller.js">
       <SubType>Code</SubType>
     </Content>
     <Content Include="components\floaters\publish-floater.js">
