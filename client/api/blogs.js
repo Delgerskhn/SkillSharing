@@ -50,3 +50,12 @@ export async function publishBlog(blogPk) {
         }
     }
 }
+
+export async function deleteBlog(blogPk) {
+    try {
+        var res = await Fetch('/writers/' + blogPk, 'delete', null, true)
+        return { Ok: true }
+    } catch (ex) {
+        return { Ok: false, Message: "An error occured!" }
+    }
+}

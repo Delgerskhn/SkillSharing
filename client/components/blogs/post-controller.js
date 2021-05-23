@@ -6,7 +6,7 @@ import PublishIcon from '@material-ui/icons/Publish';
 import { constBlog } from '../../shared/constants';
 import { useRouter } from 'next/router';
 import { useAppContext } from '../../context/AppContext';
-import { publishBlog as sendPublishRequest } from '../../api/blogs'
+import { deleteBlog, publishBlog as sendPublishRequest } from '../../api/blogs'
 
 export default function PostController({ visible, post }) {
     const router = useRouter()
@@ -14,8 +14,14 @@ export default function PostController({ visible, post }) {
     const navigateEditor = () => {
         router.push('/editor?pk=' + post.pk)
     }
-    const removeBlog = () => {
-
+    const removeBlog = async () => {
+        if (window.confirm('Are you sure permanently delete?')) {
+            setIsLoading(true)
+            const res = await deleteBlog(post.pk)
+            setIsLoading(false)
+            if (res.Ok) window.location.pathname = '/account/dashboard'
+            else setErrorMsg(res.Message)
+        }
     }
     const publishBlog = async () => {
         setIsLoading(true)
