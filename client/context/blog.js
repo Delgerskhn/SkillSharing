@@ -2,9 +2,9 @@ import { useRouter } from 'next/router'
 import * as React from 'react'
 import { useState } from 'react'
 import { createBlog, getWriterBlog, publishBlog, updateBlog } from '../api/blogs'
-import { populateBlogModel } from '../helpers/populateBlogModel'
+import { populateBlogModel } from '../helpers/populate-model'
 import { constBlog } from '../shared/constants'
-import { useAppContext } from './AppContext'
+import { useAppContext } from './app'
 
 
 const BlogContext = React.createContext()
@@ -21,7 +21,7 @@ function BlogProvider(props) {
     const [content, setContent] = useState(null);
     const [autoSaveAlertVisible, setVisible] = useState(false);
     const router = useRouter();
-    const { setIsLoading, setErrorMsg} = useAppContext();
+    const { setIsLoading, setErrorMsg } = useAppContext();
 
     //save tag state
     const onTagSelect = tags => {

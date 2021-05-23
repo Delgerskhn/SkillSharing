@@ -1,5 +1,5 @@
-import Fetch from "../helpers/Fetch";
-import { GetUser, SaveUser } from "../helpers/UserStore";
+import Fetch from "../helpers/fetch";
+import { GetUser, SaveUser } from "../helpers/user-store";
 
 export async function signIn(email, password) {
     try {
@@ -27,7 +27,7 @@ export async function signIn(email, password) {
 
 export function getUser() {
     try {
-        
+
         // Send request
         var u = GetUser()
 

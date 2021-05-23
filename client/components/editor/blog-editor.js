@@ -16,7 +16,7 @@ import {
 } from 'slate'
 import { withHistory } from 'slate-history'
 
-import { Button, Icon,  Toolbar } from './Components'
+import { Button, Icon, Toolbar } from './components'
 import { constEditor } from '../../shared/constants'
 
 const HOTKEYS = {
@@ -40,18 +40,18 @@ const BlogEditor = ({ readOnly, content, onNonInteractiveEditor }) => {
             anchor: { path: [0, 0], offset: 0 },
             focus: { path: [0, 0], offset: 0 },
         };
-        
+
     }, []);
 
     useEffect(() => {
-        if(content)
-        setValue(content)
+        if (content)
+            setValue(content)
     }, [content])
 
     return (
         <Slate
             editor={editor}
-            value={value} 
+            value={value}
             onChange={value => {
                 setValue(value);
                 clearTimeout(timeOut)
@@ -74,7 +74,7 @@ const BlogEditor = ({ readOnly, content, onNonInteractiveEditor }) => {
                 renderElement={renderElement}
                 renderLeaf={renderLeaf}
                 placeholder="Title"
-                
+
                 readOnly={readOnly}
                 spellCheck
                 autoFocus

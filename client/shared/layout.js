@@ -1,10 +1,10 @@
 import * as React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
-import Header from './Header';
-import Footer from './Footer';
-import { useAppContext } from '../context/AppContext';
-import { ErrorAlert, SuccessAlert } from '../components/Alert';
+import Header from './header';
+import Footer from './footer';
+import { useAppContext } from '../context/app';
+import { ErrorAlert, SuccessAlert } from '../components/alert';
 
 
 const sections = [

@@ -1,4 +1,4 @@
-import { GetUser } from "./UserStore";
+import { GetUser } from "./user-store";
 
 
 export const WrapResult = (ok, data, message) => {
@@ -12,7 +12,7 @@ export const WrapResult = (ok, data, message) => {
 const Fetch = async (path, method, body, secure = false) => {
     var headers = new Headers();
     if (secure) headers.append("Authorization", `Bearer ${GetUser()?.auth_token}`);
-    if(method.toUpperCase() != "GET") headers.append("Content-Type", "application/json");
+    if (method.toUpperCase() != "GET") headers.append("Content-Type", "application/json");
 
     var options = {
         method: method,
@@ -27,7 +27,7 @@ const Fetch = async (path, method, body, secure = false) => {
         res = temp;
     } catch (err) {
     }
-    console.log(req,res)
+    console.log(req, res)
     if (!req.ok) throw res
     return res
 }

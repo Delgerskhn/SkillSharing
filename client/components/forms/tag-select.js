@@ -3,7 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/core/Autocomplete';
 import { makeStyles } from '@material-ui/core/styles';
 import { useRouter } from 'next/router';
-import { useAppContext } from '../../context/AppContext';
+import { useAppContext } from '../../context/app';
 
 const useStyles = makeStyles((theme) => ({
     input: {
@@ -30,7 +30,7 @@ export default function TagSelect() {
                     setValue(newValue);
                     router.push('/?tag=' + newValue.pk)
                 }}
-                getOptionLabel={(option) => option?.name || ''} 
+                getOptionLabel={(option) => option?.name || ''}
                 inputValue={inputValue}
                 onInputChange={(event, newInputValue) => {
                     setInputValue(newInputValue);

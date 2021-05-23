@@ -12,7 +12,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { useAppContext } from "../../context/AppContext";
+import { useAppContext } from "../../context/app";
 import { useRouter } from "next/router";
 import { useAuth } from "../../context/auth";
 
@@ -53,93 +53,93 @@ export default function Login() {
   const classes = useStyles();
   const { setIsLoading, setErrorMsg } = useAppContext();
   const { signIn } = useAuth();
-    const router = useRouter();
+  const router = useRouter();
 
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
   const handleemail = e => setemail(e.target.value);
   const handlepassword = e => setpassword(e.target.value);
 
-    const onSubmit = async (e) => {
-        e.preventDefault();
-        setIsLoading(true);
-      const result = await signIn(email, password);
-        setIsLoading(false);
-        if (!result.isOk) setErrorMsg(result.message);
-        else {
-            router.push("/");
-        }
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    const result = await signIn(email, password);
+    setIsLoading(false);
+    if (!result.isOk) setErrorMsg(result.message);
+    else {
+      router.push("/");
     }
+  }
 
   return (
     <Container component="main" maxWidth="xs">
-    <form className={'login-form'} onSubmit={onSubmit}>
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
+      <form className={'login-form'} onSubmit={onSubmit}>
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign in
         </Typography>
-        <div className={classes.form} noValidate>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            onChange={handleemail}
-            value={email}
-            autoComplete="email"
-            autoFocus
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            onChange={handlepassword}
-            value={password}
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Sign In
+          <div className={classes.form} noValidate>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              onChange={handleemail}
+              value={email}
+              autoComplete="email"
+              autoFocus
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              onChange={handlepassword}
+              value={password}
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+            />
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Sign In
           </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
+            <Grid container>
+              <Grid item xs>
+                <Link href="#" variant="body2">
+                  Forgot password?
               </Link>
+              </Grid>
+              <Grid item>
+                <Link href="signup" variant="body2">
+                  {"Don't have an account? Sign Up"}
+                </Link>
+              </Grid>
             </Grid>
-            <Grid item>
-              <Link href="signup" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
+          </div>
         </div>
-      </div>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
-    </form>
-      </Container>
+        <Box mt={8}>
+          <Copyright />
+        </Box>
+      </form>
+    </Container>
   );
 }

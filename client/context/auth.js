@@ -1,6 +1,6 @@
 import React, { useState, useEffect, createContext, useContext, useCallback } from 'react';
 import { getUser, removeUser, signIn as sendSignInRequest } from '../api/auth';
-import { useAppContext } from './AppContext';
+import { useAppContext } from './app';
 
 function AuthProvider(props) {
     const [user, setUser] = useState(null);

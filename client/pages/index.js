@@ -2,12 +2,12 @@ import * as React from "react";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
-import FeaturedPost from "../components/blogs/FeaturedPost";
 import { makeStyles } from "@material-ui/core/styles";
-import Fetch from "../helpers/Fetch";
+import Fetch from "../helpers/fetch";
 import PropTypes from "prop-types";
 import { Button } from "@material-ui/core";
 import { getBlogsByTag, getLatestBlogs } from "../api/blogs";
+import { Post } from "../components/blogs/post";
 
 const featuredPosts = [
   {
@@ -78,7 +78,7 @@ export default function Index({ posts }) {
       </div>
 
       <Grid container spacing={4}>
-        {posts.map(post => <FeaturedPost key={post.title} post={post} />)}
+        {posts.map(post => <Post key={post.title} post={post} />)}
       </Grid>
     </main>
   );

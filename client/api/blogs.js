@@ -1,4 +1,4 @@
-import Fetch from "../helpers/Fetch";
+import Fetch from "../helpers/fetch";
 
 export async function getBlog(pk) {
     var res = await Fetch("/readers/" + pk, "get");
@@ -6,12 +6,12 @@ export async function getBlog(pk) {
 }
 
 export async function getWriterBlog(pk) {
-    var res = await Fetch("/writers/" + pk, "get",null, true);
+    var res = await Fetch("/writers/" + pk, "get", null, true);
     return res;
 }
 
 export async function getLatestBlogs() {
-      var res = await Fetch("/readers/latest", "get");
+    var res = await Fetch("/readers/latest", "get");
     return res;
 }
 
@@ -23,12 +23,12 @@ export async function getBlogsByTag(tagPk) {
 
 export async function getBlogsByStatus(status) {
     var res = await Fetch("/writers/?Status=" + status, "get", null, true);
-    if(!res?.length) return []
+    if (!res?.length) return []
     return res;
 }
 
 export async function updateBlog(blog) {
-    var res = await Fetch("/writers/" + blog.pk, "put",blog,true);
+    var res = await Fetch("/writers/" + blog.pk, "put", blog, true);
     return res;
 }
 
@@ -43,7 +43,7 @@ export async function publishBlog(blogPk) {
         return {
             Ok: true
         }
-    } catch(ex) {
+    } catch (ex) {
         return {
             Ok: false,
             Message: "An error occured!"

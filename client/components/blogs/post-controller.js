@@ -5,7 +5,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import PublishIcon from '@material-ui/icons/Publish';
 import { constBlog } from '../../shared/constants';
 import { useRouter } from 'next/router';
-import { useAppContext } from '../../context/AppContext';
+import { useAppContext } from '../../context/app';
 import { deleteBlog, publishBlog as sendPublishRequest } from '../../api/blogs'
 
 export default function PostController({ visible, post }) {
@@ -32,20 +32,20 @@ export default function PostController({ visible, post }) {
     }
     return (visible ?
         <Box display="flex" justifyContent="flex-end" flexDirection="row">
-        <ButtonGroup>
-            {
-                !(post?.blogStatusPk == constBlog.State.Published) &&
-                <Button onClick={publishBlog}>
-                    <PublishIcon fontSize="large" />
-                </Button>
-            }
+            <ButtonGroup>
+                {
+                    !(post?.blogStatusPk == constBlog.State.Published) &&
+                    <Button onClick={publishBlog}>
+                        <PublishIcon fontSize="large" />
+                    </Button>
+                }
                 <Button onClick={navigateEditor}>
-                <BorderColorIcon style={{fontSize: 30, marginTop: 2}} color="#ba000d" />
-            </Button>
-                <Button onClick={ removeBlog}>
-                <DeleteIcon fontSize="large"/>
-            </Button>
-        </ButtonGroup>
+                    <BorderColorIcon style={{ fontSize: 30, marginTop: 2 }} color="#ba000d" />
+                </Button>
+                <Button onClick={removeBlog}>
+                    <DeleteIcon fontSize="large" />
+                </Button>
+            </ButtonGroup>
         </Box> : <div></div>
-        )
+    )
 }

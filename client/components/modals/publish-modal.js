@@ -2,19 +2,19 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import { Box, Button, ButtonGroup, Typography } from '@material-ui/core';
-import withModal from './withModal';
+import withModal from './with-modal';
 import PublishFloater from '../floaters/publish-floater';
 import { useBlogContext } from '../../context/blog';
-import TagSearch from '../forms/TagSearch';
+import { TagSearch } from '../forms/tag-search';
 
 function Trigger() {
-    return <PublishFloater/>
+    return <PublishFloater />
 }
 
-function Body({ onInteraction, handleClose}) {
+function Body({ onInteraction, handleClose }) {
     const {
         blog,
-        onTagSelect, 
+        onTagSelect,
         publish
     } = useBlogContext();
     return (

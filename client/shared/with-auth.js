@@ -1,12 +1,9 @@
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react'
-import Loader from '../components/Loader';
-import { useAppContext } from '../context/AppContext'
+import React from 'react'
 import { useAuth } from '../context/auth';
-import { GetUser } from '../helpers/UserStore';
 
 const withAuth = (WrappedComponent) => {
-    const Wrapper = ({ children, ...props })=> {
+    const Wrapper = ({ children, ...props }) => {
         const router = useRouter();
         const { user, loading } = useAuth();
 
@@ -17,7 +14,7 @@ const withAuth = (WrappedComponent) => {
         }
         return (<WrappedComponent {...props} >{children}</WrappedComponent>)
     }
-  
+
     return Wrapper
 }
 

@@ -6,10 +6,10 @@ import Grid from "@material-ui/core/Grid";
 import GitHubIcon from "@material-ui/icons/GitHub";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import TwitterIcon from "@material-ui/icons/Twitter";
-import Sidebar from "../shared/Sidebar";
-import Fetch from "../helpers/Fetch";
+import Sidebar from "../shared/sidebar";
+import Fetch from "../helpers/fetch";
 import { Avatar, Box, Divider, Typography } from "@material-ui/core";
-import BlogEditor from "../components/editor/BlogEditor";
+import BlogEditor from "../components/editor/blog-editor";
 import { getBlog } from "../api/blogs";
 import Profile from "../components/account/profile";
 
@@ -56,7 +56,7 @@ export default function Blog({ blog }) {
     <main>
       <Grid container spacing={5} className={classes.mainGrid}>
         <Grid item xs={12} md={8}>
-                  <Profile user={blog?.appUser} reputation={blog?.appUser?.reputation }/>
+          <Profile user={blog?.appUser} reputation={blog?.appUser?.reputation} />
 
           <Divider />
           <BlogEditor content={parseContent(blog.content)} />

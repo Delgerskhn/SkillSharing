@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import { useAppContext } from '../context/AppContext';
+import { useAppContext } from '../context/app';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 
@@ -28,9 +28,9 @@ export default function Loader() {
             open={isLoading}
             closeAfterTransition
         >
-            <Fade in={isLoading }>
-                    <CircularProgress />
+            <Fade in={isLoading}>
+                <CircularProgress />
             </Fade>
         </Modal>
-        );
+    );
 }

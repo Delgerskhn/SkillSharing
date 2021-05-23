@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { withAuth } from "../shared/withAuth";
+import { withAuth } from "../shared/with-auth";
 import Grid from "@material-ui/core/Grid";
-import BlogEditor from "../components/editor/BlogEditor";
-import TagSearch from "../components/forms/TagSearch";
+import BlogEditor from "../components/editor/blog-editor";
+import { TagSearch } from "../components/forms/tag-search";
 import { useBlogContext } from "../context/blog";
-import { AutoSaveAlert } from "../components/Alert";
+import { AutoSaveAlert } from "../components/alert";
 import PublishFloater from "../components/floaters/publish-floater";
 import PublishModal from "../components/modals/publish-modal";
 
@@ -14,28 +14,28 @@ function Editor({ blogPk }) {
     setVisible,
     blog,
     onNonInteractiveEditor,
-      onTagSelect,
-      fetchBlog
+    onTagSelect,
+    fetchBlog
   } = useBlogContext();
-    useEffect(() => {
-        fetchBlog(blogPk);
-    }, []);
+  useEffect(() => {
+    fetchBlog(blogPk);
+  }, []);
   return (
     <main>
-        <AutoSaveAlert
-          isVisible={autoSaveAlertVisible}
-          setIsVisible={setVisible}
+      <AutoSaveAlert
+        isVisible={autoSaveAlertVisible}
+        setIsVisible={setVisible}
+      />
+      <PublishModal />
+      <Grid container spacing={5} p={4}>
+        <Grid item xs={12}>
+          <BlogEditor
+            content={blog.content}
+            readOnly={false}
+            onNonInteractiveEditor={onNonInteractiveEditor}
           />
-          <PublishModal />
-        <Grid container spacing={5} p={4}>
-          <Grid item xs={12}>
-            <BlogEditor
-              content={blog.content}
-              readOnly={false}
-              onNonInteractiveEditor={onNonInteractiveEditor}
-            />
-          </Grid>
         </Grid>
+      </Grid>
     </main>
   );
 }

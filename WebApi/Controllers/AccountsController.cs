@@ -63,6 +63,7 @@ namespace WebApi.Controllers
         [Authorize]
         public async Task<IActionResult> GetUserInfo()
         {
+            Console.WriteLine(GetUserId());
             var u = await _appDbContext.Users.FindAsync(GetUserId());
             if (u == null)
                 return NotFound("User doesn't exist!");

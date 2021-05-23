@@ -7,11 +7,11 @@ import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
 import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
-import { useAppContext } from "../context/AppContext";
-import { AccountPopover } from "../components/Popover";
+import { useAppContext } from "../context/app";
+import { AccountPopover } from "../components/popover";
 import BorderColorIcon from "@material-ui/icons/BorderColor";
-import TagSearch from "../components/forms/TagSearch";
-import TagSelect from "../components/forms/TagSelect";
+import { TagSearch } from "../components/forms/tag-search";
+import TagSelect from "../components/forms/tag-select";
 import { useAuth } from "../context/auth";
 
 const useStyles = makeStyles(theme => ({
@@ -36,10 +36,10 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Header(props) {
-    const classes = useStyles();
-    const { user } = useAuth();
-    const { popularTags } = useAppContext();
-    const { title } = props;
+  const classes = useStyles();
+  const { user } = useAuth();
+  const { popularTags } = useAppContext();
+  const { title } = props;
   return (
     <React.Fragment>
       <Toolbar className={classes.toolbar}>
@@ -83,13 +83,13 @@ export default function Header(props) {
         variant="dense"
         className={classes.toolbarSecondary}
       >
-        {popularTags.slice(0,9).map(tag => (
+        {popularTags.slice(0, 9).map(tag => (
           <Link
             color="inherit"
             noWrap
             key={tag.pk}
             variant="body2"
-                href={'/?tag='+tag.pk}
+            href={'/?tag=' + tag.pk}
             className={classes.toolbarLink}
           >
             {tag.name}

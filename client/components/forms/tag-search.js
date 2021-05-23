@@ -3,9 +3,9 @@ import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/core/Autocomplete";
 import { makeStyles } from "@material-ui/core/styles";
 import { useRouter } from "next/router";
-import { onEnter } from "../../helpers/keyHandlers";
+import { onEnter } from "../../helpers/key-handlers";
 import { createTag, fetchTags, getTags } from "../../api/tags";
-import { useAppContext } from "../../context/AppContext";
+import { useAppContext } from "../../context/app";
 
 const useStyles = makeStyles(theme => ({
     input: {
@@ -13,7 +13,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default function TagSearch({ onSelectCallback, defaultValue }) {
+export function TagSearch({ onSelectCallback, defaultValue }) {
     const [tags, setTags] = React.useState([]);
     const [selectValue, setSelectValue] = React.useState([]);
     const [inputValue, setInputValue] = React.useState("");
@@ -32,7 +32,7 @@ export default function TagSearch({ onSelectCallback, defaultValue }) {
         const newTag = { name: inputValue }
         var result = await createTag(newTag)
         console.log(result)
-        onSelect(e,[...selectValue, result])
+        onSelect(e, [...selectValue, result])
     }
 
     const onSelect = async (ev, val) => {
@@ -63,7 +63,7 @@ export default function TagSearch({ onSelectCallback, defaultValue }) {
                     />
                 )}
             />
-           
+
         </div>
     );
 }

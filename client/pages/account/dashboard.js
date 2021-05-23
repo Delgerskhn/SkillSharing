@@ -7,13 +7,13 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import FeaturedPost from '../../components/blogs/FeaturedPost';
 import { useRouter } from 'next/router';
 import { constBlog } from '../../shared/constants';
 import { getBlogsByStatus } from '../../api/blogs';
-import { useAppContext } from '../../context/AppContext';
+import { useAppContext } from '../../context/app';
 import Profile from '../../components/account/profile';
 import { useAuth } from '../../context/auth';
+import { Post } from '../../components/blogs/post';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -88,7 +88,7 @@ export default function Dashboard() {
     }
 
     const handleChange = (event, newValue) => {
-        fetchPosts(newValue+1)
+        fetchPosts(newValue + 1)
         setStatus(newValue);
     };
 
@@ -96,7 +96,7 @@ export default function Dashboard() {
         <div className={classes.root}>
             <Grid mt={3} container spacing={4}>
                 <Grid item xs={12}>
-                    <Profile user={user} reputation={user?.withdrawReputation }/>
+                    <Profile user={user} reputation={user?.withdrawReputation} />
                 </Grid>
                 <Grid item xs={12}>
                     <Paper className={classes.root}>
@@ -114,11 +114,11 @@ export default function Dashboard() {
                         </Tabs>
                     </Paper>
                 </Grid>
-                    {posts.map((post) => (
-                        <FeaturedPost key={post.pk} post={post} hasController/>
-                    ))}
-                </Grid>
-            
+                {posts.map((post) => (
+                    <Post key={post.pk} post={post} hasController />
+                ))}
+            </Grid>
+
         </div>
-        );
+    );
 }

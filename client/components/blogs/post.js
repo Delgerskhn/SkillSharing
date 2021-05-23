@@ -20,56 +20,56 @@ const useStyles = makeStyles({
     flex: 1,
   },
   cardMedia: {
-      width: 160,
-      height: "100%"
+    width: 160,
+    height: "100%"
   },
 });
 
-export default function FeaturedPost(props) {
+export function Post(props) {
   const classes = useStyles();
-    const { post, hasController } = props;
-    const getJumpUrl = () => {
-        if (post?.blogStatusPk === constBlog.State.Published)
-            return '/blog?pk=' + post.pk
-        return '/editor?pk='+post.pk
-    }
+  const { post, hasController } = props;
+  const getJumpUrl = () => {
+    if (post?.blogStatusPk === constBlog.State.Published)
+      return '/blog?pk=' + post.pk
+    return '/editor?pk=' + post.pk
+  }
 
   return (
-      <Grid item xs={12} md={6}>
-          <Link href={getJumpUrl()}>
-          <CardActionArea component="a">
-        <Card className={classes.card}>
-          <div className={classes.cardDetails}>
-            <CardContent>
-              <Typography component="h2" variant="h5">
-                {post.title}
-              </Typography>
-              <Typography variant="subtitle1" color="textSecondary">
-                {new Date(post.createdOn).toISOString().split('T')[0]}
+    <Grid item xs={12} md={6}>
+      <Link href={getJumpUrl()}>
+        <CardActionArea component="a">
+          <Card className={classes.card}>
+            <div className={classes.cardDetails}>
+              <CardContent>
+                <Typography component="h2" variant="h5">
+                  {post.title}
+                </Typography>
+                <Typography variant="subtitle1" color="textSecondary">
+                  {new Date(post.createdOn).toISOString().split('T')[0]}
                 </Typography>
                 <Box component="div" display={{ xs: 'none', md: 'block' }}>
                   <Typography variant="subtitle1" paragraph>
                     {post.description}
                   </Typography>
                 </Box>
-              <Typography variant="subtitle1" color="primary">
-                Continue reading...
+                <Typography variant="subtitle1" color="primary">
+                  Continue reading...
               </Typography>
-            </CardContent>
+              </CardContent>
             </div>
             <Box component="div" display={{ xs: 'none', md: 'block' }} p={1} m={1} bgcolor="background.paper">
-                <CardMedia className={classes.cardMedia} image={post.img} title={post.title} />
+              <CardMedia className={classes.cardMedia} image={post.img} title={post.title} />
             </Box>
-          {/*<Hidden xsDown>
+            {/*<Hidden xsDown>
           </Hidden>*/}
-        </Card>
-      </CardActionArea>
-          </Link>
-          <PostController visible={hasController} post={ post } /> 
+          </Card>
+        </CardActionArea>
+      </Link>
+      <PostController visible={hasController} post={post} />
     </Grid>
   );
 }
 
-FeaturedPost.propTypes = {
+Post.propTypes = {
   post: PropTypes.object,
 };

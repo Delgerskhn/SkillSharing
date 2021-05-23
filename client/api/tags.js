@@ -1,4 +1,4 @@
-import Fetch from "../helpers/Fetch"
+import Fetch from "../helpers/fetch"
 
 let tags = []
 

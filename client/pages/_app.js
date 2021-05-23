@@ -7,10 +7,10 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import createCache from "@emotion/cache";
 import theme from "../src/theme";
 import "../styles/app.css";
-import Layout from "../shared/Layout";
-import { AppProvider, useAppContext } from "../context/AppContext";
-import Loader from "../components/Loader";
-import AuthLayout from "../shared/AuthLayout";
+import Layout from "../shared/layout";
+import { AppProvider, useAppContext } from "../context/app";
+import Loader from "../components/loader";
+import AuthLayout from "../shared/auth-layout";
 import { AuthProvider } from "../context/auth";
 import { BlogProvider } from "../context/blog";
 
