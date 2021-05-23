@@ -11,6 +11,7 @@ import Fetch from "../helpers/Fetch";
 import { Avatar, Box, Divider, Typography } from "@material-ui/core";
 import BlogEditor from "../components/editor/BlogEditor";
 import { getBlog } from "../api/blogs";
+import Profile from "../components/account/profile";
 
 const useStyles = makeStyles(theme => ({
   mainGrid: {
@@ -44,34 +45,21 @@ const sidebar = {
 
 export default function Blog({ blog }) {
   const classes = useStyles();
-    const parseContent = (contentStr) => {
-        try {
-            return JSON.parse(contentStr)
-        } catch {
-            return null
-        }
+  const parseContent = contentStr => {
+    try {
+      return JSON.parse(contentStr);
+    } catch {
+      return null;
     }
+  };
   return (
     <main>
       <Grid container spacing={5} className={classes.mainGrid}>
         <Grid item xs={12} md={8}>
-          <Box
-                      display="flex"
-                      justifyContent="flex-start"
-                      direction="row"
-                      mb={2}
-            alignItems="center"
-          >
-            <Box mr={2}>
-              <Avatar alt="Remy Sharp" />
-            </Box>
-            <Typography variant="subtitle1" color="textSecondary">
-              Remy Sharp
-            </Typography>
-          </Box>
+                  <Profile user={blog?.appUser} reputation={blog?.appUser?.reputation }/>
 
           <Divider />
-                  <BlogEditor content={parseContent(blog.content)}/>
+          <BlogEditor content={parseContent(blog.content)} />
         </Grid>
 
         <Sidebar
@@ -88,8 +76,8 @@ export default function Blog({ blog }) {
 export async function getServerSideProps({ query }) {
   console.log(query);
   const { pk } = query;
-    // Fetch data from external API
-    var res = await getBlog(pk)
+  // Fetch data from external API
+  var res = await getBlog(pk);
   // Pass data to the page via props
   return { props: { blog: res } };
 }

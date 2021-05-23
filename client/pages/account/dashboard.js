@@ -12,6 +12,8 @@ import { useRouter } from 'next/router';
 import { constBlog } from '../../shared/constants';
 import { getBlogsByStatus } from '../../api/blogs';
 import { useAppContext } from '../../context/AppContext';
+import Profile from '../../components/account/profile';
+import { useAuth } from '../../context/auth';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -68,7 +70,7 @@ export default function Dashboard() {
     const [status, setStatus] = React.useState(0);
     const [posts, setPosts] = React.useState([])
     const { setIsLoading } = useAppContext()
-
+    const { user } = useAuth()
 
     useEffect(() => {
         const { query } = router
@@ -92,21 +94,26 @@ export default function Dashboard() {
 
     return (
         <div className={classes.root}>
-            <Paper className={classes.root}>
-                <Tabs
-                    value={status}
-                    onChange={handleChange}
-                    indicatorColor="primary"
-                    textColor="primary"
-                    centered
-                >
-                    <Tab label="Pending" />
-                    <Tab label="Published" />
-                    <Tab label="Declined" />
-                    <Tab label="Draft"  />
-                </Tabs>
-            </Paper>
             <Grid mt={3} container spacing={4}>
+                <Grid item xs={12}>
+                    <Profile user={user} reputation={user?.withdrawReputation }/>
+                </Grid>
+                <Grid item xs={12}>
+                    <Paper className={classes.root}>
+                        <Tabs
+                            value={status}
+                            onChange={handleChange}
+                            indicatorColor="primary"
+                            textColor="primary"
+                            centered
+                        >
+                            <Tab label="Pending" />
+                            <Tab label="Published" />
+                            <Tab label="Declined" />
+                            <Tab label="Draft" />
+                        </Tabs>
+                    </Paper>
+                </Grid>
                     {posts.map((post) => (
                         <FeaturedPost key={post.pk} post={post} hasController/>
                     ))}

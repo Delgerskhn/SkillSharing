@@ -18,6 +18,9 @@
   <ItemGroup>
     <Content Include=".env" />
     <Content Include=".env.development" />
+    <Content Include="api\account.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="api\auth.js">
       <SubType>Code</SubType>
     </Content>
@@ -81,7 +84,7 @@
     <Content Include="pages\account\dashboard.js">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="pages\account\profile.js">
+    <Content Include="components\account\profile.js">
       <SubType>Code</SubType>
     </Content>
     <Content Include="pages\auth\signup.js">
@@ -128,6 +131,7 @@
     <Folder Include="components\editor\" />
     <Folder Include="components\modals\" />
     <Folder Include="components\floaters\" />
+    <Folder Include="components\account\" />
     <Folder Include="context\" />
     <Folder Include="helpers\" />
     <Folder Include="api\" />

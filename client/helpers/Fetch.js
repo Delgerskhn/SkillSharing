@@ -1,5 +1,14 @@
 import { GetUser } from "./UserStore";
 
+
+export const WrapResult = (ok, data, message) => {
+    return {
+        Ok: ok,
+        Data: data,
+        Message: message
+    }
+}
+
 const Fetch = async (path, method, body, secure = false) => {
     var headers = new Headers();
     if (secure) headers.append("Authorization", `Bearer ${GetUser()?.auth_token}`);
