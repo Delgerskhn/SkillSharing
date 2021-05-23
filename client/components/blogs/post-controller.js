@@ -5,18 +5,24 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import PublishIcon from '@material-ui/icons/Publish';
 import { constBlog } from '../../shared/constants';
 import { useRouter } from 'next/router';
-
+import { useAppContext } from '../../context/AppContext';
+import { publishBlog as sendPublishRequest } from '../../api/blogs'
 
 export default function PostController({ visible, post }) {
     const router = useRouter()
+    const { setIsLoading, setErrorMsg } = useAppContext()
     const navigateEditor = () => {
         router.push('/editor?pk=' + post.pk)
     }
     const removeBlog = () => {
 
     }
-    const publishBlog = () => {
-
+    const publishBlog = async () => {
+        setIsLoading(true)
+        const res = await sendPublishRequest(post.pk)
+        setIsLoading(false)
+        if (res.Ok) window.location.pathname = '/account/dashboard'
+        else setErrorMsg(res.Message)
     }
     return (visible ?
         <Box display="flex" justifyContent="flex-end" flexDirection="row">
