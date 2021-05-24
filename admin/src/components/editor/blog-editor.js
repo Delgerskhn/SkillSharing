@@ -17,7 +17,7 @@ import {
 import { withHistory } from 'slate-history'
 
 import { Button, Icon, Toolbar } from './components'
-import { constEditor } from '../../shared/constants'
+import { constEditor } from '../../utils/constants'
 
 const HOTKEYS = {
     'mod+b': 'bold',

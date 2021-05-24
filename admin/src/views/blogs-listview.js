@@ -8,7 +8,7 @@ import getParam from "../utils/query-string.js";
 import { getBlogs } from "./data.js";
 
 function imgRender(data) {
-  return <img width="200" src={data.value} />;
+  return <img width="150" src={data.value} />;
 }
 
 function BlogsLV(props) {
@@ -26,6 +26,7 @@ function BlogsLV(props) {
       dataSource={blogs}
       keyExpr="pk"
       columnAutoWidth={true}
+      wordWrapEnabled
       showBorders={true}
     >
       <Column dataField="title" caption="Title" />
@@ -35,15 +36,15 @@ function BlogsLV(props) {
         allowSorting={false}
         cellRender={imgRender}
       />
-      <Column dataField="description" caption="Description" />
+      <Column dataField="description" caption="Description" width="300" />
       <Column dataField="likes" caption="Likes" dataType="number" />
       <Column dataField="createdOn" caption="Created" dataType="date" />
       <Column dataField="appUser.email" caption="Writer" />
       <Column dataField="appUser.reputation" caption="Writer Reputation" />
-      {/*<MasterDetail
-                    enabled={true}
-                    component={BlogsDV}
-                />*/}
+      <MasterDetail
+        enabled={true}
+        component={BlogsDV}
+      />
     </DataGrid>
   );
 }
