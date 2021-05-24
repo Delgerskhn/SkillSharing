@@ -11,15 +11,15 @@ const Fetch = async (path, method, body, secure = false) => {
         headers: headers
     };
     if (body) options.body = JSON.stringify(body);
-    var req = await fetch(`${process.env.REACT_APP_API_HOST}/api${path}`, options)
+    var req = await fetch(`${process.env.REACT_APP_API_HOST_DEV}/api${path}`, options)
     if (req.status === 401) removeUser()
 
     var res = await req.text();
+    console.log(res, req)
     try {
         res = JSON.parse(res);
     } catch (err) {
     }
-    console.log(res)
     if (req.ok) return res
     throw res
 }

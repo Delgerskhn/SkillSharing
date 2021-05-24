@@ -8,7 +8,7 @@ export async function signIn(email, password) {
           email: email,
           password: password
       }
-      var res = await Fetch('/auth/login', 'post', body, true);
+      var res = await Fetch('/auth/login', 'post', body, false);
       res.avatarUrl = defaultUser.avatarUrl
       saveUser(res)
     return {
@@ -19,7 +19,7 @@ export async function signIn(email, password) {
   catch(ex) {
     return {
       isOk: false,
-      message: ex?.login_failure[0] || "Authentication failed"
+      message: ex?.login_failure && ex?.login_failure[0] || "Authentication failed"
     };
   }
 }
@@ -36,7 +36,6 @@ export function getUser() {
   try {
       // Send request
       var u = JSON.parse(localStorage.getItem('user'))
-      
     return {
       isOk: true,
       data: u

@@ -13,7 +13,7 @@ namespace WebApi.Entities
         public int Pk { get; set; }
         public int? BlogPk { get; set; }
         [ForeignKey("AppUser")]
-        public string UserPk { get; set; }
+        public string? UserPk { get; set; }
 
         public virtual Blog BlogPkNavigation { get; set; }
         public virtual AppUser AppUser { get; set; }
