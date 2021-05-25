@@ -32,6 +32,11 @@ export async function getBlogsByStatus(status) {
     return res;
 }
 
+export async function getBlogsByContent(query) {
+    var res = await Fetch('/readers/search', 'post', query)
+    return res
+}
+
 export async function updateBlog(blog) {
     var res = await Fetch("/writers/" + blog.pk, "put", blog, true);
     return res;

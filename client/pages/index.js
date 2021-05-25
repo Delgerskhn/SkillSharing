@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
@@ -6,27 +6,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import Fetch from "../helpers/fetch";
 import PropTypes from "prop-types";
 import { Button } from "@material-ui/core";
-import { getBlogsByTag, getLatestBlogs } from "../api/blogs";
+import { getBlogsByContent, getBlogsByTag, getLatestBlogs } from "../api/blogs";
 import { Post } from "../components/blogs/post";
-
-const featuredPosts = [
-  {
-    title: "Featured post",
-    date: "Nov 12",
-    description:
-      "This is a wider card with supporting text below as a natural lead-in to additional content.",
-    image: "https://source.unsplash.com/random",
-    imageText: "Image Text"
-  },
-  {
-    title: "Post title",
-    date: "Nov 11",
-    description:
-      "This is a wider card with supporting text below as a natural lead-in to additional content.",
-    image: "https://source.unsplash.com/random",
-    imageText: "Image Text"
-  }
-];
+import { SearchInput } from '../components/forms/search-input'
+import { useAppContext } from "../context/app";
 
 const useStyles = makeStyles(theme => ({
   heroContent: {
@@ -35,8 +18,21 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Index({ posts }) {
+export default function Index({ prePosts }) {
+  const [posts, setPosts] = useState(prePosts)
   const classes = useStyles();
+  const { setIsLoading, setErrorMsg } = useAppContext()
+  const searchContent = async (value) => {
+    setIsLoading(true)
+    try {
+      var res = await getBlogsByContent(value)
+      setPosts(res)
+    } catch (ex) {
+      console.log(ex)
+      setErrorMsg(ex)
+    }
+    setIsLoading(false)
+  }
   return (
     <main>
       <div className={classes.heroContent}>
@@ -50,30 +46,7 @@ export default function Index({ posts }) {
           >
             Watchu lookinfo?
           </Typography>
-          <Typography
-            variant="h5"
-            align="center"
-            color="textSecondary"
-            paragraph
-          >
-            Something short and leading about the collection below�its contents,
-            the creator, etc. Make it short and sweet, but not too short so
-            folks don&apos;t simply skip over it entirely.
-          </Typography>
-          <div className={classes.heroButtons}>
-            <Grid container spacing={2} justify="center">
-              <Grid item>
-                <Button variant="contained" color="primary">
-                  Main call to action
-                </Button>
-              </Grid>
-              <Grid item>
-                <Button variant="outlined" color="primary">
-                  Secondary action
-                </Button>
-              </Grid>
-            </Grid>
-          </div>
+          <SearchInput onSubmitCallback={searchContent} />
         </Container>
       </div>
 
@@ -103,5 +76,5 @@ export async function getServerSideProps({ query }) {
     res = [];
   }
   // Pass data to the page via props
-  return { props: { posts: res } };
+  return { props: { prePosts: res } };
 }

@@ -57,7 +57,7 @@ namespace WebApi.Services
 
         public async Task<Blog> GetBlog(int pk)
         {
-            return await _context.Blogs.Where(r=>r.Pk==pk).Include(r=>r.Tags).Include(r=>r.AppUser).FirstAsync();
+            return await _context.Blogs.Where(r => r.Pk == pk).Include(r => r.Tags).Include(r => r.AppUser).FirstAsync();
         }
 
         public async Task<List<Blog>> GetBlogsByStatus(int statusPk)
@@ -71,21 +71,21 @@ namespace WebApi.Services
 
         public async Task<List<Blog>> GetBlogsByTag(Tag tag)
         {
-            var q = await(from b in _context.Blogs.Where(r => r.BlogStatusPk == Constants.Blogs.ApprovedStatusPk)
-                          where b.Tags.Contains(tag)
-                          select new Blog
-                          {
-                              Pk = b.Pk,
-                              Title = b.Title,
-                              Img = b.Img,
-                              Content = b.Content,
-                              AppUser = new AppUser
-                              {
-                                  UserName = b.AppUser.UserName
-                              },
-                              Tags = b.Tags,
-                              CreatedOn = b.CreatedOn
-                          }).ToListAsync();
+            var q = await (from b in _context.Blogs.Where(r => r.BlogStatusPk == Constants.Blogs.ApprovedStatusPk)
+                           where b.Tags.Contains(tag)
+                           select new Blog
+                           {
+                               Pk = b.Pk,
+                               Title = b.Title,
+                               Img = b.Img,
+                               Content = b.Content,
+                               AppUser = new AppUser
+                               {
+                                   UserName = b.AppUser.UserName
+                               },
+                               Tags = b.Tags,
+                               CreatedOn = b.CreatedOn
+                           }).ToListAsync();
             return q;
         }
 
@@ -100,9 +100,9 @@ namespace WebApi.Services
 
         public async Task<Blog> GetUserBlog(int pk, string userpk)
         {
-            var blog = await _context.Blogs.Where(r=>r.Pk == pk 
+            var blog = await _context.Blogs.Where(r => r.Pk == pk
             && r.UserPk == userpk
-            ).Include(r=>r.Tags).FirstOrDefaultAsync();
+            ).Include(r => r.Tags).FirstOrDefaultAsync();
             return blog;
         }
 
@@ -110,12 +110,12 @@ namespace WebApi.Services
         {
             var q = await _context.BlogStatuses.Where(r => r.Pk == status)
                     .Include(r => r.Blogs.Where(b => b.UserPk == userpk))
-                    .Select(r=>r.Blogs.ToList())
+                    .Select(r => r.Blogs.ToList())
                     .FirstOrDefaultAsync();
             return q;
         }
 
-        public async  Task UpdateBlogStatus(Blog blog)
+        public async Task UpdateBlogStatus(Blog blog)
         {
             _context.Blogs.Update(blog);
             await _context.SaveChangesAsync();
@@ -123,7 +123,7 @@ namespace WebApi.Services
 
         public async Task UpdateUserBlog(string userpk, Blog blog)
         {
-            var persistentBlog = await _context.Blogs.Where(r=>r.Pk == blog.Pk).Include(r=>r.Tags).FirstAsync();
+            var persistentBlog = await _context.Blogs.Where(r => r.Pk == blog.Pk).Include(r => r.Tags).FirstAsync();
             persistentBlog.BlogStatusPk = BlogState.Draft.Val();
             persistentBlog.Img = blog.Img;
             persistentBlog.Title = blog.Title;
@@ -134,6 +134,8 @@ namespace WebApi.Services
             foreach (var t in tagsToRemove) persistentBlog.Tags.Remove(t);
             var tagsToAdd = blog.Tags.LeftExcept(persistentBlog.Tags);
             foreach (var t in tagsToAdd) persistentBlog.Tags.Add(t);
+
+            await _context.Database.ExecuteSqlRawAsync(string.Format("SELECT public.upd_blog_vectors({0})", blog.Pk));
 
             await _context.SaveChangesAsync();
         }

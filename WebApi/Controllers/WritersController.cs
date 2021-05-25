@@ -16,7 +16,7 @@ using WebApi.Services;
 
 namespace SkillSharing.Controllers
 {
-    [Authorize( Policy = "ApiUser")]
+    [Authorize(Policy = "ApiUser")]
     [Route("api/[controller]")]
     [ApiController]
     public class WritersController : ControllerBase
@@ -44,13 +44,14 @@ namespace SkillSharing.Controllers
         [HttpPost("publish/{pk}")]
         public async Task<IActionResult> Publish(int pk)
         {
-            if(_blogService.UserBlogExists(pk, GetUserId()))
+            if (_blogService.UserBlogExists(pk, GetUserId()))
             {
                 var blog = await _blogService.GetUserBlog(pk, GetUserId());
                 blog.BlogStatusPk = BlogState.Pending.Val();
                 await _blogService.UpdateBlogStatus(blog);
                 return NoContent();
-            }else
+            }
+            else
             {
                 return BadRequest("Blog doesn't exist!");
             }
@@ -106,7 +107,7 @@ namespace SkillSharing.Controllers
         [HttpPost("tag")]
         public async Task<ActionResult> PostTag(Tag tag)
         {
-            if(await _context.Tags.AnyAsync(r=>r.Pk == (int)tag.Pk || r.Name == tag.Name))
+            if (await _context.Tags.AnyAsync(r => r.Pk == (int)tag.Pk || r.Name == tag.Name))
             {
                 await _context.AddAsync(tag);
                 await _context.SaveChangesAsync();
@@ -115,13 +116,13 @@ namespace SkillSharing.Controllers
             return new BadRequestObjectResult("Tag already exist!");
         }
 
-        
+
 
         // DELETE: api/Writers/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBlog(int id)
         {
-            if(!_blogService.UserBlogExists(id, GetUserId()))
+            if (!_blogService.UserBlogExists(id, GetUserId()))
             {
                 return NotFound();
             }

@@ -29,7 +29,19 @@ namespace WebApi.Migrations
 	            for each row
                 execute procedure update_blog_vectors();
 
+                CREATE OR REPLACE FUNCTION public.upd_blog_vectors(
+                    blogPk int)
+                    RETURNS int
+                    LANGUAGE 'sql'
 
+                    COST 100
+                    VOLATILE 
+                AS $BODY$
+                update ""Blogs"" 
+                set ""DocumentVectors"" = (to_tsvector(""Title"") || to_tsvector(""Content"") || to_tsvector(""Description""))
+                where ""Pk"" = blogPk;
+                select 1
+                $BODY$;
                 
                 create or replace function Blogs_Sel_Query(search_query character varying)
 	                returns setof ""Blogs""
