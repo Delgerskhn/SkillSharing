@@ -8,7 +8,7 @@ const withAuth = (WrappedComponent) => {
         const { user, loading } = useAuth();
 
         if (!loading) {
-            if (user == null) router.push('auth/login')
+            if (user == null) router.push('/auth/login')
         } else {
             return <div></div>
         }

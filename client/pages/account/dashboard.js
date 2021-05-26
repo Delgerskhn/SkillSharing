@@ -14,6 +14,7 @@ import { useAppContext } from '../../context/app';
 import Profile from '../../components/account/profile';
 import { useAuth } from '../../context/auth';
 import { Post } from '../../components/blogs/post';
+import { withAuth } from '../../shared/with-auth';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -46,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
     },
 }));
-export default function Dashboard() {
+function Dashboard() {
     const classes = useStyles();
     const router = useRouter()
     const [status, setStatus] = React.useState(0);
@@ -60,6 +61,7 @@ export default function Dashboard() {
         if (Number.isInteger(query.status)) {
             handleChange(null, query.status - 1)
         } else handleChange(null, 0)
+        return () => setIsLoading(false);
     }, [router.query])
 
     const fetchPosts = async (status) => {
@@ -104,3 +106,6 @@ export default function Dashboard() {
         </div>
     );
 }
+
+
+export default withAuth(Dashboard)

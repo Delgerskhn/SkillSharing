@@ -16,7 +16,6 @@ function AppProvider(props) {
     const [successMsg, setSuccessMsg] = React.useState('')
     const [errorMsg, setErrorMsg] = React.useState('')
     const [popularTags, setTags] = React.useState([])
-    const [ userInfo, setUser ] = React.useState({})
 
     const hideAlerts = () => {
         setSuccessMsg('')
@@ -25,13 +24,11 @@ function AppProvider(props) {
 
     React.useEffect(() => {
         (async function () {
-            var user = await getAccountInfo();
-            setUser(user);
             await fetchTags()
             setTags(getTags)
         })()
     }, [])
-   
+
     React.useEffect(() => {
         setTimeout(hideAlerts, 2000)
     }, [successMsg, errorMsg])
@@ -43,8 +40,7 @@ function AppProvider(props) {
         errorMsg,
         setSuccessMsg,
         setErrorMsg,
-        popularTags,
-        userInfo
+        popularTags
     };
     return <AppContext.Provider value={value} {...props} />
 }

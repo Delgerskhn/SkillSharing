@@ -14,7 +14,7 @@ function AuthProvider(props) {
             const result = await getAccountInfo();
             if (result.Ok) {
                 setUser(result.Data);
-            }
+            } else setUser(null);
             setLoading(false);
             setIsLoading(false);
         })();

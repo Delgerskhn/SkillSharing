@@ -4,9 +4,9 @@
         {
             "type": "pwa-msedge",
             "request": "launch",
-            "name": "Launch Edge against localhost",
+            "name": "Client app",
             "url": "http://localhost:3000",
-            "webRoot": "${workspaceFolder}/admin"
+            "webRoot": "${workspaceFolder}/client"
         },
         {
             // Use IntelliSense to find out which attributes exist for C# debugging
