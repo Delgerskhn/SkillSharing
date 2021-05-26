@@ -25,24 +25,6 @@ export async function signIn(email, password) {
     }
 }
 
-export function getUser() {
-    try {
-
-        // Send request
-        var u = GetUser()
-
-        return {
-            isOk: true,
-            data: u
-        };
-    }
-    catch {
-        return {
-            isOk: false
-        };
-    }
-}
-
 export async function createAccount(email, password) {
     try {
         // Send request

@@ -13,9 +13,9 @@ import BorderColorIcon from '@material-ui/icons/BorderColor';
 import { useAuth } from '../context/auth';
 
 const useStyles = makeStyles((theme) => ({
-  typography: {
-    padding: theme.spacing(2),
-  },
+    typography: {
+        padding: theme.spacing(2),
+    },
 }));
 
 function AccountPopover() {
@@ -26,7 +26,7 @@ function AccountPopover() {
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
-   
+
     const handleClose = () => {
         setAnchorEl(null);
     };
@@ -43,7 +43,7 @@ function AccountPopover() {
                     align="left"
                     noWrap
                 >
-                    {user.email}
+                    {user.firstName}
                 </Typography>
             </Button>
             <Popover
@@ -73,7 +73,7 @@ function AccountPopover() {
                         </ListItemIcon>
                         <ListItemText primary="Write" />
                     </ListItemLink>
-                    <ListItem button onClick={ LogOut }>
+                    <ListItem button onClick={LogOut}>
                         <ListItemIcon>
                             <ExitToAppIcon />
                         </ListItemIcon>

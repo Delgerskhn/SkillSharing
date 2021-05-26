@@ -1,4 +1,5 @@
 import React, { useState, useEffect, createContext, useContext, useCallback } from 'react';
+import { getAccountInfo } from '../api/account';
 import { getUser, removeUser, signIn as sendSignInRequest } from '../api/auth';
 import { useAppContext } from './app';
 
@@ -10,11 +11,10 @@ function AuthProvider(props) {
     useEffect(() => {
         (async function () {
             setIsLoading(true);
-            const result = await getUser();
-            if (result.isOk) {
-                setUser(result.data);
+            const result = await getAccountInfo();
+            if (result.Ok) {
+                setUser(result.Data);
             }
-
             setLoading(false);
             setIsLoading(false);
         })();
