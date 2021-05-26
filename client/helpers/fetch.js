@@ -21,7 +21,7 @@ const Fetch = async (path, method, body, secure = false) => {
     };
     if (body) options.body = JSON.stringify(body);
     var req = await fetch(`${process.env.NEXT_PUBLIC_API_HOST_DEV}${path}`, options)
-    if (req.status === 404) window.location.pathname = '/auth/login'
+    if (req.status === 401) window.location.pathname = '/auth/login'
     var res = await req.text();
     try {
         var temp = JSON.parse(res);
