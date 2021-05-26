@@ -2,11 +2,12 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Avatar, Box, Button, Grid, Typography } from "@material-ui/core";
 import StarIcon from '@material-ui/icons/Star';
-const styles = {
 
+const styles = {
 };
+
 const useStyles = makeStyles(styles);
-export default function Profile({ user, reputation, hasInteraction }) {
+export default function Profile({ user, reputation, onClick }) {
     const classes = useStyles();
     return (
         <Box
@@ -32,7 +33,7 @@ export default function Profile({ user, reputation, hasInteraction }) {
                 display="flex"
                 ml={5}
             >
-                <Button disabled={!hasInteraction}>
+                <Button disabled={!onClick} onClick={onClick}>
                     <StarIcon fontSize="large" />
                     <Typography variant="subtitle1" color="textSecondary">
                         {reputation}

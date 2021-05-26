@@ -63,7 +63,7 @@ export default function Blog({ blog }) {
     <main>
       <Grid container spacing={5} className={classes.mainGrid}>
         <Grid item xs={12} md={8}>
-          <Profile user={blog?.appUser} reputation={blog?.appUser?.reputation} hasInteraction={false} />
+          <Profile user={blog?.appUser} reputation={blog?.appUser?.reputation}  />
 
           <Divider />
           <BlogEditor content={parseContent(blog.content)} />

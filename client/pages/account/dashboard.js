@@ -15,6 +15,7 @@ import Profile from '../../components/account/profile';
 import { useAuth } from '../../context/auth';
 import { Post } from '../../components/blogs/post';
 import { withAuth } from '../../shared/with-auth';
+import { withdrawSalary } from '../../api/account';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -76,11 +77,17 @@ function Dashboard() {
         setStatus(newValue);
     };
 
+    const onWithdraw = async () => {
+        setIsLoading(true);
+        let res = await withdrawSalary()
+        setIsLoading(false);
+    }
+
     return (
         <div className={classes.root}>
             <Grid mt={3} container spacing={4}>
                 <Grid item xs={12}>
-                    <Profile hasInteraction={true} user={user} reputation={user?.withdrawReputation} />
+                    <Profile onClick={onWithdraw} user={user} reputation={user?.withdrawReputation} />
                 </Grid>
                 <Grid item xs={12}>
                     <Paper className={classes.root}>
