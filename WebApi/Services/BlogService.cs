@@ -108,10 +108,11 @@ namespace WebApi.Services
 
         public async Task<List<Blog>> GetUserBlogsByStatus(string userpk, int status)
         {
-            var q = await _context.BlogStatuses.Where(r => r.Pk == status)
-                    .Include(r => r.Blogs.Where(b => b.UserPk == userpk))
-                    .Select(r => r.Blogs.ToList())
-                    .FirstOrDefaultAsync();
+            var q = await _context.Blogs.Where(r=>r.BlogStatusPk == status && r.UserPk == userpk).ToListAsync();
+            // var q = await _context.BlogStatuses.Where(r => r.Pk == status)
+            //         .Include(r => r.Blogs.Where(b => b.UserPk == userpk))
+            //         .Select(r => r.Blogs.ToList())
+            //         .FirstOrDefaultAsync();
             return q;
         }
 
