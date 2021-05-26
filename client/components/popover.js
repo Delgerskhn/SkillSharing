@@ -43,7 +43,7 @@ function AccountPopover() {
                     align="left"
                     noWrap
                 >
-                    {user.firstName}
+                    {user.firstName || user.email}
                 </Typography>
             </Button>
             <Popover
