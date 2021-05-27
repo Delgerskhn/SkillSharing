@@ -53,7 +53,7 @@ function Dashboard() {
     const router = useRouter()
     const [status, setStatus] = React.useState(0);
     const [posts, setPosts] = React.useState([])
-    const { setIsLoading } = useAppContext()
+    const { setIsLoading, setSuccessMsg } = useAppContext()
     const { user } = useAuth()
 
     useEffect(() => {
@@ -80,6 +80,7 @@ function Dashboard() {
     const onWithdraw = async () => {
         setIsLoading(true);
         let res = await withdrawSalary()
+        setSuccessMsg('Withdraw successful!')
         setIsLoading(false);
     }
 
