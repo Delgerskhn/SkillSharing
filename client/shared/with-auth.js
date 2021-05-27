@@ -5,10 +5,13 @@ import { useAuth } from '../context/auth';
 const withAuth = (WrappedComponent) => {
     const Wrapper = ({ children, ...props }) => {
         const router = useRouter();
-        const { user, loading } = useAuth();
+        const { user, loading, signOut } = useAuth();
 
         if (!loading) {
-            if (user == null) router.push('/auth/login')
+            if (user == null) {
+                signOut()
+                router.push('/auth/login')
+            }
         } else {
             return <div></div>
         }

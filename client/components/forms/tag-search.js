@@ -17,7 +17,7 @@ export function TagSearch({ onSelectCallback, defaultValue }) {
     const [tags, setTags] = React.useState([]);
     const [selectValue, setSelectValue] = React.useState([]);
     const [inputValue, setInputValue] = React.useState("");
-    const { popularTags } = useAppContext()
+    const { popularTags, setIsLoading } = useAppContext()
 
     useEffect(() => {
         setTags(popularTags)
@@ -30,7 +30,9 @@ export function TagSearch({ onSelectCallback, defaultValue }) {
 
     const addNewTag = async (e) => {
         const newTag = { name: inputValue }
+        setIsLoading(true)
         var result = await createTag(newTag)
+        setIsLoading(false)
         console.log(result)
         onSelect(e, [...selectValue, result])
     }

@@ -7,7 +7,6 @@ const createTag = async (tag) => {
     try {
         return await Fetch('/writers/tag', 'post', tag, true)
     } catch {
-        return tag
     }
 }
 

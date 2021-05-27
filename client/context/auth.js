@@ -29,7 +29,7 @@ function AuthProvider(props) {
     }
 
     const signOut = () => {
-        setUser();
+        setUser(null);
         removeUser();
     }
 
