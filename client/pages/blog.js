@@ -10,9 +10,11 @@ import Sidebar from "../shared/sidebar";
 import Fetch from "../helpers/fetch";
 import { Avatar, Box, Divider, Typography } from "@material-ui/core";
 import BlogEditor from "../components/editor/blog-editor";
-import { getBlog } from "../api/blogs";
+import { getBlog, writeComment } from "../api/blogs";
 import Profile from "../components/account/profile";
 import { useBlogContext } from "../context/blog";
+import { useAuth } from "../context/auth";
+import Comments from '../components/blogs/comments'
 
 const useStyles = makeStyles(theme => ({
   mainGrid: {
@@ -46,7 +48,14 @@ const sidebar = {
 
 export default function Blog({ blog }) {
   const classes = useStyles();
-  const { setBlog } = useBlogContext()
+  const { setBlog, setComments, comments } = useBlogContext()
+  const { user } = useAuth()
+
+  const sendComment = async (value) => {
+    let comment = { content: value, userPk: user.id, blogPk: blog.pk };
+    let res = await writeComment(comment)
+    setComments([...comments, comment])
+  }
 
   const parseContent = contentStr => {
     try {
@@ -58,12 +67,13 @@ export default function Blog({ blog }) {
 
   useEffect(() => {
     setBlog(blog)
+    setComments(blog?.comments || [])
   }, [])
   return (
     <main>
       <Grid container spacing={5} className={classes.mainGrid}>
         <Grid item xs={12} md={8}>
-          <Profile user={blog?.appUser} reputation={blog?.appUser?.reputation}  />
+          <Profile user={blog?.appUser} reputation={blog?.appUser?.reputation} />
 
           <Divider />
           <BlogEditor content={parseContent(blog.content)} />
@@ -75,6 +85,8 @@ export default function Blog({ blog }) {
           archives={sidebar.archives}
           social={sidebar.social}
         />
+
+        <Comments onSubmit={sendComment} comments={comments} />
       </Grid>
     </main>
   );

@@ -57,7 +57,10 @@ namespace WebApi.Services
 
         public async Task<Blog> GetBlog(int pk)
         {
-            return await _context.Blogs.Where(r => r.Pk == pk).Include(r => r.Tags).Include(r => r.AppUser).FirstAsync();
+            return await _context.Blogs.Where(r => r.Pk == pk)
+                            .Include(r => r.Tags)
+                            .Include(r => r.AppUser)
+                            .Include(r => r.Comments).FirstAsync();
         }
 
         public async Task<List<Blog>> GetBlogsByStatus(int statusPk)
@@ -108,7 +111,7 @@ namespace WebApi.Services
 
         public async Task<List<Blog>> GetUserBlogsByStatus(string userpk, int status)
         {
-            var q = await _context.Blogs.Where(r=>r.BlogStatusPk == status && r.UserPk == userpk).ToListAsync();
+            var q = await _context.Blogs.Where(r => r.BlogStatusPk == status && r.UserPk == userpk).ToListAsync();
             // var q = await _context.BlogStatuses.Where(r => r.Pk == status)
             //         .Include(r => r.Blogs.Where(b => b.UserPk == userpk))
             //         .Select(r => r.Blogs.ToList())

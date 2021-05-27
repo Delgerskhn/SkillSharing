@@ -3,10 +3,11 @@ import { useAppContext } from './app';
 
 function BlogProvider(props) {
     const [blog, setBlog] = useState({})
+    const [comments, setComments] = useState([])
     const { setIsLoading } = useAppContext();
 
     return (
-        <BlogContext.Provider value={{ blog, setBlog }} {...props} />
+        <BlogContext.Provider value={{ blog, setBlog, comments, setComments }} {...props} />
     );
 }
 

@@ -1,4 +1,4 @@
-import Fetch from "../helpers/fetch";
+import Fetch, { WrapResult } from "../helpers/fetch";
 import { GetUser } from "../helpers/user-store";
 
 export async function likeBlog(blogPk) {
@@ -67,5 +67,15 @@ export async function deleteBlog(blogPk) {
         return { Ok: true }
     } catch (ex) {
         return { Ok: false, Message: "An error occured!" }
+    }
+}
+
+
+export async function writeComment(comment) {
+    try {
+        var res = await Fetch('/readers/comment', 'post', comment, true)
+        return WrapResult(true, res)
+    } catch (ex) {
+        return WrapResult(false, "An error occured!")
     }
 }
