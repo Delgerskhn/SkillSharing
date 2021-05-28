@@ -20,7 +20,7 @@ const Fetch = async (path, method, body, secure = false) => {
         headers: headers
     };
     if (body) options.body = JSON.stringify(body);
-    var req = await fetch(`${process.env.NEXT_PUBLIC_API_HOST_DEV}${path}`, options)
+    var req = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}${path}`, options)
     var res = await req.text();
     try {
         var temp = JSON.parse(res);
