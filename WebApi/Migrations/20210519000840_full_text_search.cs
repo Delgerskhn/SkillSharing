@@ -48,7 +48,7 @@ namespace WebApi.Migrations
                 as
                 $$
 
-                    select * from ""Blogs"" where ""DocumentVectors"" @@ plainto_tsquery(search_query);
+                    select * from ""Blogs"" where ""DocumentVectors"" @@ plainto_tsquery(search_query) and ""BlogStatusPk"" = 2;; 
                 $$
                 language sql;
             ",
