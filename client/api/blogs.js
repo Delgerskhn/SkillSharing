@@ -73,7 +73,7 @@ export async function deleteBlog(blogPk) {
 
 export async function writeComment(comment) {
     try {
-        var res = await Fetch('/readers/comment', 'post', comment, true)
+        var res = await Fetch('/readers/comment', 'post', comment)
         return WrapResult(true, res)
     } catch (ex) {
         return WrapResult(false, "An error occured!")

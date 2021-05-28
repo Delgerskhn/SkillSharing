@@ -15,6 +15,7 @@ import Profile from "../components/account/profile";
 import { useBlogContext } from "../context/blog";
 import { useAuth } from "../context/auth";
 import Comments from '../components/blogs/comments'
+import { useAppContext } from "../context/app";
 
 const useStyles = makeStyles(theme => ({
   mainGrid: {
@@ -50,10 +51,13 @@ export default function Blog({ blog }) {
   const classes = useStyles();
   const { setBlog, setComments, comments } = useBlogContext()
   const { user } = useAuth()
+  const { setIsLoading } = useAppContext()
 
   const sendComment = async (value) => {
-    let comment = { content: value, userPk: user.id, blogPk: blog.pk };
+    let comment = { content: value, userPk: user?.id, blogPk: blog.pk };
+    setIsLoading(true)
     let res = await writeComment(comment)
+    setIsLoading(false)
     setComments([...comments, comment])
   }
 

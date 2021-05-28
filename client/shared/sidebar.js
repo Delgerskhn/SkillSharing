@@ -55,8 +55,8 @@ export default function Sidebar(props) {
         {blog?.tags?.map(r =>
           <Link href={"/?tag=" + r?.pk}>
             <Chip
-              key={r}
-              label={r}
+              key={r.pk}
+              label={r.name}
               clickable
               className={classes.chip}
               color="primary"

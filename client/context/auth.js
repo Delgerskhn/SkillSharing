@@ -1,6 +1,7 @@
 import React, { useState, useEffect, createContext, useContext, useCallback } from 'react';
 import { getAccountInfo } from '../api/account';
-import { getUser, removeUser, signIn as sendSignInRequest } from '../api/auth';
+import { getUser, signIn as sendSignInRequest } from '../api/auth';
+import { RemoveUser } from '../helpers/user-store';
 import { useAppContext } from './app';
 
 function AuthProvider(props) {
@@ -30,7 +31,7 @@ function AuthProvider(props) {
 
     const signOut = () => {
         setUser(null);
-        removeUser();
+        RemoveUser()
     }
 
 

@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 function AccountPopover() {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
-    const { user, LogOut } = useAuth();
+    const { user, signOut } = useAuth();
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -73,7 +73,7 @@ function AccountPopover() {
                         </ListItemIcon>
                         <ListItemText primary="Write" />
                     </ListItemLink>
-                    <ListItem button onClick={LogOut}>
+                    <ListItem button onClick={signOut}>
                         <ListItemIcon>
                             <ExitToAppIcon />
                         </ListItemIcon>
