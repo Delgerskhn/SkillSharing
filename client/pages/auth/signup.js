@@ -14,6 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useAppContext } from '../../context/app';
 import { useRouter } from 'next/router';
+import { createAccount } from '../../api/auth';
 
 function Copyright() {
     return (
@@ -61,18 +62,20 @@ export default function SignUp() {
     const handlelname = (e) => setlname(e.target.value);
     const handlepassword = (e) => setpassword(e.target.value);
 
-    const { FetchApi, setErrorMsg } = useAppContext();
+    const { setErrorMsg, setIsLoading } = useAppContext();
 
     const signUp = async () => {
-        var body = {
+        var user = {
             firstname: fname,
             lastname: lname,
             email: email,
             password: password
         }
-        var res = await FetchApi('/accounts', 'post', body, true);
-        if (res?.DuplicateUserName) setErrorMsg(res.DuplicateUserName[0])
-        else router.push('/auth/login')
+        setIsLoading(true)
+        var res = await createAccount(user);
+        setIsLoading(false)
+        if(res.Ok) router.push('/auth/login')
+        else setErrorMsg(res.Message)
     };
     const validEmail = () => {
         console.log('validate email');

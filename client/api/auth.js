@@ -1,4 +1,4 @@
-import Fetch from "../helpers/fetch";
+import Fetch, { WrapResult } from "../helpers/fetch";
 import { GetUser, SaveUser } from "../helpers/user-store";
 
 export async function signIn(email, password) {
@@ -25,20 +25,15 @@ export async function signIn(email, password) {
     }
 }
 
-export async function createAccount(email, password) {
+export async function createAccount(user) {
     try {
         // Send request
         console.log(email, password);
-
-        return {
-            isOk: true
-        };
+        var res = await Fetch('/accounts', 'post', user);
+        return WrapResult(true, res)
     }
-    catch {
-        return {
-            isOk: false,
-            message: "Failed to create account"
-        };
+    catch(ex) {
+        return WrapResult(false,null,ex?.DuplicateUserName? ex.DuplicateUserName[0]:"Failed to create account")
     }
 }
 
