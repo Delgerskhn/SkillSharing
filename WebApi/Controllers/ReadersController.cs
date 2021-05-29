@@ -24,11 +24,10 @@ namespace WebApi.Controllers
         }
 
         //TODO: can have multiple tags 
-        [HttpGet("tag")]
-        public async Task<ActionResult> GetBlogsByTag([FromQuery] string ids)
+        [HttpGet("tag/{tagPk}")]
+        public async Task<ActionResult> GetBlogsByTag(int tagPk)
         {
-            string[] idList = ids.Split(",");
-            var blogs = await _blogService.GetBlogsByTags(idList);
+            var blogs = await _blogService.GetBlogsByTags(tagPk);
             return Ok(blogs);
         }
 
@@ -43,7 +42,7 @@ namespace WebApi.Controllers
         public async Task<ActionResult<IEnumerable<Blog>>> GetLatestBlogs()
         {
             return await _blogService.GetLatestBlogs();
-          
+
         }
 
         // GET: api/Readers/5
