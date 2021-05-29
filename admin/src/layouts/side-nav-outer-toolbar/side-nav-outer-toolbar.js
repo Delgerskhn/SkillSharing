@@ -49,6 +49,7 @@ export default function ({ title, children }) {
     }
 
     history.push(path);
+    
     scrollViewRef.current.instance.scrollTo(0);
 
     if (!isLarge || menuStatus === MenuStatus.TemporaryOpened) {

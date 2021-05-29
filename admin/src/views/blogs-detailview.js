@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { DataGrid, Column } from 'devextreme-react/data-grid';
-import ArrayStore from 'devextreme/data/array_store';
-import DataSource from 'devextreme/data/data_source';
-import service from './data.js';
+import { Button } from 'devextreme-react/button';
+
+import Box, {
+    Item
+  } from 'devextreme-react/box';
+  
 import BlogEditor from '../components/editor/blog-editor.js';
-
-const tasks = service.getTasks();
-
+import { useBlogs } from '../contexts/blog.js';
+import { constBlog } from '../utils/constants.js';
+ 
 export default function BlogsDV(props) {
-    let { appUser, content } = props.data.data;
+    let { appUser, content, pk } = props.data.data;
+    const {updateStatus} = useBlogs()
 
     const parseContent = () => {
         try {
@@ -19,6 +22,14 @@ export default function BlogsDV(props) {
         }
     }
 
+    const onApprove =() => {
+        updateStatus(pk, constBlog.State.Published)
+    }
+
+    const onDecline =() => {
+        updateStatus(pk, constBlog.State.Declined)
+    }
+
     useEffect(() => {
         console.log(props.data)
     }, [])
@@ -26,11 +37,24 @@ export default function BlogsDV(props) {
     function completedValue(rowData) {
         return rowData.Status === 'Completed';
     }
+
     return (
         <React.Fragment>
-            <div className="master-detail-caption">
-                {`${appUser?.email}'s Tasks`}
-            </div>
+                    <div className="master-detail-caption">
+                        {`${appUser?.email}'s blog`}
+                    </div>
+                    <Button 
+                        text="Approve" 
+                        type="default"                   
+                        stylingMode="contained"
+                        onClick={onApprove}
+                        />
+                    <Button 
+                        text="Decline" 
+                        type="default"                   
+                        stylingMode="contained"
+                        onClick={onDecline}
+                        />
             <BlogEditor readOnly={true} content={parseContent()} />
         </React.Fragment>
     );

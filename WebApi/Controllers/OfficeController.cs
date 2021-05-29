@@ -45,6 +45,7 @@ namespace WebApi.Controllers
         {
             var blog = await _blogService.GetBlog(blogPk) ;
             if (blog == null) return NotFound("Blog doesn't exist");
+            blog.BlogStatusPk = statusPk;
             await _blogService.UpdateBlogStatus(blog);
             return NoContent();
         }

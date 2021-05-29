@@ -5,33 +5,36 @@ import DataGrid, { Column, MasterDetail } from "devextreme-react/data-grid";
 
 import BlogsDV from "./blogs-detailview.js";
 import getParam from "../utils/query-string.js";
-import { getBlogs } from "./data.js";
+import { useBlogs } from "../contexts/blog.js";
 
 function imgRender(data) {
   return <img width="150" src={data.value} />;
 }
 
 function BlogsLV(props) {
-  const [blogs, setBlogs] = useState([]);
+  const {blogs, setBlogsByStatus, setBlogs} = useBlogs()
+  const [status, setStatus] = useState(1)
   useEffect(
     () => {
       let p = getParam(props.location.search, "status");
-      setBlogs(getBlogs(p));
+      setBlogsByStatus(p)
+      if(p) setStatus(parseInt(p))
     },
     [props.location]
   );
   return (
     <DataGrid
       id="grid-container"
-      dataSource={blogs}
+      dataSource={blogs.filter(r=>r.blogStatusPk === status)}
       keyExpr="pk"
       columnAutoWidth={true}
+      filter
       wordWrapEnabled
       showBorders={true}
     >
       <Column dataField="title" caption="Title" />
       <Column
-        dataField="Image"
+        caption="Image"
         dataField="img"
         allowSorting={false}
         cellRender={imgRender}

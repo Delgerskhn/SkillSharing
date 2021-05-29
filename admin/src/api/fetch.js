@@ -15,11 +15,11 @@ const Fetch = async (path, method, body, secure = false) => {
     if (req.status === 401) removeUser()
 
     var res = await req.text();
-    console.log(res, req)
     try {
         res = JSON.parse(res);
     } catch (err) {
     }
+    console.log(req, res)
     if (req.ok) return res
     throw res
 }

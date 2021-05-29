@@ -1,16 +1,7 @@
 import CustomStore from 'devextreme/data/custom_store';
 import { getBlogsByStatus } from '../api/blogs';
 
-const employees = [
-{
-    'ID': 9,
-    'Prefix': 'Dr.',
-    'FirstName': 'Kent',
-    'LastName': 'Samuelson',
-    'Position': 'Ombudsman',
-    'State': 'Missouri',
-    'BirthDate': '1972/09/11'
-}];
+
 
 const tasks = [
 {
@@ -52,7 +43,8 @@ const tasks = [
     'Priority': 'Normal',
     'Completion': 0,
     'EmployeeID': 9
-    }];
+}
+];
 
 const getBlogs = (statusPk) => {
     return new CustomStore({
@@ -66,6 +58,7 @@ const getBlogs = (statusPk) => {
             // ...
         },
         update: (key, values) => {
+            console.log(key, values)
             // ...
         },
         remove: (key) => {
