@@ -48,8 +48,9 @@ export default function ({ title, children }) {
       return;
     }
 
-    history.push(path);
-    
+    //history.push(path);
+    window.location.href= window.location.origin + '/#'+ path
+    window.location.reload(false)
     scrollViewRef.current.instance.scrollTo(0);
 
     if (!isLarge || menuStatus === MenuStatus.TemporaryOpened) {
